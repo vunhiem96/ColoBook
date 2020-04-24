@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/tools"
+        xmlns:app2="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#E1E9EC"
+        app:ignore="NamespaceTypo">
+
+    <ImageView
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:layout_above="@id/app_name"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/icon_app"
+            android:layout_width="@dimen/_50sdp"
+            android:layout_height="@dimen/_50sdp"
+            android:layout_marginTop="60dp"
+            app2:srcCompat="@drawable/ic_splash" />
+
+    <TextView
+            android:id="@+id/app_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:fontFamily="@font/jua_regular"
+            android:singleLine="true"
+            android:text="ColorBook 2"
+            android:textColor="#000000"
+            android:textSize="@dimen/_19sdp"
+            android:textStyle="bold" />
+
+    <LinearLayout
+            android:id="@+id/layout_ads"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_alignParentBottom="true"
+            android:orientation="vertical" />
+
+
+    <LinearLayout
+            android:id="@+id/layout_counter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_margin="@dimen/_16sdp"
+            android:orientation="horizontal" />
+
+</RelativeLayout>

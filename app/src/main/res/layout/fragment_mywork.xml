@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#FFFF"
+        android:orientation="vertical">
+
+    <RelativeLayout
+            android:id="@+id/action_bar_setting"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_50sdp">
+
+        <ImageView
+                android:layout_width="@dimen/_22sdp"
+                android:layout_height="@dimen/_22sdp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/_20sdp"
+                android:layout_marginRight="@dimen/_20sdp"
+                android:layout_marginBottom="@dimen/_5sdp"
+                app:srcCompat="@drawable/ic_giftbox" />
+
+        <ImageView
+                android:id="@+id/back_my_work"
+                android:layout_width="@dimen/_22sdp"
+                android:layout_height="@dimen/_22sdp"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/_15sdp"
+                android:layout_marginLeft="@dimen/_15sdp"
+                android:src="@drawable/img_home" />
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:fontFamily="@font/chalkboard_regular"
+                android:text="my work"
+                android:textAllCaps="true"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_16sdp" />
+
+        <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_1sdp"
+                android:layout_alignParentBottom="true"
+                android:background="#4D9E9A9A" />
+
+        <!--        <com.skydoves.medal.MedalLayout-->
+        <!--                android:layout_width="wrap_content"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:layout_alignParentEnd="true"-->
+        <!--                android:layout_alignParentRight="true"-->
+        <!--                android:layout_centerVertical="true"-->
+        <!--                android:layout_marginEnd="@dimen/_10sdp"-->
+        <!--                android:layout_marginRight="@dimen/_10sdp"-->
+        <!--                android:visibility="gone"-->
+        <!--                app:direction="right"-->
+        <!--                app:speed="1500"-->
+        <!--                app:turn="1">-->
+
+
+        <!--            <ImageView-->
+        <!--                    android:id="@+id/img_ad"-->
+        <!--                    android:layout_width="wrap_content"-->
+        <!--                    android:layout_height="@dimen/_30sdp"-->
+        <!--                    android:adjustViewBounds="true"-->
+        <!--                    android:scaleType="centerInside"-->
+        <!--                    app:srcCompat="@drawable/ic_ads" />-->
+        <!--        </com.skydoves.medal.MedalLayout>-->
+
+    </RelativeLayout>
+
+    <RadioGroup
+            android:id="@+id/btn"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_34sdp"
+            android:layout_below="@+id/action_bar_setting"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+        <RadioButton
+                android:textSize="@dimen/_11ssp"
+                android:layout_marginVertical="@dimen/_1sdp"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/_20sdp"
+                android:layout_marginLeft="@dimen/_20sdp"
+                android:layout_weight="1"
+                android:background="@drawable/onoff_my_work"
+                android:button="@null"
+                android:gravity="center"
+                android:text="Picture"
+                android:textColor="@color/text_color_mywork" />
+
+        <RadioButton
+                android:textSize="@dimen/_11ssp"
+                android:layout_marginVertical="@dimen/_1sdp"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_20sdp"
+                android:layout_marginRight="@dimen/_20sdp"
+                android:layout_weight="1"
+                android:background="@drawable/onoff_my_work"
+                android:button="@null"
+                android:gravity="center"
+                android:text="Color book"
+                android:textColor="@color/text_color_mywork" />
+
+    </RadioGroup>
+
+    <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/btn"
+            android:layout_marginTop="@dimen/_10sdp">
+
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycle_my_work"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/_5sdp"
+                android:layout_marginRight="@dimen/_5sdp" />
+
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@id/back_category"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="@dimen/_5sdp"
+                    app:srcCompat="@drawable/ic_emty" />
+
+            <TextView
+                    android:id="@+id/back_category"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="You dont have any artwork"
+                    android:textColor="#000000"
+                    android:textSize="@dimen/_11ssp" />
+
+            <Button
+                    android:layout_width="@dimen/_180sdp"
+                    android:layout_height="@dimen/_38sdp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="@dimen/_15sdp"
+                    android:background="@drawable/round_bg_bedtime2"
+                    android:text="+  Add Blank Artwork"
+                    android:textColor="#ffff"
+                    android:textSize="@dimen/_12ssp" />
+        </RelativeLayout>
+    </FrameLayout>
+
+
+    <!--    <RelativeLayout-->
+    <!--            android:id="@+id/layout_gift_tab3"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="match_parent"-->
+    <!--            android:visibility="gone">-->
+
+    <!--        <View-->
+    <!--                android:id="@+id/view_tranparent"-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="match_parent"-->
+    <!--                android:background="@color/black_tranparent"-->
+    <!--                android:visibility="visible" />-->
+
+    <!--        <ImageView-->
+    <!--                android:id="@+id/ic_gift_gif"-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="match_parent"-->
+    <!--                android:layout_centerInParent="true"-->
+    <!--                android:padding="@dimen/_70sdp"-->
+    <!--                android:visibility="visible" />-->
+    <!--    </RelativeLayout>-->
+</RelativeLayout>

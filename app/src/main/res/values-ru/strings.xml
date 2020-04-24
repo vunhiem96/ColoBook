@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Coloring Book</string>
+    <string name="check_for_update">Проверить обновления</string>
+    <string name="complete_the_picture">Дополняют картину</string>
+    <string name="content_feedback">Отзыв по содержанию</string>
+    <string name="continue_edit_or_new">Это изображение редактируется, Вы хотите продолжить?</string>
+    <string name="continuee">Продолжить</string>
+    <string name="discover_the_things_you_like_right_now">Откройте для себя вещи, которые вы любите прямо сейчас!
+    </string>
+    <string name="feed_back">Обратная связь</string>
+    <string name="finish">Конец</string>
+    <string name="home">Главная</string>
+    <string name="no">нет</string>
+    <string name="no_ads">Нет объявлений в наличии</string>
+    <string name="please_send_your_review_to_us">Пожалуйста, пришлите свой отзыв нам</string>
+    <string name="please_wait_">Пожалуйста, подождите секунду!</string>
+    <string name="private_policy">Политика конфиденциальности</string>
+    <string name="rate_app">Оценить приложение</string>
+    <string name="restart">Запустить снова</string>
+    <string name="rework">переделывать</string>
+    <string name="save_current">Вы хотите, чтобы сохранить текущий процесс?</string>
+    <string name="send_now">Отправить сейчас</string>
+    <string name="share_app">Доля приложение</string>
+    <string name="share_now">Поделись сейчас</string>
+    <string name="skip_ads">Пропустить рекламу</string>
+    <string name="text_error">ошибка</string>
+    <string name="try_again">Пожалуйста, попробуйте еще раз!</string>
+    <string name="txt_please_install_first">Пожалуйста, установите в первую очередь!</string>
+    <string name="yes">да</string>
+    <string name="your_favorite_photos">Ваши любимые фотографии</string>
+    <string name="all">Ваши любимые фотографии</string>
+    <string name="animals">Все</string>
+    <string name="discover_now">животные</string>
+    <string name="dogs">Узнайте прямо сейчас</string>
+    <string name="people">Собаки</string>
+    <string name="daily">Ежедневно</string>
+    <string name="gallery">Галерея</string>
+    <string name="my_work">Моя работа</string>
+    <string name="setting">настройки</string>
+    <string name="cats">Ваши любимые фотографии</string>
+    <string name="color_selected">коты</string>
+    <string name="fantasy">Цвет выбран</string>
+    <string name="floral">Фантастика</string>
+    <string name="mandalas">Florals</string>
+    <string name="unicorn">Мандалы</string>
+    <string name="house">жилой дом</string>
+    <string name="image_success">Это изображение было завершено</string>
+    <string name="bring_color">Принесите цвет в вашу жизнь!</string>
+    <string name="end_edit">Вы не закончили работу, хотите вернуться?</string>
+    <string name="start">Начните</string>
+</resources>

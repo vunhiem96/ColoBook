@@ -1,0 +1,9 @@
+include ':app', ':fontloader', ':FlycoTabLayout_Lib', ':tiny2'
+
+//include ':libAdlib'
+//project(':libAdlib').projectDir = new File(settingsDir, '../libad/libAdlib')
+//
+//project(':tiny').projectDir = new File(settingsDir, '../libad/tiny')
+
+include ':serverads'
+project(':serverads').projectDir = new File(settingsDir, '../AdServer/serverads')

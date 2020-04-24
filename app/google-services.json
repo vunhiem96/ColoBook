@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "333781360741",
+    "firebase_url": "https://coloringbook-730f6.firebaseio.com",
+    "project_id": "coloringbook-730f6",
+    "storage_bucket": "coloringbook-730f6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:333781360741:android:ad842b498eb0b5d3",
+        "android_client_info": {
+          "package_name": "com.volio.coloringbook2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "333781360741-dmjsvu2g6l1g89qpqvucqm8400at8i41.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.volio.coloringbook2",
+            "certificate_hash": "8e346281cfc596f5bc068526748ded064ae21b76"
+          }
+        },
+        {
+          "client_id": "333781360741-ntc04enbq1m6ptq2apk7q5jvv4dsrsvb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBg8qC5J0ZbPyrA6Rf1LBw88fLAiJi48A4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "333781360741-ntc04enbq1m6ptq2apk7q5jvv4dsrsvb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

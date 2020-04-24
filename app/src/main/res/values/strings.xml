@@ -1,0 +1,80 @@
+<resources>
+    <string name="fb_login_protocol_scheme" translatable="false">fb1552264281571037</string>
+    <string name="admob_app_id" translatable="false">ca-app-pub-2222869408518511~3381076429</string>
+    <string name="facebook_app_id" translatable="false">2259177201077384</string>
+
+    <string name="app_name">ColorBook</string>
+    <string name="text_error">Error</string>
+    <string name="discover_now">Discover now</string>
+    <string name="all">All</string>
+    <string name="animals">Animals</string>
+
+    <string name="dogs">Dogs</string>
+    <string name="people">People</string>
+    <string name="gallery">Gallery</string>
+    <string name="daily">Daily</string>
+    <string name="my_work">My Work</string>
+    <string name="setting">Settings</string>
+    <string name="check_for_update">Check for update</string>
+    <string name="feed_back">Feed back</string>
+    <string name="rate_app">Rate app</string>
+    <string name="private_policy">Privacy policy</string>
+    <string name="share_app">Share app</string>
+    <string name="share_now">Share now</string>
+    <string name="restart">Restart</string>
+    <string name="content_feedback">Content feedback</string>
+    <string name="send_now">Send now</string>
+    <string name="please_send_your_review_to_us">Please send your review to us</string>
+    <string name="pls_rate_app">Please support us by giving 5 stars. Thank you so much!</string>
+
+
+    <string name="continue_edit_or_new">This image is being edited, do you want to continue?</string>
+    <string name="continuee">Continue</string>
+    <string name="rework">Rework</string>
+    <string name="finish">Finish</string>
+    <string name="your_favorite_photos">Your favorite photos</string>
+    <string name="discover_the_things_you_like_right_now">Discover the things you like right now!</string>
+    <!--<string name="save_current">Do you want to save the current process?</string>-->
+    <string name="end_edit">You have not finished the work, do you want to back?</string>
+
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="complete_the_picture">Complete the picture</string>
+    <string name="txt_please_install_first">Please Install First!</string>
+    <string name="home">Home</string>
+    <string name="no_ads">No ads available</string>
+    <string name="try_again">Please try again!</string>
+    <string name="skip_ads">Skip Ad</string>
+    <string name="please_wait_">Please wait for a moment!</string>
+
+    <string name="cats">Cats</string>
+    <string name="fantasy">Fantasy</string>
+    <string name="floral">Florals</string>
+    <string name="unicorn">Unicorn</string>
+    <string name="mandalas">Mandalas</string>
+    <string name="color_selected">Color selected</string>
+    <string name="house">House</string>
+
+    <string name="image_success">This image has been completed</string>
+    <string name="feed_back_color_book" translatable="false">Feedback to Coloring Book</string>
+    <string name="bring_color">Bring Color to Your Life!</string>
+    <string name="start">Start</string>
+    <string name="save_current">You have not finished the work, do you want to back?</string>
+    <string name="later" translatable="false">Later</string>
+    <string name="please_wait_to_load_image">Please wait to load your picture! \n (This action may contain ads)</string>
+    <string name="please_wait_to_save">Please wait to save your image! \n(This action may contain ads)</string>
+    <string name="st_went_wrong">Something went wrong! Please try again!</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="apploving_sdk" translatable="false">_O3U9144Fh61uHnxKMZqv2Sd65UdygF1V8LfOayfkKDhRNHKXcdhqyq6LUuUo1Z3wwnKw8TrI-2nflVwSJwL7a</string>
+    <string name="new_">New</string>
+    <string name="love">Love</string>
+    <string name="flower">Flowers</string>
+    <string name="manda">Mandala</string>
+    <string name="classic">Classic</string>
+    <string name="girly">Girly</string>
+    <string name="lifestyle">Lifestyle</string>
+    <string name="animal">Animal</string>
+    <string name="fantasy_world">Fantasy world</string>
+
+</resources>

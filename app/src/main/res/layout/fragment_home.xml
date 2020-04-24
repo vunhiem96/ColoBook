@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tl="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/background_1">
+
+<!--    <RelativeLayout-->
+<!--            android:id="@+id/view1"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="@dimen/_10sdp">-->
+
+<!--        <com.skydoves.medal.MedalLayout-->
+<!--                android:id="@+id/rotate_view"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_alignParentEnd="true"-->
+<!--                android:layout_alignParentRight="true"-->
+<!--                android:layout_marginTop="@dimen/_10sdp"-->
+<!--                android:layout_marginEnd="@dimen/_10sdp"-->
+<!--                android:layout_marginRight="@dimen/_10sdp"-->
+<!--                android:visibility="gone"-->
+<!--                app:direction="right"-->
+<!--                app:speed="1500"-->
+<!--                app:turn="1">-->
+
+
+<!--            <ImageView-->
+<!--                    android:id="@+id/img_ad"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="@dimen/_30sdp"-->
+<!--                    android:layout_alignParentEnd="true"-->
+<!--                    android:layout_alignParentRight="true"-->
+<!--                    android:adjustViewBounds="true"-->
+<!--                    android:scaleType="centerInside"-->
+<!--                    tl:srcCompat="@drawable/ic_ads" />-->
+<!--        </com.skydoves.medal.MedalLayout>-->
+
+
+<!--    </RelativeLayout>-->
+
+    <RelativeLayout
+            android:layout_marginTop="@dimen/_10sdp"
+            android:id="@+id/ll"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp">
+        <TextView
+                android:layout_marginStart="@dimen/_15sdp"
+                android:fontFamily="@font/jua_regular"
+                android:layout_centerVertical="true"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_22ssp"
+                android:text="ColorBook"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_15sdp" />
+        <ImageView
+                android:layout_centerVertical="true"
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_marginEnd="@dimen/_25sdp"
+                android:layout_alignParentEnd="true"
+                app:srcCompat="@drawable/ic_giftbox"
+                android:layout_width="@dimen/_26sdp"
+                android:layout_height="@dimen/_26sdp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/_25sdp" />
+
+    </RelativeLayout>
+
+    <com.flyco.tablayout.SlidingTabLayout
+            android:layout_marginTop="@dimen/_10sdp"
+            android:id="@+id/tabLayout_10"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_below="@+id/ll"
+            android:background="@color/tranparent"
+            android:paddingLeft="@dimen/_10sdp"
+            android:paddingRight="@dimen/_10sdp"
+            tl:tl_indicator_color="@color/gnt_blue"
+            tl:tl_indicator_corner_radius="@dimen/_7sdp"
+            tl:tl_indicator_margin_left="@dimen/_2sdp"
+            tl:tl_indicator_margin_right="@dimen/_2sdp"
+            tl:tl_indicator_style="BLOCK"
+            tl:tl_indicator_width_equal_title="false"
+            tl:tl_textSelectColor="@color/white"
+            tl:tl_textUnselectColor="@color/white"
+            />
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_marginHorizontal="@dimen/_6sdp"
+            android:background="@drawable/round_bg_main"
+            android:layout_below="@+id/tabLayout_10"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        <FrameLayout
+                android:layout_marginHorizontal="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_85sdp">
+            <ImageView
+                    android:scaleType="fitXY"
+                    android:src="@drawable/banner"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+            <Button
+                    android:textColor="@color/white"
+                    android:background="@drawable/round_bg_bedtime"
+                    android:layout_marginTop="@dimen/_65sdp"
+                    android:layout_marginStart="@dimen/_15sdp"
+                    android:textAllCaps="true"
+                    android:text="Try now"
+                    android:textSize="@dimen/_8sdp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_15sdp"
+                    android:layout_marginLeft="@dimen/_15sdp" />
+
+        </FrameLayout>
+
+
+    <androidx.viewpager.widget.ViewPager
+            android:layout_marginTop="@dimen/_10sdp"
+            android:id="@+id/vp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
+
+    </LinearLayout>
+
+<!--    <ProgressBar-->
+<!--            android:id="@+id/progressBar"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_centerInParent="true"-->
+<!--            android:visibility="gone" />-->
+
+<!--    <RelativeLayout-->
+<!--            android:id="@+id/layout_gift_tab1"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:visibility="gone">-->
+
+<!--        <View-->
+<!--                android:id="@+id/view_tranparent"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:background="@color/black_tranparent"-->
+<!--                android:visibility="visible" />-->
+
+<!--        <ImageView-->
+<!--                android:id="@+id/ic_gift_gif"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:layout_centerInParent="true"-->
+<!--                android:padding="@dimen/_70sdp"-->
+<!--                android:visibility="visible" />-->
+<!--    </RelativeLayout>-->
+
+</RelativeLayout>

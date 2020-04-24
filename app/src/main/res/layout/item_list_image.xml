@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:orientation="vertical"
+        android:layout_margin="@dimen/_6sdp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="@dimen/_6sdp"
+        app:cardElevation="@dimen/_4sdp"
+        >
+<RelativeLayout
+        android:padding="@dimen/_2sdp"
+        android:background="@drawable/border_white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <ImageView
+            android:id="@+id/img_list"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/_10sdp"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    <ImageView
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="@dimen/_5sdp"
+            android:id="@+id/img_type_image"
+           android:layout_alignParentEnd="true"
+            android:adjustViewBounds="true"
+            android:layout_marginRight="@dimen/_5sdp"
+            android:layout_width="@dimen/_22sdp"
+            android:layout_height="@dimen/_22sdp"
+            android:layout_marginEnd="@dimen/_5sdp"
+            android:layout_alignParentRight="true" />
+
+</RelativeLayout>
+
+    <TextView
+            android:id="@+id/tv_page"
+            android:layout_alignParentBottom="true"
+            android:gravity="center"
+            android:textColor="#ffff"
+            android:textSize="@dimen/_10ssp"
+            android:background="@drawable/round_bg_item"
+            android:layout_gravity="left|bottom"
+            android:text="32 pics"
+            android:layout_width="@dimen/_50sdp"
+            android:layout_height="@dimen/_15sdp"
+           />
+</androidx.cardview.widget.CardView>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#FFFF"
+        android:orientation="vertical">
+
+    <RelativeLayout
+            android:id="@+id/action_bar_setting"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_50sdp">
+
+        <ImageView
+                android:layout_width="@dimen/_22sdp"
+                android:layout_height="@dimen/_22sdp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/_20sdp"
+                android:layout_marginRight="@dimen/_20sdp"
+                android:layout_marginBottom="@dimen/_5sdp"
+                app:srcCompat="@drawable/ic_giftbox" />
+
+        <ImageView
+                android:id="@+id/back_storybook"
+                android:layout_width="@dimen/_22sdp"
+                android:layout_height="@dimen/_22sdp"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/_15sdp"
+                android:layout_marginLeft="@dimen/_15sdp"
+                android:src="@drawable/img_home" />
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:fontFamily="@font/chalkboard_regular"
+                android:text="STORY BOOK"
+                android:textAllCaps="true"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_16sdp" />
+
+
+    </RelativeLayout>
+    <ImageView
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/img_storybook"
+            android:layout_below="@id/action_bar_setting"
+            android:layout_width="@dimen/_160sdp"
+            android:layout_height="@dimen/_145sdp"/>
+
+
+
+</RelativeLayout>

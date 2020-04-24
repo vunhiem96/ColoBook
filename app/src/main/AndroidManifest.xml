@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+        package="com.volio.coloringbook2">
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+            android:name="com.volio.coloringbook2.common.PhotoApplication"
+            android:allowBackup="true"
+            android:icon="@drawable/ic_splash"
+            android:label="@string/app_name"
+            android:largeHeap="true"
+            android:networkSecurityConfig="@xml/network_security_config"
+            android:roundIcon="@drawable/ic_splash"
+            android:supportsRtl="true"
+            android:theme="@style/AppTheme">
+
+        <service
+                android:name="com.volio.coloringbook2.service.MyFirebaseMessageService"
+                android:enabled="false"
+                android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGE_EVENT" />
+            </intent-filter>
+        </service>
+
+        <uses-library
+                android:name="org.apache.http.legacy"
+                android:required="false" />
+
+        <activity
+                android:name="com.volio.coloringbook2.activity.MainActivity"
+                android:screenOrientation="portrait">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <meta-data
+                android:name="applovin.sdk.key"
+                android:value="@string/apploving_sdk" />
+
+        <meta-data
+                android:name="com.google.android.gms.ads.APPLICATION_ID"
+                android:value="@string/admob_app_id" />
+        <meta-data
+                android:name="io.fabric.ApiKey"
+                android:value="1daa8a9927cbd5bef096c0ae933ca6530bcaf729" />
+
+    </application>
+
+</manifest>

@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:font="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:background="@drawable/background_gradient"
+                android:orientation="vertical"
+                android:layout_height="match_parent">
+
+    <androidx.core.widget.NestedScrollView android:layout_width="match_parent" android:layout_height="wrap_content">
+
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            <RelativeLayout android:layout_width="match_parent"
+                            android:layout_height="@dimen/_50sdp">
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:text="challengers"
+                        android:textSize="@dimen/_20sdp"
+                        android:fontFamily="@font/chalkboard_regular"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:textColor="@color/tim_than"
+                        android:textAllCaps="true"
+                        android:layout_centerVertical="true"
+                        android:layout_height="wrap_content"/>
+
+
+                <com.skydoves.medal.MedalLayout
+                        android:visibility="gone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        app:direction="right"
+                        app:turn="1"
+                        android:layout_alignParentRight="true"
+                        app:speed="1500"
+                        android:layout_alignParentEnd="true">
+
+                    <ImageView
+                            android:id="@+id/img_ad"
+                            android:layout_width="?android:actionBarSize"
+                            app:srcCompat="@drawable/ic_ads"
+                            android:scaleType="centerInside"
+                            android:layout_height="?android:actionBarSize"/>
+                </com.skydoves.medal.MedalLayout>
+
+            </RelativeLayout>
+
+            <com.prolificinteractive.materialcalendarview.MaterialCalendarView
+                    android:id="@+id/calendar_view"
+                    app:mcv_tileHeight="@dimen/_25sdp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:mcv_showOtherDates="all"
+                    app:mcv_selectionColor="@color/tim_than"/>
+
+
+            <com.skydoves.androidribbon.RibbonLayout
+                    android:id="@+id/ribbonLayout"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:ribbonLayout_header_align="left">
+                <FrameLayout
+                        android:id="@+id/layout_image_1"
+                        android:layout_margin="@dimen/_2sdp"
+                        android:background="@drawable/border_white"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_180sdp">
+                    <ImageView
+                            android:id="@+id/img_one_tab_2"
+                            android:layout_margin="@dimen/_3sdp"
+                            android:scaleType="centerCrop"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"/>
+
+                </FrameLayout>
+            </com.skydoves.androidribbon.RibbonLayout>
+
+
+            <LinearLayout
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:layout_marginBottom="@dimen/_20sdp"
+                    android:layout_width="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_height="wrap_content">
+
+                <com.volio.coloringbook2.customview.OneOneRelativeLayout
+                        android:id="@+id/layout_image_2"
+                        android:background="@drawable/border_white"
+                        android:layout_width="0dp"
+                        android:layout_marginRight="@dimen/_5sdp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content">
+
+                    <ImageView
+                            android:id="@+id/img_two_tab_2"
+                            android:layout_centerInParent="true"
+                            android:layout_margin="@dimen/_10sdp"
+                            android:adjustViewBounds="true"
+                            android:scaleType="fitCenter"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+
+                    <androidx.core.widget.ContentLoadingProgressBar
+                            android:id="@+id/progress_image_my_work"
+                            android:layout_width="match_parent"
+                            android:progress="0"
+                            android:max="100"
+                            android:visibility="gone"
+                            android:layout_marginLeft="@dimen/_5sdp"
+                            android:layout_marginRight="@dimen/_5sdp"
+                            android:progressDrawable="@drawable/custom_progress_seekbar"
+                            android:layout_marginBottom="@dimen/_5sdp"
+                            android:layout_alignParentBottom="true"
+                            android:layout_height="@dimen/_3sdp"/>
+
+                    <TextView
+                            android:text="@string/finish"
+                            android:visibility="gone"
+                            android:textSize="@dimen/_8sdp"
+                            android:layout_above="@+id/progress_image_my_work"
+                            android:layout_marginLeft="@dimen/_5sdp"
+                            android:textColor="@color/text_color_new"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" android:layout_marginStart="@dimen/_5sdp"/>
+
+                    <TextView
+                            android:id="@+id/txt_percent_my_work"
+                            android:text="1/100"
+                            android:visibility="gone"
+                            android:layout_alignParentRight="true"
+                            android:textSize="@dimen/_8sdp"
+                            android:layout_above="@+id/progress_image_my_work"
+                            android:layout_marginRight="@dimen/_5sdp"
+                            android:textColor="@color/text_color_new"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" android:layout_alignParentEnd="true"
+                            android:layout_marginEnd="@dimen/_5sdp"/>
+
+                    <ImageView
+                            android:id="@+id/img_done_image"
+                            android:visibility="gone"
+                            app:srcCompat="@drawable/ic_tick"
+                            android:layout_alignParentRight="true"
+                            android:layout_width="@dimen/_12sdp"
+                            android:scaleType="fitXY"
+                            android:layout_margin="@dimen/_4sdp"
+                            android:layout_height="@dimen/_12sdp"
+                            android:layout_alignParentEnd="true"/>
+                </com.volio.coloringbook2.customview.OneOneRelativeLayout>
+
+                <com.volio.coloringbook2.customview.OneOneFrameLayout
+                        android:id="@+id/layout_image_3"
+                        android:background="@drawable/border_white"
+                        android:layout_marginLeft="@dimen/_5sdp"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content">
+
+                    <ImageView
+                            android:id="@+id/img_three_tab_2"
+                            android:layout_gravity="center"
+                            android:layout_margin="@dimen/_10sdp"
+                            android:adjustViewBounds="true"
+                            android:scaleType="fitCenter"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+
+                </com.volio.coloringbook2.customview.OneOneFrameLayout>
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+    <RelativeLayout android:layout_width="match_parent"
+                    android:id="@+id/layout_gift_tab2"
+                    android:visibility="gone"
+                    android:layout_height="match_parent">
+        <View
+                android:id="@+id/view_tranparent"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/black_tranparent"
+                android:visibility="visible"/>
+
+        <ImageView
+                android:id="@+id/ic_gift_gif"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:padding="@dimen/_70sdp"
+                android:visibility="visible"/>
+    </RelativeLayout>
+</RelativeLayout>

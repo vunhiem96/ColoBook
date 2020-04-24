@@ -1,0 +1,119 @@
+apply plugin: 'com.android.application'
+
+apply plugin: 'kotlin-android'
+
+apply plugin: 'kotlin-android-extensions'
+
+apply plugin: "kotlin-kapt"
+
+buildscript {
+    repositories {
+        maven { url 'https://maven.fabric.io/public' }
+    }
+
+    dependencies {
+        classpath 'io.fabric.tools:gradle:1.31.1'
+    }
+}
+android {
+    compileSdkVersion 29
+    defaultConfig {
+        applicationId "com.volio.coloringbook2"
+        minSdkVersion 16
+        targetSdkVersion 29
+        versionCode 20
+        versionName "1.1.8dev"
+        multiDexEnabled true
+        vectorDrawables.useSupportLibrary = true
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility = '1.8'
+        targetCompatibility = '1.8'
+    }
+}
+//apply plugin: 'io.fabric'
+repositories {
+    maven { url 'https://maven.fabric.io/public' }
+}
+dependencies {
+    implementation('com.crashlytics.sdk.android:crashlytics:2.10.0@aar') {
+        transitive = true;
+    }
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.1.60"
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+//    implementation "androidx.activity:activity-ktx:1.0.0"
+
+    implementation 'androidx.core:core-ktx:1.1.0-alpha05'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'com.google.firebase:firebase-core:17.2.0'
+    implementation 'com.google.firebase:firebase-messaging:20.0.0'
+
+
+    kapt 'com.github.bumptech.glide:compiler:4.11.0'
+    implementation 'com.intuit.sdp:sdp-android:1.0.6'
+    implementation 'com.android.support:multidex:1.0.3'
+    implementation 'me.yokeyword:swipebackfragment:0.2.1'
+
+    // Kotlin Android Coroutines
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.1.1'
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.1.1"
+
+    api 'com.google.android.material:material:1.0.0-alpha3'
+
+    implementation 'com.github.prolificinteractive:material-calendarview:2.0.1'
+    implementation 'com.jakewharton.threetenabp:threetenabp:1.2.0'
+    implementation "androidx.room:room-runtime:2.1.0-alpha07"
+    kapt "androidx.room:room-compiler:2.1.0-alpha07"
+    implementation 'com.github.chrisbanes:PhotoView:2.0.0'
+    implementation "com.github.skydoves:medal:1.0.4"
+    implementation "com.github.skydoves:androidribbon:1.0.1"
+    implementation 'com.github.florent37:runtime-permission-kotlin:1.1.0'
+
+    implementation project(':FlycoTabLayout_Lib')
+    implementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
+    implementation 'com.crashlytics.sdk.android:answers:1.4.7'
+    implementation('com.alibaba.android:ultraviewpager:1.0.7.8') {
+        transitive = true
+    }
+
+    implementation 'com.jakewharton:butterknife:10.2.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.0'
+    implementation 'com.otaliastudios:zoomlayout:1.6.1'
+    implementation 'com.shopgun.android:zoomlayout:2.0.0'
+//    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.0-alpha-2'
+
+    implementation "org.jetbrains.anko:anko-sdk25-coroutines:0.10.8"
+    implementation "org.jetbrains.anko:anko-appcompat-v7-coroutines:0.10.8"
+
+
+    implementation project(path: ':serverads')
+    implementation project(path: ':tiny2')
+
+
+    implementation 'com.squareup.retrofit2:retrofit:2.5.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
+
+    def nav_version = "2.2.1"
+    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
+
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
+    implementation 'com.intuit.sdp:sdp-android:1.0.6'
+    implementation 'com.intuit.ssp:ssp-android:1.0.6'
+    implementation 'com.squareup:otto:1.3.8'
+
+    //recovery
+//    implementation 'com.zxy.android:recovery:1.0.0'
+}
+
+apply plugin: 'com.google.gms.google-services'

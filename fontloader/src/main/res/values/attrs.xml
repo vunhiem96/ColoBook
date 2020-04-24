@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="FontTextView">
+        <!-- Simplest case where you point to a single file -->
+        <attr name="fontFile" format="string"/>
+        <!-- Advanced usage for styling -->
+        <attr name="fontFamily" format="string"/>
+        <attr name="fontVariant" format="string"/>
+        <attr name="fontFilePattern" format="string"/>
+    </declare-styleable>
+</resources>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.volio.coloringbook2.customview.OneOneRelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto" android:orientation="vertical"
+        android:background="@drawable/border_white"
+        android:layout_margin="@dimen/_6sdp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <ImageView
+            android:id="@+id/img_list_on_work"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/_10sdp"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    <androidx.core.widget.ContentLoadingProgressBar
+            android:id="@+id/progress_image_my_work"
+            android:layout_width="match_parent"
+            android:progress="0"
+            android:max="100"
+            android:layout_marginLeft="@dimen/_5sdp"
+            android:layout_marginRight="@dimen/_5sdp"
+            android:progressDrawable="@drawable/custom_progress_seekbar"
+            android:layout_marginBottom="@dimen/_5sdp"
+            android:layout_alignParentBottom="true"
+            android:layout_height="@dimen/_3sdp"/>
+
+    <TextView
+            android:text="@string/finish"
+            android:textSize="@dimen/_8sdp"
+            android:layout_above="@+id/progress_image_my_work"
+            android:layout_marginLeft="@dimen/_5sdp"
+            android:textColor="@color/text_color_new"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    <TextView
+            android:id="@+id/txt_percent_my_work"
+            android:text="1/100"
+            android:layout_alignParentRight="true"
+            android:textSize="@dimen/_8sdp"
+            android:layout_above="@+id/progress_image_my_work"
+            android:layout_marginRight="@dimen/_5sdp"
+            android:textColor="@color/text_color_new"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    <ImageView
+            android:id="@+id/img_done_image"
+            android:visibility="visible"
+            android:layout_alignParentRight="true"
+            android:layout_width="@dimen/_12sdp"
+            android:scaleType="fitXY"
+            android:layout_margin="@dimen/_4sdp"
+            android:layout_height="@dimen/_12sdp"/>
+</com.volio.coloringbook2.customview.OneOneRelativeLayout>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#C4EAFF</color>
+    <color name="colorPrimaryDark">#80CEEC</color>
+    <color name="colorAccent">#125883</color>
+    <color name="colorWhite">#ffffff</color>
+
+    <color name="white">#ffffff</color>
+    <color name="text_color">#A1A1A1</color>
+    <color name="black_tranparent">#bc28282b</color>
+    <color name="black">#000000</color>
+    <color name="black2">#222121</color>
+    <color name="tranparent">#00ffffff</color>
+    <color name="grey">#515362</color>
+    <color name="pink">#fc6588</color>
+    <color name="grey_frame">#dadada</color>
+    <color name="grey_frame_tranfarent">#7d4b4b4b</color>
+
+    <color name="text_grey_pick_image">#23262f</color>
+    <color name="grey_pick_image">#f0f1f6</color>
+    <color name="pink_white">#ffc5db</color>
+    <color name="grey_black">#505362</color>
+    <color name="grey_background">#f0f1f6</color>
+    <color name="grey_background_image">#BDBDBD</color>
+    <color name="toolbar_color">#353535</color>
+    <color name="red">#F44336</color>
+    <color name="yellow">#d99214</color>
+    <color name="blue">#82c9e1</color>
+    <color name="red2">#f52c56</color>
+    <color name="red3">#FF5C6F</color>
+    <color name="black_grey">#414145</color>
+    <color name="grey_tranparent">#80414145</color>
+    <color name="text_color_new">#2F89C0</color>
+    <color name="tim_than">#125883</color>
+    <color name="blue_new">#6FCAFF</color>
+    <color name="background_setting">#D8EAF3</color>
+    <color name="background_setting1">#9DD6F5</color>
+    <color name="green">#6FE874</color>
+    <color name="grey_2">#818286</color>
+
+
+</resources>

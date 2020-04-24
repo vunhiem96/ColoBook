@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:background="@color/white"
+                android:layout_height="match_parent"
+                tools:context="com.volio.coloringbook2.fragment.SaveFragment">
+
+    <RelativeLayout android:id="@+id/toolbar" android:layout_width="match_parent" android:layout_height="@dimen/_50sdp">
+
+        <ImageButton
+                android:id="@+id/btn_cancel_save"
+                android:layout_centerVertical="true"
+                android:background="@color/tranparent"
+                android:scaleType="fitXY"
+                android:padding="@dimen/_6sdp"
+                app:srcCompat="@drawable/ic_exit"
+                android:layout_width="@dimen/_40sdp" android:layout_height="@dimen/_40sdp"/>
+
+    </RelativeLayout>
+
+
+    <ImageView
+            android:id="@+id/img_save"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginRight="@dimen/_10sdp"
+            android:layout_below="@+id/toolbar"
+            android:layout_above="@+id/bottom"
+            android:adjustViewBounds="true"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    <LinearLayout
+            android:id="@+id/bottom"
+            android:background="@drawable/background_gradient"
+            android:paddingBottom="@dimen/_20sdp"
+            android:gravity="center_horizontal"
+            android:layout_alignParentBottom="true"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/_30sdp"
+            android:paddingRight="@dimen/_30sdp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <TextView
+                android:text="@string/share_now"
+                android:textSize="@dimen/_18sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:textStyle="bold"
+                android:textColor="@color/tim_than"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        <RelativeLayout
+                android:id="@+id/layout_share_save"
+                android:background="@drawable/border_save_button"
+                android:layout_width="match_parent"
+                android:padding="@dimen/_8sdp"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:layout_height="wrap_content">
+
+            <TextView
+                    android:id="@+id/txt1"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:textSize="@dimen/_14sdp"
+                    android:layout_centerInParent="true"
+                    android:textColor="@color/white"
+                    android:text="@string/share_now"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            <ImageView android:layout_width="@dimen/_20sdp"
+                       android:layout_toLeftOf="@+id/txt1"
+                       app:srcCompat="@drawable/ic_share" android:scaleType="fitXY"
+                       android:layout_height="@dimen/_20sdp"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+                android:id="@+id/layout_restart_save"
+                android:background="@drawable/border_save_button_2"
+                android:layout_width="match_parent"
+                android:padding="@dimen/_8sdp"
+                android:layout_height="wrap_content">
+
+            <TextView
+                    android:id="@+id/txt2"
+                    android:fontFamily="Chalkboard"
+                    android:layout_marginLeft="@dimen/_18sdp"
+                    android:textSize="@dimen/_14sdp"
+                    android:layout_centerInParent="true"
+                    android:textColor="@color/tim_than"
+                    android:text="@string/restart"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            <ImageView android:layout_width="@dimen/_20sdp"
+                       android:layout_toLeftOf="@+id/txt2"
+                       app:srcCompat="@drawable/ic_restart" android:scaleType="fitXY"
+                       android:layout_height="@dimen/_20sdp"/>
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+
+</RelativeLayout>
