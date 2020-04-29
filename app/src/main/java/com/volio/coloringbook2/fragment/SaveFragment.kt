@@ -20,7 +20,7 @@ import kotlinx.android.synthetic.main.fragment_save.btn_cancel_save
 import kotlinx.android.synthetic.main.fragment_save.img_save
 import kotlinx.android.synthetic.main.fragment_save.layout_restart_save
 import kotlinx.android.synthetic.main.fragment_save.layout_share_save
-import kotlinx.android.synthetic.main.fragment_save_share.*
+import kotlinx.android.synthetic.main.saveas_fragment.*
 import java.util.*
 
 private const val ARG_PARAM1 = "param1"
@@ -56,7 +56,7 @@ class SaveFragment : BaseFragment(), OnCustomClickListener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_save_share, container, false)
+        return inflater.inflate(R.layout.saveas_fragment, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -69,10 +69,10 @@ class SaveFragment : BaseFragment(), OnCustomClickListener {
     }
 
     private fun initEvent() {
-        PhotorTool.clickScaleView(btn_cancel_save, this)
-        PhotorTool.clickScaleView(layout_share_save, this)
-        PhotorTool.clickScaleView(layout_restart_save, this)
-        PhotorTool.clickScaleView(txt_home, this)
+        PhotorTool.clickScaleView(btn_cancel_saves, this)
+        PhotorTool.clickScaleView(layout_share_saves, this)
+        PhotorTool.clickScaleView(layout_restart_saves, this)
+        PhotorTool.clickScaleView(txt_homee, this)
     }
 
 
@@ -88,61 +88,63 @@ class SaveFragment : BaseFragment(), OnCustomClickListener {
 
     override fun OnCustomClick(v: View?, event: MotionEvent?) {
         when (v?.id) {
-            R.id.btn_cancel_save -> findNavController().popBackStack()
-            R.id.layout_share_save -> clickShare()
-            R.id.layout_restart_save -> {
-                val list = Stack<AdsChild>()
-                val admob = AdsChild("ca-app-pub-2222869408518511/7472719890",
-                    AdDef.NETWORK.GOOGLE,
-                    AdDef.GOOGLE_AD_TYPE.INTERSTITIAL,
-                    "Default",
-                    "Default"
-                )
-                list.add(admob)
-                AdHolderOnline(activity!!).showAdsWithOfflineId(list, "", null, getString(R.string.please_wait_to_load_image), object : AdHolderOnline.AdHolderCallback {
-                    override fun onAdFailToLoad(messageError: String?) {
-                        clickRestart()
-                    }
-
-                    override fun onAdOff() {
-
-                    }
-
-                    override fun onAdShow(network: String?, adtype: String?) {
-                        clickRestart()
-                    }
-
-                    override fun onAdClose(adType: String?) {
-
-                    }
-                })
+            R.id.btn_cancel_saves -> findNavController().popBackStack()
+            R.id.layout_share_saves -> clickShare()
+            R.id.layout_restart_saves -> {
+                clickRestart()
+//                val list = Stack<AdsChild>()
+//                val admob = AdsChild("ca-app-pub-2222869408518511/7472719890",
+//                    AdDef.NETWORK.GOOGLE,
+//                    AdDef.GOOGLE_AD_TYPE.INTERSTITIAL,
+//                    "Default",
+//                    "Default"
+//                )
+//                list.add(admob)
+//                AdHolderOnline(activity!!).showAdsWithOfflineId(list, "", null, getString(R.string.please_wait_to_load_image), object : AdHolderOnline.AdHolderCallback {
+//                    override fun onAdFailToLoad(messageError: String?) {
+//                        clickRestart()
+//                    }
+//
+//                    override fun onAdOff() {
+//
+//                    }
+//
+//                    override fun onAdShow(network: String?, adtype: String?) {
+//                        clickRestart()
+//                    }
+//
+//                    override fun onAdClose(adType: String?) {
+//
+//                    }
+//                })
             }
-            R.id.txt_home -> {
-                val list = Stack<AdsChild>()
-                val admob = AdsChild("ca-app-pub-2222869408518511/9505601888",
-                    AdDef.NETWORK.GOOGLE,
-                    AdDef.GOOGLE_AD_TYPE.INTERSTITIAL,
-                    "Default",
-                    "Default"
-                )
-                list.add(admob)
-                AdHolderOnline(activity!!).showAdsWithOfflineId(list, "", null, getString(R.string.please_wait_to_load_image), object : AdHolderOnline.AdHolderCallback {
-                    override fun onAdFailToLoad(messageError: String?) {
-                        findNavController().popBackStack(R.id.menuFragment, false)
-                    }
-
-                    override fun onAdOff() {
-
-                    }
-
-                    override fun onAdShow(network: String?, adtype: String?) {
-                        findNavController().popBackStack(R.id.menuFragment, false)
-                    }
-
-                    override fun onAdClose(adType: String?) {
-
-                    }
-                })
+            R.id.txt_homee -> {
+                findNavController().popBackStack(R.id.menuFragment, false)
+//                val list = Stack<AdsChild>()
+//                val admob = AdsChild("ca-app-pub-2222869408518511/9505601888",
+//                    AdDef.NETWORK.GOOGLE,
+//                    AdDef.GOOGLE_AD_TYPE.INTERSTITIAL,
+//                    "Default",
+//                    "Default"
+//                )
+//                list.add(admob)
+//                AdHolderOnline(activity!!).showAdsWithOfflineId(list, "", null, getString(R.string.please_wait_to_load_image), object : AdHolderOnline.AdHolderCallback {
+//                    override fun onAdFailToLoad(messageError: String?) {
+//                        findNavController().popBackStack(R.id.menuFragment, false)
+//                    }
+//
+//                    override fun onAdOff() {
+//
+//                    }
+//
+//                    override fun onAdShow(network: String?, adtype: String?) {
+//                        findNavController().popBackStack(R.id.menuFragment, false)
+//                    }
+//
+//                    override fun onAdClose(adType: String?) {
+//
+//                    }
+//                })
 
             }
         }

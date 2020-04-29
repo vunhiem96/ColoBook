@@ -241,6 +241,7 @@ public class ViewToBitmap {
             if (success) {
                 this.dialog.dismiss();
             } else {
+                this.dialog.dismiss();
                 Toast.makeText(context, context.getResources().getString(R.string.text_error), Toast.LENGTH_SHORT).show();
             }
         }

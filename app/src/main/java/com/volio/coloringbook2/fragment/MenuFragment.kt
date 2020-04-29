@@ -68,19 +68,19 @@ class MenuFragment : BaseFragment(), BottomNavigationView.OnNavigationItemSelect
                 isChoseStar = true
                 isFiveStar = false
                 one_star?.setImageResource(R.drawable.star_checked)
-                two_star?.setImageResource(R.drawable.star_uncheck)
-                three_star?.setImageResource(R.drawable.star_uncheck)
-                four_star?.setImageResource(R.drawable.star_uncheck)
-                five_star?.setImageResource(R.drawable.star_uncheck)
+                two_star?.setImageResource(R.drawable.ic_star_off)
+                three_star?.setImageResource(R.drawable.ic_star_off)
+                four_star?.setImageResource(R.drawable.ic_star_off)
+                five_star?.setImageResource(R.drawable.ic_star_off)
             }
             R.id.two_star -> {
                 isChoseStar = true
                 isFiveStar = false
                 one_star?.setImageResource(R.drawable.star_checked)
                 two_star?.setImageResource(R.drawable.star_checked)
-                three_star?.setImageResource(R.drawable.star_uncheck)
-                four_star?.setImageResource(R.drawable.star_uncheck)
-                five_star?.setImageResource(R.drawable.star_uncheck)
+                three_star?.setImageResource(R.drawable.ic_star_off)
+                four_star?.setImageResource(R.drawable.ic_star_off)
+                five_star?.setImageResource(R.drawable.ic_star_off)
             }
             R.id.three_star -> {
                 isChoseStar = true
@@ -88,8 +88,8 @@ class MenuFragment : BaseFragment(), BottomNavigationView.OnNavigationItemSelect
                 one_star?.setImageResource(R.drawable.star_checked)
                 two_star?.setImageResource(R.drawable.star_checked)
                 three_star?.setImageResource(R.drawable.star_checked)
-                four_star?.setImageResource(R.drawable.star_uncheck)
-                five_star?.setImageResource(R.drawable.star_uncheck)
+                four_star?.setImageResource(R.drawable.ic_star_off)
+                five_star?.setImageResource(R.drawable.ic_star_off)
             }
             R.id.four_star -> {
                 isChoseStar = true
@@ -98,8 +98,8 @@ class MenuFragment : BaseFragment(), BottomNavigationView.OnNavigationItemSelect
                 two_star?.setImageResource(R.drawable.star_checked)
                 three_star?.setImageResource(R.drawable.star_checked)
                 four_star?.setImageResource(R.drawable.star_checked)
-                five_star?.setImageResource(R.drawable.star_uncheck)
-                rateApp()
+                five_star?.setImageResource(R.drawable.ic_star_off)
+
             }
             R.id.five_star -> {
                 isChoseStar = true
@@ -109,7 +109,7 @@ class MenuFragment : BaseFragment(), BottomNavigationView.OnNavigationItemSelect
                 three_star?.setImageResource(R.drawable.star_checked)
                 four_star?.setImageResource(R.drawable.star_checked)
                 five_star?.setImageResource(R.drawable.star_checked)
-                rateApp()
+
             }
         }
         return false
@@ -279,24 +279,33 @@ class MenuFragment : BaseFragment(), BottomNavigationView.OnNavigationItemSelect
     var doubleBackToExitPressedOnce = false
     override fun onClickBack() {
         super.onClickBack()
-        if (doubleBackToExitPressedOnce) {
-//            showPopupOrExit()
-            activity!!.finish()
-            return
+        val firstTime = PhotorSharePreUtils.getBoolean("hasRate", false)
+        if (firstTime) {
+            if (doubleBackToExitPressedOnce) {
+                activity!!.finish()
+
+                return
+            }
+            this.doubleBackToExitPressedOnce = true
+            Toast.makeText(context!!, "Please click BACK again to exit", Toast.LENGTH_SHORT).show()
+            Handler().postDelayed({ doubleBackToExitPressedOnce = false }, 2000)
+        } else {
+            clickRate()
+
         }
-        this.doubleBackToExitPressedOnce = true
-        Toast.makeText(context!!, "Please click BACK again to exit", Toast.LENGTH_SHORT).show()
-        Handler().postDelayed({ doubleBackToExitPressedOnce = false }, 2000)
+
+
     }
 
-    private fun showPopupOrExit() {
-        val firstTime = PhotorSharePreUtils.getBoolean("hasRate", false)
-        if (!firstTime) {
-            clickRate()
-        } else {
-//            actionExitApp()
-        }
-    }
+//    private fun showPopupOrExit() {
+//        val firstTime = PhotorSharePreUtils.getBoolean("hasRate", false)
+//        if (!firstTime) {
+//            activity!!.finish()
+//        } else {
+//            clickRate()
+//
+//        }
+//    }
 
     private fun goToMainFragment(url: String, isFromMain: Boolean, isRestart: Boolean) {
         val bundle = Bundle()
@@ -365,7 +374,7 @@ class MenuFragment : BaseFragment(), BottomNavigationView.OnNavigationItemSelect
         builder = AlertDialog.Builder(context!!)
         val logoutDialog = inflater.inflate(R.layout.dialog_rate_app, null)
         val btnCancel: ImageView = logoutDialog.findViewById(R.id.btn_close_dialog)
-        val btnLater: TextView = logoutDialog.findViewById(R.id.btn_later)
+        val btnLater: RelativeLayout = logoutDialog.findViewById(R.id.btn_later)
 
         val layoutSend: RelativeLayout = logoutDialog.findViewById(R.id.layout_send_rate)
         one_star = logoutDialog.findViewById(R.id.one_star)
@@ -387,6 +396,7 @@ class MenuFragment : BaseFragment(), BottomNavigationView.OnNavigationItemSelect
         dialog?.setCancelable(true)
         btnCancel.setOnClickListener {
             dialog?.dismiss()
+
 //            PhotorSharePreUtils.putBoolean("hasRate", false)
 //            exitProcess(0)
         }
@@ -395,6 +405,7 @@ class MenuFragment : BaseFragment(), BottomNavigationView.OnNavigationItemSelect
                 PhotorSharePreUtils.putBoolean("hasRate", true)
                 if (isFiveStar) {
                     PhotorTool.openMarket(context, context?.packageName)
+                    To.show("Please rate us 5 start")
                 } else {
                     dialog?.dismiss()
                     clickFeedback()
@@ -405,6 +416,7 @@ class MenuFragment : BaseFragment(), BottomNavigationView.OnNavigationItemSelect
         }
         btnLater.setOnClickListener {
             dialog?.dismiss()
+            activity!!.finish()
 //            actionExitApp()
         }
         dialog?.window?.setBackgroundDrawableResource(android.R.color.transparent)

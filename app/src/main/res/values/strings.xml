@@ -23,9 +23,9 @@
     <string name="share_now">Share now</string>
     <string name="restart">Restart</string>
     <string name="content_feedback">Content feedback</string>
-    <string name="send_now">Send now</string>
+    <string name="send_now">Rate us</string>
     <string name="please_send_your_review_to_us">Please send your review to us</string>
-    <string name="pls_rate_app">Please support us by giving 5 stars. Thank you so much!</string>
+    <string name="pls_rate_app">If you like app, please rate us five stars!</string>
 
 
     <string name="continue_edit_or_new">This image is being edited, do you want to continue?</string>

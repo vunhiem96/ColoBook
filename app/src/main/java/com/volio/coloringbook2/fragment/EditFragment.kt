@@ -60,7 +60,7 @@ class EditFragment : BaseFragment(), OnCustomClickListener, SaveInterface, Image
 
         }
         setBackPress()
-
+       gg("vcvcvcvcvcvcjkjkjk","$imageUrl")
     }
 
 
@@ -78,7 +78,7 @@ class EditFragment : BaseFragment(), OnCustomClickListener, SaveInterface, Image
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        Glide.with(context!!).load(imageUrl).diskCacheStrategy(DiskCacheStrategy.NONE).into(imgPreView)
+//        Glide.with(context!!).asBitmap().load(imageUrl).diskCacheStrategy(DiskCacheStrategy.NONE).into(imgPreView)
         if (AppConst.isRestartImage) {
             AppConst.isRestartImage = false
             restart()
@@ -245,10 +245,10 @@ class EditFragment : BaseFragment(), OnCustomClickListener, SaveInterface, Image
         if (isRestart) isFromMain = true
 
         val id = AppConst.getIdRawFromName(context!!, imageName!!)
-        if (id == 0) {
-            To.show(R.string.try_again)
-            return
-        }
+//        if (id == 0) {
+//            To.show(R.string.try_again)
+//            return
+//        }
 
         val compressOptions = Tiny.BitmapCompressOptions()
         compressOptions.config = Bitmap.Config.ARGB_8888
@@ -290,7 +290,8 @@ class EditFragment : BaseFragment(), OnCustomClickListener, SaveInterface, Image
                 bitmap = Glide.with(context!!)
                     .asBitmap()
                     .load(if (isFromMain) {
-                        id
+//                        id
+                        imageUrl
                     } else {
                         imageUrl
                     })
@@ -383,7 +384,7 @@ class EditFragment : BaseFragment(), OnCustomClickListener, SaveInterface, Image
             if (PhotorTool.checkHasPermission(activity!!)) {
                 cacheImage()
             } else {
-//                findNavController().popBackStack()
+                findNavController().popBackStack(R.id.menuFragment, false)
 //                findNavController().navigate(R.id.action_editFragment_to_menuFragment)
             }
         }
@@ -399,7 +400,7 @@ class EditFragment : BaseFragment(), OnCustomClickListener, SaveInterface, Image
         if (bitmap != null) {
             AppConst.saveBitmap(imageUrl1, "", bitmap)
         }
-        findNavController().popBackStack()
+        findNavController().popBackStack(R.id.menuFragment, false)
 //        findNavController().navigate(R.id.action_editFragment_to_menuFragment)
 //        mChangeFragmentListener?.popToRootFragments()
     }
