@@ -3,7 +3,11 @@ package com.volio.coloringbook2.common
 import android.content.Context
 import android.graphics.Bitmap
 import android.os.Environment
+import android.util.Log
+import com.google.gson.Gson
 import com.volio.coloringbook2.R
+import com.volio.coloringbook2.database.config
+import com.volio.coloringbook2.model.ColorBook
 import com.volio.coloringbook2.models.ImageModel
 import com.volio.coloringbook2.models.ListColorModel
 import com.volio.coloringbook2.models.TypeModel
@@ -14,6 +18,7 @@ import java.io.IOException
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.concurrent.schedule
+import kotlin.math.log
 
 object AppConst {
 
@@ -33,12 +38,30 @@ object AppConst {
     fun getAllType(context: Context): Array<TypeModel> {
         return arrayOf(
             TypeModel(context.resources.getString(R.string.new_), 0),
-            TypeModel(context.resources.getString(R.string.girly), 6),
-            TypeModel(context.resources.getString(R.string.lifestyle), 4),
-            TypeModel(context.resources.getString(R.string.manda), 1),
-            TypeModel(context.resources.getString(R.string.animal), 2),
-            TypeModel(context.resources.getString(R.string.fantasy_world), 3))
-//            TypeModel(context.resources.getString(R.string.people), 5))
+//            TypeModel(context.resources.getString(R.string.girly), 6),
+//            TypeModel(context.resources.getString(R.string.lifestyle), 4),
+            TypeModel(context.resources.getString(R.string.manda), 0)
+//            TypeModel(context.resources.getString(R.string.animal), 2),
+//            TypeModel(context.resources.getString(R.string.fantasy_world), 3))
+//            TypeModel(context.resources.getString(R.string.people), 5)
+            )
+    }
+
+    fun getAllType2(context: Context): ArrayList<TypeModel> {
+        val list2:ArrayList<TypeModel> = ArrayList()
+        val apiJson = context.config.category
+        val gson = Gson()
+        val category = gson.fromJson(apiJson, ColorBook::class.java)
+        val position = category.size - 1
+        list2.add(TypeModel(context.resources.getString(R.string.manda), 10002))
+        for (i in 0..position) {
+            val id = category[i].cate_id
+            val idInt = id.toInt()
+            list2.add(TypeModel(category[i].cate_name, idInt))
+
+        }
+        return list2
+
     }
 
     //    val listCats
@@ -50,6 +73,34 @@ object AppConst {
     val listMandala = loadMandala()
     val listPeople = loadPeople()
     val listUnicorn = loadUnicorn()
+    val listHardMandalas = loadHardManalas()
+    val listSimpleMandalas = loadSimpleManalas()
+
+    private fun loadSimpleManalas(): ArrayList<ImageModel> {
+        val list = arrayListOf<ImageModel>()
+        for (i in 1..6) {
+            val name = "simple_mandalas_$i"
+            when {
+                i <= 3 -> list.add(ImageModel(name = name, type = 1))
+                i in 4..6 -> list.add(ImageModel(name = name, type = 2))
+                else -> list.add(ImageModel(name = name))
+            }
+        }
+        return list
+    }
+
+    private fun loadHardManalas(): ArrayList<ImageModel> {
+        val list = arrayListOf<ImageModel>()
+        for (i in 1..10) {
+            val name = "mandalaa_$i"
+            when {
+                i <= 3 -> list.add(ImageModel(name = name, type = 1))
+                i in 4..6 -> list.add(ImageModel(name = name, type = 2))
+                else -> list.add(ImageModel(name = name))
+            }
+        }
+        return list
+    }
 //   val listHouse = loadHouse()
 
 
@@ -104,17 +155,19 @@ object AppConst {
 
 
     private val minMandala = 1
-    private val maxMandala = 12
+    private val maxMandala = 10
     private fun loadMandala(): ArrayList<ImageModel> {
         val list = arrayListOf<ImageModel>()
-        for (i in minMandala..maxMandala) {
-            val name = "mandalaa_$i"
-            when {
-                i <= 3 -> list.add(ImageModel(name = name, type = 1))
-                i in 4..6 -> list.add(ImageModel(name = name, type = 2))
-                else -> list.add(ImageModel(name = name))
-            }
-        }
+        list.add(ImageModel("mandalaa_1", type = 3))
+        list.add(ImageModel("simple_mandalas_1", type = 4))
+//        for (i in minMandala..maxMandala) {
+//            val name = "mandalaa_$i"
+//            when {
+//                i <= 3 -> list.add(ImageModel(name = name, type = 1))
+//                i in 4..6 -> list.add(ImageModel(name = name, type = 2))
+//                else -> list.add(ImageModel(name = name))
+//            }
+//        }
         return list
     }
 

@@ -1,8 +1,11 @@
 package com.volio.coloringbook2.common
 
+import android.content.Context
 import android.content.res.ColorStateList
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.core.widget.ImageViewCompat
 
 
@@ -16,6 +19,13 @@ fun View.hide() {
 
 fun View.gone() {
     visibility = View.GONE
+}
+
+fun gg(tag:String, bien:String){
+    Log.i(tag,bien)
+}
+fun toast(context:Context,toast:String){
+    Toast.makeText(context,toast,Toast.LENGTH_LONG).show()
 }
 
 fun View.isVisible(): Boolean {

@@ -23,6 +23,7 @@ import com.tmall.ultraviewpager.transformer.UltraDepthScaleTransformer
 import com.volio.coloringbook2.R
 import com.volio.coloringbook2.common.AppConst
 import com.volio.coloringbook2.common.AppConst.TEMP_FOLDER
+import com.volio.coloringbook2.common.gg
 import com.volio.coloringbook2.common.gone
 import com.volio.coloringbook2.common.setImageTint
 import com.volio.coloringbook2.customview.ColourImageView
@@ -56,8 +57,10 @@ class EditFragment : BaseFragment(), OnCustomClickListener, SaveInterface, Image
             imageUrl = it.getString(ARG_PARAM1)
             isFromMain = it.getBoolean(ARG_PARAM2)
             isRestart = it.getBoolean(ARG_PARAM3)
+
         }
         setBackPress()
+
     }
 
 
@@ -75,6 +78,7 @@ class EditFragment : BaseFragment(), OnCustomClickListener, SaveInterface, Image
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+//        Glide.with(context!!).load(imageUrl).diskCacheStrategy(DiskCacheStrategy.NONE).into(imgPreView)
         if (AppConst.isRestartImage) {
             AppConst.isRestartImage = false
             restart()

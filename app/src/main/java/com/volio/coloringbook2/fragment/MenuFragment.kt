@@ -3,41 +3,60 @@ package com.volio.coloringbook2.fragment
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.view.*
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager.widget.PagerAdapter
 import com.adconfigonline.AdHolderOnline
 import com.adconfigonline.server.AdsChild
 import com.adconfigonline.untils.AdDef
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.gson.Gson
 import com.volio.coloringbook2.R
 import com.volio.coloringbook2.common.AppConst
 import com.volio.coloringbook2.fragment.tab.HomeFragment
 import com.volio.coloringbook2.fragment.tab.MyWorkFragment
 import com.volio.coloringbook2.fragment.tab.Tab2Fragment
 import com.volio.coloringbook2.fragment.tab.Tab4Fragment
+import com.volio.coloringbook2.interfaces.APIService
 import com.volio.coloringbook2.interfaces.NewImageInterface
 import com.volio.coloringbook2.java.Lo
 import com.volio.coloringbook2.java.PhotorSharePreUtils
 import com.volio.coloringbook2.java.PhotorTool
 import com.volio.coloringbook2.java.util.OnCustomClickListener
 import com.volio.coloringbook2.java.util.To
+import com.volio.coloringbook2.model.ColorBook
+import com.volio.coloringbook2.model.ColorBookItem
+import com.volio.coloringbook2.viewmodel.ColorBookViewModel
 import kotlinx.android.synthetic.main.fragment_menu.*
+import okhttp3.ResponseBody
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import java.io.IOException
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 class MenuFragment : BaseFragment(), BottomNavigationView.OnNavigationItemSelectedListener, View.OnTouchListener
     , HomeFragment.Tab1Interface, NewImageInterface, OnCustomClickListener {
 
-
+//    lateinit var viewmodel:ColorBookViewModel
     lateinit var listFragment: ArrayList<BaseFragment>
     lateinit var mAdapter: PagerAdapter
     lateinit var layoutContainer: LinearLayout
+
     override fun clickDiscovery() {
         view_pager.setCurrentItem(2, true)
 //        bottomNavigationView.selectedItemId = R.id.tab3
@@ -240,13 +259,22 @@ class MenuFragment : BaseFragment(), BottomNavigationView.OnNavigationItemSelect
         PhotorTool.clickScaleView(rl_setting, this)
         PhotorTool.clickScaleView(rl_mywork, this)
         PhotorTool.clickScaleView(rl_story_book, this)
+//        viewmodel = ViewModelProviders.of(this).get(ColorBookViewModel::class.java)
 
+//        viewmodel.labels.value = "haha"
+//        viewmodel.labels.observe(viewLifecycleOwner, object : Observer<String> {
+//            override fun onChanged(t: String?) {
+//                Log.i("fgfgfgfgfgfgfgfgvc","$t")
+//            }
+//        })
         if (!isInit) {
             isInit = true
             layoutContainer = LinearLayout(context)
             loadMenuFragment()
         }
     }
+
+
 
     var doubleBackToExitPressedOnce = false
     override fun onClickBack() {
@@ -287,6 +315,7 @@ class MenuFragment : BaseFragment(), BottomNavigationView.OnNavigationItemSelect
 
 
     private fun loadMenuFragment() {
+
         load = false
 //        bottomNavigationView.itemIconTintList = null
         tab3 = MyWorkFragment()

@@ -3,6 +3,7 @@ package com.volio.coloringbook2.fragment.tab
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -10,20 +11,29 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import com.flyco.tablayout.listener.OnTabSelectListener
+import com.google.gson.Gson
 import com.volio.coloringbook2.R
 import com.volio.coloringbook2.common.AppConst
+import com.volio.coloringbook2.database.config
 import com.volio.coloringbook2.fragment.BaseFragment
 import com.volio.coloringbook2.fragment.NewImageFragment
 import com.volio.coloringbook2.interfaces.NewImageInterface
 import com.volio.coloringbook2.java.PhotorTool
 import com.volio.coloringbook2.java.util.OnCustomClickListener
+import com.volio.coloringbook2.model.ColorBook
+import com.volio.coloringbook2.model.ColorBookItem
+import com.volio.coloringbook2.models.TypeModel
+import com.volio.coloringbook2.viewmodel.ColorBookViewModel
 import kotlinx.android.synthetic.main.fragment_home.*
 
 
 class HomeFragment : BaseFragment(), OnCustomClickListener, NewImageInterface {
+    var list:Array<TypeModel>? = null
 
-
+    //    lateinit var viewmodel: ColorBookViewModel
     var newImageInterface: NewImageInterface? = null
 
     override fun onGotoEdit(url: String, isFromMain: Boolean, isRestart: Boolean) {
@@ -50,6 +60,8 @@ class HomeFragment : BaseFragment(), OnCustomClickListener, NewImageInterface {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+//        viewmodel = ViewModelProviders.of(this).get(ColorBookViewModel::class.java)
+
         initTabViewPager()
         initClick()
     }
@@ -59,9 +71,11 @@ class HomeFragment : BaseFragment(), OnCustomClickListener, NewImageInterface {
 //        PhotorTool.clickScaleView(txt_discover, this)
     }
 
+
+
     private fun initTabViewPager() {
         mFragments.clear()
-        for (type in AppConst.getAllType(context!!)) {
+        for (type in AppConst.getAllType2(context!!)) {
             val fragment = NewImageFragment.newInstance(type)
             fragment.newImageInterface = this
             mFragments.add(fragment)
@@ -69,7 +83,6 @@ class HomeFragment : BaseFragment(), OnCustomClickListener, NewImageInterface {
         val mAdapter = MyPagerAdapter(fragmentManager!!, mFragments, context!!)
         vp.adapter = mAdapter
         tabLayout_10.setViewPager(vp)
-        vp.currentItem = 3
         tabLayout_10.setOnTabSelectListener(object : OnTabSelectListener {
             override fun onTabSelect(position: Int) {
 
@@ -95,7 +108,8 @@ class HomeFragment : BaseFragment(), OnCustomClickListener, NewImageInterface {
         }
 
         override fun getPageTitle(position: Int): CharSequence? {
-            return AppConst.getAllType(context = context)[position].name
+            return AppConst.getAllType2(context = context)[position].name
+
         }
 
         override fun getItem(position: Int): BaseFragment {

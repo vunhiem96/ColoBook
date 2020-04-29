@@ -14,18 +14,23 @@ import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.volio.coloringbook2.R
 import com.volio.coloringbook2.common.AppConst
+import com.volio.coloringbook2.common.toast
 import com.volio.coloringbook2.fragment.BaseFragment
 import com.volio.coloringbook2.java.PhotorTool
 import com.volio.coloringbook2.java.util.OnCustomClickListener
 import com.volio.coloringbook2.java.util.To
+import com.volio.coloringbook2.viewmodel.ColorBookViewModel
 import kotlinx.android.synthetic.main.fragment_tab4.*
 import java.util.*
 
 
 class Tab4Fragment : BaseFragment(), OnCustomClickListener, View.OnTouchListener {
+    lateinit var viewmodel: ColorBookViewModel
     override fun onTouch(v: View?, event: MotionEvent?): Boolean {
         when (v?.id) {
             R.id.one_star -> {
@@ -111,13 +116,22 @@ class Tab4Fragment : BaseFragment(), OnCustomClickListener, View.OnTouchListener
 //        txt_feedback.typeface = font
 //        txt_policy.typeface = font
 //        txt_share.typeface = font
+        viewmodel = ViewModelProviders.of(activity!!).get(ColorBookViewModel::class.java)
 
         getVersionName()
+//        viewmodel.url.observe(viewLifecycleOwner, object : Observer<String> {
+//            override fun onChanged(t: String?) {
+//                toast(context!!,"$t")
+//            }
+//        })
     }
 
     override fun OnCustomClick(v: View?, event: MotionEvent?) {
         when (v?.id) {
-            R.id.txt_checkupdate -> clickUpdate()
+            R.id.txt_checkupdate -> {
+                clickUpdate()
+                viewmodel.url.value="vfvfvfvfvfvfvfvfv"
+            }
             R.id.back_setting -> findNavController().popBackStack()
 
 //            R.id.txt_rate -> clickRate()
