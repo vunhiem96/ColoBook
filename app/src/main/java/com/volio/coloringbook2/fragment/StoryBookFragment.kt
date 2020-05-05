@@ -8,11 +8,18 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.gson.Gson
 
 import com.volio.coloringbook2.R
+import com.volio.coloringbook2.adapter.StoryBookAdapter
+import com.volio.coloringbook2.database.config
 import com.volio.coloringbook2.java.Lo
 import com.volio.coloringbook2.java.PhotorTool
 import com.volio.coloringbook2.java.util.OnCustomClickListener
+import com.volio.coloringbook2.model.ColorBook
+import com.volio.coloringbook2.model.storybook.StoryBook
 import kotlinx.android.synthetic.main.fragment_story_book.*
 
 
@@ -20,7 +27,7 @@ import kotlinx.android.synthetic.main.fragment_story_book.*
  * A simple [Fragment] subclass.
  */
 class StoryBookFragment : BaseFragment(), OnCustomClickListener {
-
+    lateinit var storyBookAdapter: StoryBookAdapter
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
@@ -31,6 +38,20 @@ class StoryBookFragment : BaseFragment(), OnCustomClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         PhotorTool.clickScaleView(back_storybook, this)
+        initRv()
+    }
+
+    private fun initRv() {
+        rv_story_book.layoutManager = GridLayoutManager(context,3)
+        val apiJson = context!!.config.storyBook
+        val gson = Gson()
+        val listStoryBook = gson.fromJson(apiJson, StoryBook::class.java)
+        storyBookAdapter =  StoryBookAdapter(context!!, listStoryBook, object : StoryBookAdapter.ItemClickListener {
+            override fun onClick(pos: Int) {
+            }
+
+        })
+        rv_story_book.adapter = storyBookAdapter
     }
 
     override fun OnCustomClick(v: View?, event: MotionEvent?) {
@@ -41,18 +62,5 @@ class StoryBookFragment : BaseFragment(), OnCustomClickListener {
 
         }
     }
-    private fun goToMainFragment(url: String, isFromMain: Boolean, isRestart: Boolean) {
-        val bundle = Bundle()
-        bundle.putString("url", url)
-        bundle.putBoolean("isFromMain", isFromMain)
-        bundle.putBoolean("isRestart", isRestart)
-//        Navigation.findNavController(view1!!).navigate(R.id.action_menuFragment_to_editFragment, bundle)
-//        Navigation.findNavController(view).navigate(R.id.action_menuFragment_to_editFragment, bundle)
 
-        val id1 = Navigation.findNavController(view1!!).currentDestination?.id
-        Lo.d("id1 $id1")
-        Navigation.findNavController(view!!).navigate(R.id.action_menuFragment_to_editFragment, bundle)
-
-//        Navigation.findNavController(view1!!).
-    }
 }

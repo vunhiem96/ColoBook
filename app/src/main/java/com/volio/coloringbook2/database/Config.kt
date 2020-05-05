@@ -13,6 +13,10 @@ class Configs(context: Context)  {
     var category: String?
         get() = prefs.getString("category", "")
         set(category) = prefs.edit().putString("category", category).apply()
+
+    var storyBook: String?
+        get() = prefs.getString("storybook", "")
+        set(storyBook) = prefs.edit().putString("storybook", storyBook).apply()
 }
 fun Context.getSharedPrefs() = getSharedPreferences(PREFS_KEY, Context.MODE_PRIVATE)
 val Context.config: Configs get() = Configs.newInstance(applicationContext)

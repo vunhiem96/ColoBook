@@ -43,13 +43,21 @@
 
 
     </RelativeLayout>
-    <ImageView
-            android:layout_centerHorizontal="true"
-            android:src="@drawable/img_storybook"
-            android:layout_below="@id/action_bar_setting"
-            android:layout_width="@dimen/_160sdp"
-            android:layout_height="@dimen/_145sdp"/>
 
+    <ImageView
+            android:id="@+id/img"
+            android:layout_width="@dimen/_160sdp"
+            android:layout_height="@dimen/_145sdp"
+            android:layout_below="@id/action_bar_setting"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/img_storybook" />
+
+    <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_story_book"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/img"
+            android:layout_marginTop="@dimen/_5sdp" />
 
 
 </RelativeLayout>

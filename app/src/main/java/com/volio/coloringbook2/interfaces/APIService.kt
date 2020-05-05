@@ -11,4 +11,7 @@ interface APIService {
 
     @GET("getAllCategory.php")
     fun getCategory(): Call<ResponseBody>
+
+    @GET("getAllStoryBook.php")
+    fun getStoryBook(): Call<ResponseBody>
 }
