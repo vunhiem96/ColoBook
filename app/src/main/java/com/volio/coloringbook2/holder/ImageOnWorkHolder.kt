@@ -27,6 +27,9 @@ class ImageOnWorkHolder(itemView: View) : ViewHolder(itemView) {
   val txtPercent: TextView = itemView.findViewById(R.id.txt_percent_my_work)
   val progressBar: ContentLoadingProgressBar = itemView.findViewById(R.id.progress_image_my_work)
   val imgDone: ImageView = itemView.findViewById(R.id.img_done_image)
+  val share: ImageView = itemView.findViewById(R.id.share)
+  val delete: ImageView = itemView.findViewById(R.id.delete)
+  val tv_finish: TextView = itemView.findViewById(R.id.tv_finish)
 
 
 }

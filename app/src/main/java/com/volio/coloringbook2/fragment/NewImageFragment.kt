@@ -2,7 +2,6 @@ package com.volio.coloringbook2.fragment
 
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,9 +15,6 @@ import com.volio.alarmoclock.eventbus.EventBus
 import com.volio.alarmoclock.eventbus.MessageEvent2
 import com.volio.coloringbook2.R
 import com.volio.coloringbook2.common.AppConst
-import com.volio.coloringbook2.common.AppConst.listCats
-import com.volio.coloringbook2.common.gg
-import com.volio.coloringbook2.common.toast
 import com.volio.coloringbook2.customview.recyclical.emptyDataSource
 import com.volio.coloringbook2.customview.recyclical.setup
 import com.volio.coloringbook2.customview.recyclical.withItem
@@ -31,6 +27,7 @@ import com.volio.coloringbook2.models.ImageModel
 import com.volio.coloringbook2.models.TypeModel
 import com.volio.coloringbook2.viewmodel.ColorBookViewModel
 import kotlinx.android.synthetic.main.fragment_new_image.*
+
 
 private const val ARG_PARAM1 = "param1"
 
@@ -89,7 +86,8 @@ class NewImageFragment : BaseFragment() {
     private fun initRecycleView() {
         listImage.clear()
         dataSourceImage.clear()
-
+          val checkNet = context!!.config.checkNetwork
+     if ( checkNet == true){
         val list = AppConst.getAllType2(context!!)
         val position = list.size - 1
         for (i in 0..position) {
@@ -113,7 +111,6 @@ class NewImageFragment : BaseFragment() {
                         }
 
 
-
                     }
 
                 }
@@ -124,6 +121,7 @@ class NewImageFragment : BaseFragment() {
 //                5 -> listImage.addAll(AppConst.listPeople)
 //                6 -> listImage.addAll(AppConst.listUnicorn)
             }
+        }
 
         }
         when (typeImage?.id) {
@@ -153,7 +151,6 @@ class NewImageFragment : BaseFragment() {
                             nameCategory.text = "Simple Mandalas"
                         }
                         val type = item.type
-//                    Lo.d("type $type")
                         when (type) {
 
 
@@ -173,65 +170,57 @@ class NewImageFragment : BaseFragment() {
                     }
                     onClick { index, item ->
                         if (!canTouch()) return@onClick
-//                    openPictureToColor(item.name)
-
                             val  bundle = bundleOf("url" to item.name)
-
-
                         findNavController().navigate(R.id.action_menuFragment_to_categoryFragment, bundle)
 
-//                    loadIntertital("ClickPicture", R.string.please_wait_to_load_image, object : OnAdCallback {
-//                        override fun actionShow() {
-//
-//                        }
-//                    })
                     }
                 }
             }
         } else {
-            dataSourceImage.clear()
-            for (item in listImageServer!!) {
-                dataSourceImage.add(item)
-            }
+            if (checkNet == true) {
+                dataSourceImage.clear()
+                for (item in listImageServer!!) {
+                    dataSourceImage.add(item)
+                }
 
-            recycle_list_image.setup {
-                withDataSource(dataSourceImage)
-                withLayoutManager(
-                    GridLayoutManager(context, 2)
-                )
-                withItem<Type>(R.layout.item_list_image) {
-                    onBind(::ImageHolder) { index, item ->
+                recycle_list_image.setup {
+                    withDataSource(dataSourceImage)
+                    withLayoutManager(
+                        GridLayoutManager(context, 2)
+                    )
+                    withItem<Type>(R.layout.item_list_image) {
+                        onBind(::ImageHolder) { index, item ->
 
-                        val url = "http://mycat.asia/volio_colorbook/"
-                        val url2 = "${url}${listImageServer!![index].image_type_url}"
-                        nameCategory.text = "${listImageServer!![index].name}"
-                        Glide.with(context!!).load(url2).placeholder(R.drawable.ic_splash)
-                            .into(img)
-                        val listImage2 = listImageServer!![index].listImage
-                        val size = listImage2.size
-                        page.text = "$size pics"
-                        val type = item.tag_type
+                            val url = "http://mycat.asia/volio_colorbook/"
+                            val url2 = "${url}${listImageServer!![index].image_type_url}"
+                            nameCategory.text = "${listImageServer!![index].name}"
+                            Glide.with(context!!).load(url2).placeholder(R.drawable.ic_splash)
+                                .into(img)
+                            val listImage2 = listImageServer!![index].listImage
+                            val size = listImage2.size
+                            page.text = "$size pics"
+                            val type = item.tag_type
 //                        page.text = "$size pics"
 //                    Lo.d("type $type")
-                        when (type) {
+                            when (type) {
 
 
-                            "2" -> Glide.with(context!!).load(R.drawable.ic_new).into(imgType)
-                            "2" -> Glide.with(context!!).load(R.drawable.a).into(imgType)
-                            "2" -> imgType.setImageResource(R.color.tranparent)
-                            "2" -> {
-                                page.text = "10 pics"
-                                nameCategory.text = "Hard Mandalas"
+                                "2" -> Glide.with(context!!).load(R.drawable.ic_new).into(imgType)
+                                "2" -> Glide.with(context!!).load(R.drawable.a).into(imgType)
+                                "2" -> imgType.setImageResource(R.color.tranparent)
+                                "2" -> {
+                                    page.text = "10 pics"
+                                    nameCategory.text = "Hard Mandalas"
+                                }
+                                "2" -> {
+                                    nameCategory.text = "Simple Mandalas"
+                                    page.text = "6 pics"
+                                }
+
                             }
-                            "2" -> {
-                                nameCategory.text = "Simple Mandalas"
-                                page.text = "6 pics"
-                            }
-
                         }
-                    }
-                    onClick { index, item ->
-                        if (!canTouch()) return@onClick
+                        onClick { index, item ->
+                            if (!canTouch()) return@onClick
 //                    openPictureToColor(item.name)
                             val bundle = Bundle()
                             bundle.putString("url", item.name)
@@ -239,12 +228,12 @@ class NewImageFragment : BaseFragment() {
                             findNavController().navigate(R.id.action_menuFragment_to_categoryFragment, bundle)
 
 
-
 //                    loadIntertital("ClickPicture", R.string.please_wait_to_load_image, object : OnAdCallback {
 //                        override fun actionShow() {
 //
 //                        }
 //                    })
+                        }
                     }
                 }
             }

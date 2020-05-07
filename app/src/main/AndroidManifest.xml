@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
         package="com.volio.coloringbook2">
-
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -16,6 +16,7 @@
             android:roundIcon="@drawable/ic_splash"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
+
 
         <service
                 android:name="com.volio.coloringbook2.service.MyFirebaseMessageService"

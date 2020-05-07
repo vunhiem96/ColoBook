@@ -3,48 +3,31 @@ package com.volio.coloringbook2.fragment
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.Handler
-import android.util.Log
 import android.view.*
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager.widget.PagerAdapter
 import com.adconfigonline.AdHolderOnline
 import com.adconfigonline.server.AdsChild
 import com.adconfigonline.untils.AdDef
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.gson.Gson
 import com.volio.coloringbook2.R
 import com.volio.coloringbook2.common.AppConst
 import com.volio.coloringbook2.fragment.tab.HomeFragment
-import com.volio.coloringbook2.fragment.tab.MyWorkFragment
+import com.volio.coloringbook2.fragment.tab.MyWorkFragments
 import com.volio.coloringbook2.fragment.tab.Tab2Fragment
 import com.volio.coloringbook2.fragment.tab.Tab4Fragment
-import com.volio.coloringbook2.interfaces.APIService
 import com.volio.coloringbook2.interfaces.NewImageInterface
 import com.volio.coloringbook2.java.Lo
 import com.volio.coloringbook2.java.PhotorSharePreUtils
 import com.volio.coloringbook2.java.PhotorTool
 import com.volio.coloringbook2.java.util.OnCustomClickListener
 import com.volio.coloringbook2.java.util.To
-import com.volio.coloringbook2.model.ColorBook
-import com.volio.coloringbook2.model.ColorBookItem
-import com.volio.coloringbook2.viewmodel.ColorBookViewModel
 import kotlinx.android.synthetic.main.fragment_menu.*
-import okhttp3.ResponseBody
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-import java.io.IOException
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -204,13 +187,13 @@ class MenuFragment : BaseFragment(), BottomNavigationView.OnNavigationItemSelect
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.tab1 -> {
-                if (HomeFragment.isAdShown) {
-                    Toast.makeText(context, getString(R.string.please_wait_), Toast.LENGTH_SHORT).show()
-                } else {
-                    view_pager.setCurrentItem(0, false)
-                }
-            }
+//            R.id.tab1 -> {
+//                if (HomeFragment.isAdShown) {
+//                    Toast.makeText(context, getString(R.string.please_wait_), Toast.LENGTH_SHORT).show()
+//                } else {
+//                    view_pager.setCurrentItem(0, false)
+//                }
+//            }
 //            R.id.tab2 -> {
 //                if (Tab1Fragment.isAdShown) {
 //                    Toast.makeText(context, getString(R.string.please_wait_), Toast.LENGTH_SHORT).show()
@@ -219,13 +202,10 @@ class MenuFragment : BaseFragment(), BottomNavigationView.OnNavigationItemSelect
 //                }
 //            }
 
-            R.id.tab3 -> {
-                if (HomeFragment.isAdShown) {
-                    Toast.makeText(context, getString(R.string.please_wait_), Toast.LENGTH_SHORT).show()
-                } else {
+            R.id.tab1 -> {
                     tab3.updateListImage()
                     view_pager.setCurrentItem(2, false)
-                }
+
             }
             R.id.tab4 -> {
                 if (HomeFragment.isAdShown) {
@@ -247,7 +227,7 @@ class MenuFragment : BaseFragment(), BottomNavigationView.OnNavigationItemSelect
         return view1
     }
 
-    private lateinit var tab3: MyWorkFragment
+    private lateinit var tab3: MyWorkFragments
     private var tab2: BaseFragment? = null
     private lateinit var tab4: BaseFragment
 
@@ -327,7 +307,7 @@ class MenuFragment : BaseFragment(), BottomNavigationView.OnNavigationItemSelect
 
         load = false
 //        bottomNavigationView.itemIconTintList = null
-        tab3 = MyWorkFragment()
+        tab3 = MyWorkFragments()
         tab3.newImageInterface = this
         tab4 = Tab4Fragment()
         val tab1 = HomeFragment()

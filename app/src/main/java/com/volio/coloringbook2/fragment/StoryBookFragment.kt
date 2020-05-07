@@ -14,6 +14,7 @@ import com.google.gson.Gson
 
 import com.volio.coloringbook2.R
 import com.volio.coloringbook2.adapter.StoryBookAdapter
+import com.volio.coloringbook2.common.gg
 import com.volio.coloringbook2.database.config
 import com.volio.coloringbook2.java.Lo
 import com.volio.coloringbook2.java.PhotorTool
@@ -48,6 +49,10 @@ class StoryBookFragment : BaseFragment(), OnCustomClickListener {
         val listStoryBook = gson.fromJson(apiJson, StoryBook::class.java)
         storyBookAdapter =  StoryBookAdapter(context!!, listStoryBook, object : StoryBookAdapter.ItemClickListener {
             override fun onClick(pos: Int) {
+                val bundle = Bundle()
+                bundle.putString("name", listStoryBook[pos].book_name)
+                bundle.putInt("id", pos)
+                findNavController().navigate(R.id.action_storyBookFragment_to_pageStoryFragment,bundle)
             }
 
         })

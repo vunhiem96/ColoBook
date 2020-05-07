@@ -48,17 +48,22 @@ object AppConst {
     }
 
     fun getAllType2(context: Context): ArrayList<TypeModel> {
-        val list2:ArrayList<TypeModel> = ArrayList()
-        val apiJson = context.config.category
-        val gson = Gson()
-        val category = gson.fromJson(apiJson, ColorBook::class.java)
-        val position = category.size - 1
-        list2.add(TypeModel(context.resources.getString(R.string.manda), 10002))
-        for (i in 0..position) {
-            val id = category[i].cate_id
-            val idInt = id.toInt()
-            list2.add(TypeModel(category[i].cate_name, idInt))
+        val checkNet = context!!.config.checkNetwork
+        val list2: ArrayList<TypeModel> = ArrayList()
+        if(checkNet == true) {
+            val apiJson = context.config.category
+            val gson = Gson()
+            val category = gson.fromJson(apiJson, ColorBook::class.java)
+            val position = category.size - 1
+            list2.add(TypeModel(context.resources.getString(R.string.manda), 10002))
+            for (i in 0..position) {
+                val id = category[i].cate_id
+                val idInt = id.toInt()
+                list2.add(TypeModel(category[i].cate_name, idInt))
 
+            }
+        } else{
+            list2.add(TypeModel(context.resources.getString(R.string.manda), 10002))
         }
         return list2
 
@@ -67,12 +72,7 @@ object AppConst {
     //    val listCats
 //    val listDogs = loadDogs()
 
-    val listCats = loadCats()
-    val listFantasy = loadFantasy()
-    val listFloral = loadFloral()
     val listMandala = loadMandala()
-    val listPeople = loadPeople()
-    val listUnicorn = loadUnicorn()
     val listHardMandalas = loadHardManalas()
     val listSimpleMandalas = loadSimpleManalas()
 
@@ -81,9 +81,9 @@ object AppConst {
         for (i in 1..6) {
             val name = "simple_mandalas_$i"
             when {
-                i <= 3 -> list.add(ImageModel(name = name, type = 1))
-                i in 4..6 -> list.add(ImageModel(name = name, type = 2))
-                else -> list.add(ImageModel(name = name))
+                i <= 3 -> list.add(ImageModel(name = name, type = 1,date = "",time = ""))
+                i in 4..6 -> list.add(ImageModel(name = name, type = 2,date = "",time = ""))
+                else -> list.add(ImageModel(name = name, date = "",time = ""))
             }
         }
         return list
@@ -94,9 +94,9 @@ object AppConst {
         for (i in 1..10) {
             val name = "mandalaa_$i"
             when {
-                i <= 3 -> list.add(ImageModel(name = name, type = 1))
-                i in 4..6 -> list.add(ImageModel(name = name, type = 2))
-                else -> list.add(ImageModel(name = name))
+                i <= 3 -> list.add(ImageModel(name = name, type = 1,date = "",time = ""))
+                i in 4..6 -> list.add(ImageModel(name = name, type = 2,date = "",time = ""))
+                else -> list.add(ImageModel(name = name,date = "",time = ""))
             }
         }
         return list
@@ -108,58 +108,15 @@ object AppConst {
     //type 1 hot
     //type 2 new
 
-    private val minCat = 1
-    private val maxCat = 8
-    private fun loadCats(): ArrayList<ImageModel> {
-        val list = arrayListOf<ImageModel>()
-        for (i in minCat..maxCat) {
-            val name = "cat_$i"
-            when {
-                i <= 3 -> list.add(ImageModel(name = name, type = 1))
-                i in 4..8 -> list.add(ImageModel(name = name, type = 2))
-                else -> list.add(ImageModel(name = name))
-            }
-        }
-        return list
-    }
 
-    private val minFantasy = 1
-    private val maxFantasy = 7
-    private fun loadFantasy(): ArrayList<ImageModel> {
-        val list = arrayListOf<ImageModel>()
-        for (i in minFantasy..maxFantasy) {
-            val name = "fantasy_$i"
-            when {
-                i <= 3 -> list.add(ImageModel(name = name, type = 1))
-                i in 4..6 -> list.add(ImageModel(name = name, type = 2))
-                else -> list.add(ImageModel(name = name))
-            }
-        }
-        return list
-    }
-
-    private val minFloral = 1
-    private val maxFloral = 13
-    private fun loadFloral(): ArrayList<ImageModel> {
-        val list = arrayListOf<ImageModel>()
-        for (i in minFloral..maxFloral) {
-            val name = "floral_$i"
-            when {
-                i <= 3 -> list.add(ImageModel(name = name, type = 1))
-                i in 4..6 -> list.add(ImageModel(name = name, type = 2))
-                else -> list.add(ImageModel(name = name))
-            }
-        }
-        return list
-    }
 
 
     private val minMandala = 1
     private val maxMandala = 10
     private fun loadMandala(): ArrayList<ImageModel> {
         val list = arrayListOf<ImageModel>()
-        list.add(ImageModel("mandalaa_1", type = 3))
-        list.add(ImageModel("simple_mandalas_1", type = 4))
+        list.add(ImageModel("mandalaa_1", type = 3,date = "",time = ""))
+        list.add(ImageModel("simple_mandalas_1", type = 4,date = "",time = ""))
 //        for (i in minMandala..maxMandala) {
 //            val name = "mandalaa_$i"
 //            when {
@@ -171,73 +128,17 @@ object AppConst {
         return list
     }
 
-    private val minPeo = 1
-    private val maxPeo = 13
-    private fun loadPeople(): ArrayList<ImageModel> {
-        val list = arrayListOf<ImageModel>()
-        for (i in minPeo..maxPeo) {
-            val name = "people_$i"
-            when {
-                i <= 3 -> list.add(ImageModel(name = name, type = 1))
-                i in 4..6 -> list.add(ImageModel(name = name, type = 2))
-                else -> list.add(ImageModel(name = name))
-            }
-        }
-        return list
-    }
 
-    private val minUni = 1
-    private val maxUni = 6
-    private fun loadUnicorn(): ArrayList<ImageModel> {
-        val list = arrayListOf<ImageModel>()
-        for (i in minUni..maxUni) {
-            val name = "unicorn_$i"
-            when {
-                i <= 3 -> list.add(ImageModel(name = name, type = 1))
-                i in 4..6 -> list.add(ImageModel(name = name, type = 2))
-                else -> list.add(ImageModel(name = name))
-            }
-        }
-        return list
-    }
 
-    private val minHou = 1
-    private val maxHou = 12
-    private fun loadHouse(): ArrayList<ImageModel> {
-        val list = arrayListOf<ImageModel>()
-        for (i in minHou..maxHou) {
-            val name = "house_$i"
-            when {
-                i <= 3 -> list.add(ImageModel(name = name, type = 1))
-                i in 4..6 -> list.add(ImageModel(name = name, type = 2))
-                else -> list.add(ImageModel(name = name))
-            }
-        }
-        return list
-    }
+
 
 
     val listAllImages = loadNames()
     private fun loadNames(): ArrayList<String> {
         val list = arrayListOf<String>()
-        for (i in minUni..maxUni) {
-            list.add("unicorn_$i")
-        }
+
         for (i in minMandala..maxMandala) {
             list.add("mandalaa_$i")
-        }
-        for (i in minCat..maxCat) {
-            list.add("cat_$i")
-        }
-        for (i in minFantasy..maxFantasy) {
-            list.add("fantasy_$i")
-        }
-        for (i in minFloral..maxFloral) {
-            list.add("floral_$i")
-        }
-
-        for (i in minPeo..maxPeo) {
-            list.add("people_$i")
         }
 //        for (i in minHou..maxHou) {
 //            list.add("house_$i")
@@ -277,7 +178,6 @@ object AppConst {
     )
 
     val listAllColor =
-//        Arrays.asList(
         arrayListOf(
             ListColorModel("Spring", arrayListOf("#f8cf53", "#f2b32c", "#f2b32c", "#d14b27", "#c94ca4", "#f6718d", "#ffa0b4", "#8844b9", "#40b24e", "#804c2d", "#C8F4F9")),
             ListColorModel("Summer", arrayListOf("#fedc55", "#ffcb00", "#ff8a00", "#f85c00", "#fd7f7f", "#5fccff", "#1173d7", "#39c600", "#ff9975", "#e81e00", "#5885AF")),

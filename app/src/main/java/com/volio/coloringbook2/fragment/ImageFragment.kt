@@ -2,7 +2,6 @@ package com.volio.coloringbook2.fragment
 
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +12,6 @@ import com.volio.alarmoclock.eventbus.EventBus
 import com.volio.alarmoclock.eventbus.MessageEvent2
 import com.volio.coloringbook2.R
 import com.volio.coloringbook2.common.AppConst
-import com.volio.coloringbook2.common.AppConst.listCats
 import com.volio.coloringbook2.common.gg
 import com.volio.coloringbook2.customview.recyclical.emptyDataSource
 import com.volio.coloringbook2.customview.recyclical.setup
@@ -23,7 +21,6 @@ import com.volio.coloringbook2.holder.ImageHolder
 import com.volio.coloringbook2.interfaces.NewImageInterface
 import com.volio.coloringbook2.model.ColorBook
 import com.volio.coloringbook2.model.Image
-import com.volio.coloringbook2.model.Type
 import com.volio.coloringbook2.models.ImageModel
 import com.volio.coloringbook2.models.TypeModel
 import kotlinx.android.synthetic.main.fragment_new_image.*
@@ -33,7 +30,7 @@ private const val ARG_PARAM1 = "param1"
 class ImageFragment : BaseFragment() {
     var check = 0
     var url = ""
-    var baseUrl="http://mycat.asia/volio_colorbook/"
+    var baseUrl = "http://mycat.asia/volio_colorbook/"
     var idType = ""
     private var listImage = mutableListOf<ImageModel>()
     private var typeImage: TypeModel? = null
@@ -66,15 +63,15 @@ class ImageFragment : BaseFragment() {
             } else if (url == "simple_mandalas_1") {
                 typeImage = TypeModel(context!!.resources.getString(R.string.manda), 10004)
             } else {
-                   idType = bundle.getString("id")!!
+                idType = bundle.getString("id")!!
                 val apiJson = context!!.config.category
                 val gson = Gson()
                 val category = gson.fromJson(apiJson, ColorBook::class.java)
                 val position = category.size - 1
-                for (i in 0..position){
+                for (i in 0..position) {
                     val listType = category[i].listType
-                    for(j in 0..listType.size-1){
-                        if(listType[j].type_id ==idType) {
+                    for (j in 0..listType.size - 1) {
+                        if (listType[j].type_id == idType) {
                             listImageServer = listType[j].listImage
                         }
                     }
@@ -93,8 +90,6 @@ class ImageFragment : BaseFragment() {
         return inflater.inflate(R.layout.image_fragment, container, false)
     }
 
-    //private var isFirst = true
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initRecycleView()
@@ -103,33 +98,18 @@ class ImageFragment : BaseFragment() {
     private fun initRecycleView() {
         listImage.clear()
         dataSourceImage.clear()
-        var idType2 =1
-        if(idType != "") {
+        var idType2 = 1
+        if (idType != "") {
             idType2 = idType.toInt()
         }
         when (typeImage?.id) {
-
-//            0 -> {
-//                listImage.addAll(listCats)
-//                listImage.addAll(listFantasy)
-//                listImage.addAll(AppConst.listFloral)
-//                listImage.addAll(AppConst.listMandala)
-//                listImage.addAll(AppConst.listPeople)
-//                listImage.addAll(AppConst.listUnicorn)
-//            }
-            idType2 ->  listImage.addAll(AppConst.listHardMandalas)
+            idType2 -> listImage.addAll(AppConst.listHardMandalas)
             10003 -> listImage.addAll(AppConst.listHardMandalas)
             10004 -> listImage.addAll(AppConst.listSimpleMandalas)
-//            1 -> listImage.addAll(listCats)
-//            2 -> listImage.addAll(listFantasy)
-//            3 -> listImage.addAll(AppConst.listFloral)
-//            4 -> listImage.addAll(AppConst.listMandala)
-//            5 -> listImage.addAll(AppConst.listPeople)
-//            6 -> listImage.addAll(AppConst.listUnicorn)
         }
 
-        if(typeImage?.id == null){
-           var url2 =""
+        if (typeImage?.id == null) {
+            var url2 = ""
             dataSourceImage.clear()
             for (item in listImageServer!!) {
                 dataSourceImage.add(item)
@@ -142,14 +122,12 @@ class ImageFragment : BaseFragment() {
                 )
                 withItem<Image>(R.layout.item_list_image) {
                     onBind(::ImageHolder) { index, item ->
-                        url2 = "${baseUrl}${listImageServer!![index].image_url}"
+                        url2 = "${baseUrl}${listImageServer!![index].thumbnail_url}"
                         nameCategory.visibility = View.GONE
                         Glide.with(context!!).load(url2).placeholder(R.drawable.ic_splash)
                             .into(img)
                         page.visibility = View.GONE
                         val type = item.tag_image
-//                        page.text = "$size pics"
-//                    Lo.d("type $type")
                         when (type) {
 
 
@@ -175,7 +153,7 @@ class ImageFragment : BaseFragment() {
                     }
                 }
             }
-        } else{
+        } else {
 
             dataSourceImage.clear()
             for (item in listImage) {
@@ -201,15 +179,6 @@ class ImageFragment : BaseFragment() {
                             2 -> Glide.with(context!!).load(R.drawable.ic_new).into(imgType)
                             1 -> Glide.with(context!!).load(R.drawable.a).into(imgType)
                             0 -> imgType.setImageResource(R.color.tranparent)
-//                        3 -> {
-//                            page.text = "10 pics"
-//                            nameCategory.text = "Hard Mandalas"
-//                        }
-//                        4 -> {
-//                            nameCategory.text = "Simple Mandalas"
-//                            page.text = "6 pics"
-//                        }
-
                         }
                     }
                     onClick { index, item ->

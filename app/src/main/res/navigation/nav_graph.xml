@@ -100,18 +100,38 @@
             android:label="Tab4Fragment" />
     <fragment
             android:id="@+id/tab3Fragment"
-            android:name="com.volio.coloringbook2.fragment.tab.MyWorkFragment"
-            android:label="Tab3Fragment" />
+            android:name="com.volio.coloringbook2.fragment.tab.MyWorkFragments"
+            android:label="Tab3Fragment" >
+        <action
+                android:id="@+id/action_tab3Fragment_to_editFragment"
+                app:destination="@id/editFragment" />
+        <action
+                android:id="@+id/action_tab3Fragment_to_categoryFragment"
+                app:destination="@id/categoryFragment" />
+    </fragment>
     <fragment
             android:id="@+id/storyBookFragment"
             android:name="com.volio.coloringbook2.fragment.StoryBookFragment"
-            android:label="StoryBookFragment" />
+            android:label="StoryBookFragment" >
+        <action
+                android:id="@+id/action_storyBookFragment_to_pageStoryFragment"
+                app:destination="@id/pageStoryFragment" />
+    </fragment>
     <fragment
             android:id="@+id/categoryFragment"
             android:name="com.volio.coloringbook2.fragment.CategoryFragment"
             android:label="CategoryFragment" >
         <action
                 android:id="@+id/action_categoryFragment_to_editFragment"
+                app:destination="@id/editFragment" />
+    </fragment>
+    <fragment
+            android:id="@+id/pageStoryFragment"
+            android:name="com.volio.coloringbook2.fragment.PageStoryFragment"
+            android:label="fragment_page_story"
+            tools:layout="@layout/fragment_page_story" >
+        <action
+                android:id="@+id/action_pageStoryFragment_to_editFragment"
                 app:destination="@id/editFragment" />
     </fragment>
 </navigation>

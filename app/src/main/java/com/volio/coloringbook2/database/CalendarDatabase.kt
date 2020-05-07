@@ -10,7 +10,7 @@ import com.volio.coloringbook2.models.ImageModel
 
 @Database(
     entities = [CalendarEntry::class, ImageModel::class],
-    version = 3
+    version = 4
 )
 abstract class CalendarDatabase : RoomDatabase() {
     abstract fun calendarDao(): CalendarDao

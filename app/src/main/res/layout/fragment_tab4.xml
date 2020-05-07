@@ -34,29 +34,6 @@
                 android:textSize="@dimen/_16sdp"
                 android:layout_marginStart="@dimen/_10sdp" />
 
-
-<!--        <com.skydoves.medal.MedalLayout-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_alignParentEnd="true"-->
-<!--                android:layout_alignParentRight="true"-->
-<!--                android:layout_centerVertical="true"-->
-<!--                android:layout_marginRight="@dimen/_10sdp"-->
-<!--                android:visibility="gone"-->
-<!--                app:direction="right"-->
-<!--                app:speed="1500"-->
-<!--                app:turn="1">-->
-
-
-<!--            <ImageView-->
-<!--                    android:id="@+id/img_ad"-->
-<!--                    android:layout_width="?android:actionBarSize"-->
-<!--                    android:layout_height="?android:actionBarSize"-->
-<!--                    android:adjustViewBounds="true"-->
-<!--                    android:scaleType="centerInside"-->
-<!--                    app:srcCompat="@drawable/ic_ads" />-->
-<!--        </com.skydoves.medal.MedalLayout>-->
-
     </RelativeLayout>
     <View
             android:id="@+id/view"

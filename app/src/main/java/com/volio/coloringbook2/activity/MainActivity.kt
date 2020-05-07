@@ -1,14 +1,19 @@
 package com.volio.coloringbook2.activity
 
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.NotificationCompat.getCategory
 import com.adconfigonline.AdHolderOnline
 import com.bumptech.glide.Glide
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.gson.Gson
 import com.volio.coloringbook2.R
 import com.volio.coloringbook2.common.gg
+import com.volio.coloringbook2.common.toast
 import com.volio.coloringbook2.database.config
 import com.volio.coloringbook2.interfaces.APIService
 import com.volio.coloringbook2.java.util.To
@@ -74,7 +79,7 @@ class MainActivity : AppCompatActivity() {
                 try {
                     apiJson = response.body()!!.string()
                     config.category = apiJson
-
+                    config.checkNetwork = true
 
                 } catch (e: IOException) {
                     e.printStackTrace()
@@ -83,6 +88,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                config.checkNetwork = false
                 Toast.makeText(this@MainActivity, "Vui lòng kiểm tra lại 3G/Wifi", Toast.LENGTH_SHORT).show()
             }
         })
@@ -100,7 +106,7 @@ class MainActivity : AppCompatActivity() {
                 try {
                     apiJson = response.body()!!.string()
                     config.storyBook = apiJson
-
+                    config.checkNetwork = true
 
                 } catch (e: IOException) {
                     e.printStackTrace()
@@ -109,10 +115,12 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                config.checkNetwork = false
                 Toast.makeText(this@MainActivity, "Vui lòng kiểm tra lại 3G/Wifi", Toast.LENGTH_SHORT).show()
             }
         })
     }
+
 }
 
 

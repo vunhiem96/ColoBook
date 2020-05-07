@@ -10,4 +10,6 @@ data class ImageModel(
     var type: Int = 0,
     var id: Int = 0,
     var percent: Int = 0,
-    var pixelWhite: Int = 0)
+    var pixelWhite: Int = 0,
+    var date: String,
+    var time: String)

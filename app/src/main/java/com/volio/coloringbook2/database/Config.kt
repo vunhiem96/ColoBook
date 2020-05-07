@@ -17,6 +17,14 @@ class Configs(context: Context)  {
     var storyBook: String?
         get() = prefs.getString("storybook", "")
         set(storyBook) = prefs.edit().putString("storybook", storyBook).apply()
+
+    var checkNetwork: Boolean?
+        get() = prefs.getBoolean("checkNetwork", false)
+        set(checkNetwork) = prefs.edit().putBoolean("checkNetwork", checkNetwork!!).apply()
+
+    var urlImage: String?
+        get() = prefs.getString("url", "")
+        set(urlImage) = prefs.edit().putString("url", urlImage).apply()
 }
 fun Context.getSharedPrefs() = getSharedPreferences(PREFS_KEY, Context.MODE_PRIVATE)
 val Context.config: Configs get() = Configs.newInstance(applicationContext)

@@ -1,9 +1,11 @@
-    package com.volio.coloringbook2.fragment
+package com.volio.coloringbook2.fragment
 
 
 import android.Manifest
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -18,6 +20,7 @@ import androidx.viewpager.widget.PagerAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.github.florent37.runtimepermission.kotlin.askPermission
+import com.google.gson.Gson
 import com.tmall.ultraviewpager.UltraViewPager
 import com.tmall.ultraviewpager.transformer.UltraDepthScaleTransformer
 import com.volio.coloringbook2.R
@@ -28,11 +31,12 @@ import com.volio.coloringbook2.common.gone
 import com.volio.coloringbook2.common.setImageTint
 import com.volio.coloringbook2.customview.ColourImageView
 import com.volio.coloringbook2.customview.photoview.PhotoViewAttacher
+import com.volio.coloringbook2.database.config
 import com.volio.coloringbook2.interfaces.ColorInterfaces
 import com.volio.coloringbook2.interfaces.ImageInterface
 import com.volio.coloringbook2.java.*
 import com.volio.coloringbook2.java.util.OnCustomClickListener
-import com.volio.coloringbook2.java.util.To
+import com.volio.coloringbook2.model.storybook.StoryBook
 import com.volio.coloringbook2.models.UltraPagerAdapter
 import com.zxy.tiny.Tiny
 import kotlinx.android.synthetic.main.fragment_edit.*
@@ -44,8 +48,9 @@ private const val ARG_PARAM2 = "isFromMain"
 private const val ARG_PARAM3 = "isRestart"
 
 class EditFragment : BaseFragment(), OnCustomClickListener, SaveInterface, ImageInterface, ColorInterfaces {
-
-
+    private var edit = -1
+    private var idList = -1
+    private var idImage = -1
     private var imageUrl: String? = null
     private var isFromMain = false
     private var imageName: String? = null
@@ -54,13 +59,25 @@ class EditFragment : BaseFragment(), OnCustomClickListener, SaveInterface, Image
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
+
             imageUrl = it.getString(ARG_PARAM1)
             isFromMain = it.getBoolean(ARG_PARAM2)
             isRestart = it.getBoolean(ARG_PARAM3)
+            idList = it.getInt("idList",-1)
+            idImage = it.getInt("idImg",-1)
+            edit= it.getInt("edit",-1)
+        }
+        if (idList != -1) {
 
+            val apiJson = context!!.config.storyBook
+            val gson = Gson()
+            val listStoryBook = gson.fromJson(apiJson, StoryBook::class.java)
+            val urlBase = "http://mycat.asia/volio_colorbook/"
+            val url  = listStoryBook[idList].list[idImage].image_url
+            imageUrl = "$urlBase$url"
         }
         setBackPress()
-       gg("vcvcvcvcvcvcjkjkjk","$imageUrl")
+
     }
 
 
@@ -360,6 +377,12 @@ class EditFragment : BaseFragment(), OnCustomClickListener, SaveInterface, Image
         PhotorTool.clickScaleView(btn_back_image, this)
         PhotorTool.clickScaleView(btn_forward_image, this)
         btn_share.setOnClickListener {
+            if (edit == 1001){
+                val file = File(imageUrl)
+                file.delete()
+                context!!.sendBroadcast(Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(File(imageUrl))))
+
+            }
             Log.e("MEOMEO", "click save")
             if (!canTouch()) return@setOnClickListener
             if (PhotorTool.checkHasPermission(activity!!)) {
