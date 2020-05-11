@@ -15,5 +15,7 @@ data class StoryBookSave(
     val book_name: String,
     val is_pro: String,
     val list: List<ImageStorySave>,
-    val priority: String
+    val priority: String,
+    val date:String,
+    val time:String
 )

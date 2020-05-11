@@ -57,6 +57,19 @@
                     android:layout_width="@dimen/_20sdp"
                     android:layout_height="@dimen/_30sdp"
                     app:srcCompat="@drawable/ic_vip" />
+            <TextView
+                    android:id="@+id/tv_finish_story"
+                    android:layout_width="@dimen/_60sdp"
+                    android:layout_height="@dimen/_15sdp"
+                  android:layout_centerHorizontal="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_gravity="end|bottom"
+                    android:background="@drawable/round_bg_item3"
+                    android:gravity="center"
+                    android:text="1/12 pages"
+                    android:textColor="#ffff"
+                    android:textSize="@dimen/_8ssp"
+                    />
 
         </RelativeLayout>
 

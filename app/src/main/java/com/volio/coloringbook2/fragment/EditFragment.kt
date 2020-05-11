@@ -7,6 +7,7 @@ import android.graphics.Bitmap
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -66,14 +67,15 @@ class EditFragment : BaseFragment(), OnCustomClickListener, SaveInterface, Image
     private var imageName: String? = null
     private var isRestart = false
     private var isStoryBook = false
+    private var isMywork = false
     private var dao: CalendarDao? = null
     private var storyBookdao: SaveStoryDao? = null
-    private var namesss = ""
+    private var idBook:String?=null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-
             imageUrl = it.getString(ARG_PARAM1)
             isFromMain = it.getBoolean(ARG_PARAM2)
             isRestart = it.getBoolean(ARG_PARAM3)
@@ -81,24 +83,19 @@ class EditFragment : BaseFragment(), OnCustomClickListener, SaveInterface, Image
             idImage = it.getInt("idImg", -1)
             edit = it.getInt("edit", -1)
             isStoryBook = it.getBoolean("story", false)
-        }
-        if (idList != -1) {
+            isMywork = it.getBoolean("mywork", false)
+            idBook = it.getString("idStorybook")
 
-            val apiJson = context!!.config.storyBook
-            val gson = Gson()
-            val listStoryBook = gson.fromJson(apiJson, StoryBook::class.java)
-            val urlBase = "http://mycat.asia/volio_colorbook/"
-            val url = listStoryBook[idList].list[idImage].image_url
-            imageUrl = "$urlBase$url"
         }
+
         setBackPress()
-        if (isStoryBook == true) {
-            val apiJson = context!!.config.storyBook
-            val gson = Gson()
-            val listStoryBook = gson.fromJson(apiJson, StoryBook::class.java)
-            val url = listStoryBook[idList].book_id
-            Log.i("hjhjhjhjhjhjhjhjj", "$url")
-        }
+//        if (isStoryBook == true && isMywork == false) {
+//            val apiJson = context!!.config.storyBook
+//            val gson = Gson()
+//            val listStoryBook = gson.fromJson(apiJson, StoryBook::class.java)
+//            val url = listStoryBook[idList].book_id
+//
+//        }
     }
 
 
@@ -123,6 +120,32 @@ class EditFragment : BaseFragment(), OnCustomClickListener, SaveInterface, Image
             AppConst.isRestartImage = false
             restart()
         }
+
+        if (idList != -1 && isMywork == false ) {
+            val apiJson = context!!.config.storyBook
+            val gson = Gson()
+            val listStoryBook = gson.fromJson(apiJson, StoryBook::class.java)
+            val urlBase = "http://mycat.asia/volio_colorbook/"
+            val url = listStoryBook[idList].list[idImage].image_url
+            imageUrl = "$urlBase$url"
+            val id2 = listStoryBook[idList].book_id
+            getList2("$id2")
+
+        }
+        if (idList != -1 && isMywork == true )
+        {
+            getList2(idBook!!)
+
+            Handler().postDelayed({
+                imageUrl = storyBook[0].list[idImage].image_url
+                gg("vcvcvcvcvcvcvcvc","$idBook")
+                initView()
+            },100)
+        }
+
+
+
+
         if (!isNeedInit) return
         initEvent()
         initView()
@@ -147,11 +170,11 @@ class EditFragment : BaseFragment(), OnCustomClickListener, SaveInterface, Image
             }
         }
         if (isStoryBook == true) {
-            val apiJson = context!!.config.storyBook
-            val gson = Gson()
-            val listStoryBook = gson.fromJson(apiJson, StoryBook::class.java)
-            val id = listStoryBook[idList].book_id
-            getList2("$id")
+
+//            Handler().postDelayed({
+//             loadImage()
+//            },100)
+
         }
 
     }
@@ -235,14 +258,28 @@ class EditFragment : BaseFragment(), OnCustomClickListener, SaveInterface, Image
                             val url = listStoryBook[idList].list[idImage].image_url
                             imageUrl = "$urlBase$url"
 
-                            val id = listStoryBook[idList].book_id
+                            var book_image_url =""
+                            var book_name = ""
+                            var is_pro = ""
+                            var priority = ""
+                            var id ="12"
+                              if(isMywork == false){
+                                   id = listStoryBook[idList].book_id
+                                   book_image_url = listStoryBook[idList].book_image_url
+                                   book_name = listStoryBook[idList].book_name
+                                   is_pro = listStoryBook[idList].is_pro
+                                   priority = listStoryBook[idList].priority
+                              } else{
+                                  id = idBook!!
+                                  book_image_url = storyBook[0].book_image_url
+                                  book_name = storyBook[0].book_name
+                                  is_pro = storyBook[0].is_pro
+                                  priority = storyBook[0].priority
+                              }
 
 
-                            val book_image_url = listStoryBook[idList].book_image_url
-                            val book_name = listStoryBook[idList].book_name
-                            val is_pro = listStoryBook[idList].is_pro
-                            //list
-                            val priority = listStoryBook[idList].priority
+
+
 //                            val book_id: String,
 //                            val book_image_url: String,
 //                            val book_name: String,
@@ -251,7 +288,6 @@ class EditFragment : BaseFragment(), OnCustomClickListener, SaveInterface, Image
 //                            val priority: String
                             val listImage: ArrayList<ImageStorySave> = ArrayList()
                             if (storyBook.size == 0) {
-                                gg("vcvcvcvcvcfgfgfgfgf", "${storyBook.size}")
                                 for (i in 0..listStoryBook[idList].list.size - 1) {
                                     if (i != idImage) {
                                         val imageId = listStoryBook[idList].list[i].image_id
@@ -262,21 +298,18 @@ class EditFragment : BaseFragment(), OnCustomClickListener, SaveInterface, Image
                                         listImage.add(ImageStorySave(id, imageId, image_url, priorityImage, thumbnail_url, false))
                                     } else {
                                         val imageId = listStoryBook[idList].list[idImage].image_id
-                                        val image_url = listStoryBook[idList].list[idImage].image_url
                                         val priorityImage = listStoryBook[idList].list[idImage].priority
                                         val thumbnail_url = listStoryBook[idList].list[idImage].thumbnail_url
                                         listImage.add(ImageStorySave(id, imageId, path, priorityImage, thumbnail_url, true))
 
 
                                     }
-                                    gg("vcvcvcvcvcfgfgfgfgf", "hiha$listImage")
                                 }
-                                val storybook = StoryBookSave(id, book_image_url, book_name, is_pro, listImage, priority)
-
+                                val storybook = StoryBookSave(id, book_image_url, book_name, is_pro, listImage, priority, currentDate, currentTime)
+                                gg("vcvcvcvfgfgfgfgfg", "insert $storybook")
                                 saveStory(storybook)
                             } else {
-                                gg("vunhieemmmmmmm", "$storyBook")
-                                for (i in 0..storyBook.size - 1) {
+                                for (i in 0..storyBook[idList].list.size - 1) {
                                     if (i != idImage) {
                                         val imageId = storyBook[idList].list[i].image_id
                                         val image_url = storyBook[idList].list[i].image_url
@@ -285,6 +318,7 @@ class EditFragment : BaseFragment(), OnCustomClickListener, SaveInterface, Image
                                         val trues = storyBook[idList].list[i].saveLocal
                                         listImage.add(ImageStorySave(id, imageId, image_url, priorityImage, thumbnail_url, trues))
                                     } else {
+
                                         val imageId = listStoryBook[idList].list[idImage].image_id
                                         val priorityImage = listStoryBook[idList].list[idImage].priority
                                         val thumbnail_url = listStoryBook[idList].list[idImage].thumbnail_url
@@ -292,9 +326,9 @@ class EditFragment : BaseFragment(), OnCustomClickListener, SaveInterface, Image
                                     }
 
                                 }
-                                val storybook = StoryBookSave(id, book_image_url, book_name, is_pro, listImage, priority)
+                                val storybook = StoryBookSave(id, book_image_url, book_name, is_pro, listImage, priority, currentDate, currentTime)
                                 updateStory(storybook)
-                                gg("vcvcvcvcvcfgfgfgfgf", "hihi$storybook")
+                                gg("vcvcvcvfgfgfgfgfg", "vao $storybook")
                             }
 
                             nextFragment(path)
@@ -312,6 +346,7 @@ class EditFragment : BaseFragment(), OnCustomClickListener, SaveInterface, Image
 
     private fun nextFragment(path: String) {
         val bundle = Bundle()
+        bundle.putString("param1", path)
         bundle.putString("param1", path)
         findNavController().navigate(R.id.action_editFragment_to_saveFragment, bundle)
     }
@@ -690,6 +725,7 @@ class EditFragment : BaseFragment(), OnCustomClickListener, SaveInterface, Image
 
             dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
         } else {
+
         }
     }
 

@@ -7,21 +7,14 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
-import com.adconfigonline.AdHolderOnline
-import com.adconfigonline.server.AdsChild
-import com.adconfigonline.untils.AdDef
 import com.bumptech.glide.Glide
 import com.volio.coloringbook2.R
 import com.volio.coloringbook2.common.AppConst
 import com.volio.coloringbook2.java.PhotorTool
 import com.volio.coloringbook2.java.SharePhotoUntils
 import com.volio.coloringbook2.java.util.OnCustomClickListener
-import kotlinx.android.synthetic.main.fragment_save.btn_cancel_save
 import kotlinx.android.synthetic.main.fragment_save.img_save
-import kotlinx.android.synthetic.main.fragment_save.layout_restart_save
-import kotlinx.android.synthetic.main.fragment_save.layout_share_save
 import kotlinx.android.synthetic.main.saveas_fragment.*
-import java.util.*
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
@@ -31,7 +24,7 @@ class SaveFragment : BaseFragment(), OnCustomClickListener {
 
 
     private var imageUrl: String? = null
-
+    private var style = 0
     //private var param2: String? = null
 
 
@@ -49,6 +42,7 @@ class SaveFragment : BaseFragment(), OnCustomClickListener {
         super.onCreate(savedInstanceState)
         arguments?.let {
             imageUrl = it.getString(ARG_PARAM1)
+            style = it.getInt("style")
         }
     }
 
@@ -119,7 +113,12 @@ class SaveFragment : BaseFragment(), OnCustomClickListener {
 //                })
             }
             R.id.txt_homee -> {
-                findNavController().popBackStack(R.id.menuFragment, false)
+//                if (style == 0) {
+                    findNavController().popBackStack(R.id.menuFragment, false)
+//                } else {
+//                    findNavController().popBackStack(R.id.pageStoryFragment, false)
+//                }
+
 //                val list = Stack<AdsChild>()
 //                val admob = AdsChild("ca-app-pub-2222869408518511/9505601888",
 //                    AdDef.NETWORK.GOOGLE,

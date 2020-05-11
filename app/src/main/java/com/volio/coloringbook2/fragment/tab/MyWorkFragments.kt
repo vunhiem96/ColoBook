@@ -7,7 +7,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.FileObserver
 import android.os.Handler
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -19,19 +18,15 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.github.florent37.runtimepermission.kotlin.askPermission
-import com.google.gson.Gson
 import com.volio.coloringbook2.R
-import com.volio.coloringbook2.adapter.StoryBookAdapter
 import com.volio.coloringbook2.adapter.StorySaveAdapter
 import com.volio.coloringbook2.common.AppConst
-import com.volio.coloringbook2.common.gg
 import com.volio.coloringbook2.customview.recyclical.emptyDataSource
 import com.volio.coloringbook2.customview.recyclical.setup
 import com.volio.coloringbook2.customview.recyclical.withItem
 import com.volio.coloringbook2.database.CalendarDao
 import com.volio.coloringbook2.database.CalendarDatabase
 import com.volio.coloringbook2.database.SaveStoryDao
-import com.volio.coloringbook2.database.config
 import com.volio.coloringbook2.fragment.BaseFragment
 import com.volio.coloringbook2.holder.ImageOnWorkHolder
 import com.volio.coloringbook2.interfaces.NewImageInterface
@@ -40,12 +35,10 @@ import com.volio.coloringbook2.java.PhotorThread
 import com.volio.coloringbook2.java.PhotorTool
 import com.volio.coloringbook2.java.SharePhotoUntils
 import com.volio.coloringbook2.java.util.OnCustomClickListener
-import com.volio.coloringbook2.model.storybook.StoryBook
 import com.volio.coloringbook2.model.storybook.saveLocal.StoryBookSave
 import com.volio.coloringbook2.models.ImageModel
 import com.volio.coloringbook2.models.ImageOnWorkModel
 import kotlinx.android.synthetic.main.fragment_mywork.*
-import kotlinx.android.synthetic.main.fragment_story_book.*
 import org.jetbrains.anko.doAsync
 import java.io.File
 
@@ -53,7 +46,7 @@ import java.io.File
 class MyWorkFragments : BaseFragment(), OnCustomClickListener {
     var imageModel2: List<ImageModel> = ArrayList()
     var storyBook: List<StoryBookSave> = ArrayList()
-   lateinit var storyBookSaveAdapter:StorySaveAdapter
+    lateinit var storyBookSaveAdapter: StorySaveAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -79,15 +72,17 @@ class MyWorkFragments : BaseFragment(), OnCustomClickListener {
         daoSaveStory = CalendarDatabase.invoke(context!!).saveStoryDao()
         getPercent()
         updateListImage()
-
         chooseList()
+
         getList()
 
     }
 
     private fun chooseList() {
+        initRv()
         rdbtn_pick.isChecked = true
         rdbtn_pick.setOnClickListener {
+            getImage()
             recycle_my_work.visibility = View.VISIBLE
             recycle_story.visibility = View.GONE
         }
@@ -124,10 +119,27 @@ class MyWorkFragments : BaseFragment(), OnCustomClickListener {
     }
 
     private fun initRv() {
-        recycle_story.layoutManager = GridLayoutManager(context,3)
-        storyBookSaveAdapter =  StorySaveAdapter(context!!, storyBook as java.util.ArrayList<StoryBookSave>, object : StorySaveAdapter.ItemClickListener {
+        recycle_story.layoutManager = GridLayoutManager(context, 3)
+        storyBookSaveAdapter = StorySaveAdapter(context!!, storyBook as java.util.ArrayList<StoryBookSave>, object : StorySaveAdapter.ItemClickListener {
             override fun onClick(pos: Int) {
+                val bundle = Bundle()
+                bundle.putString("idImage", "${storyBook[pos].book_id}")
+                bundle.putString("name", "${storyBook[pos].book_name}")
+                bundle.putBoolean("mywork", true)
+                bundle.putBoolean("isFromMain", true)
+                bundle.putBoolean("isRestart", true)
+                findNavController().navigate(R.id.action_tab3Fragment_to_pageStoryFragment, bundle)
+            }
 
+        }, object : StorySaveAdapter.ItemClickListener2 {
+            override fun onClick(pos: Int) {
+                storyBookSaveAdapter.notifyItemRemoved(pos)
+                getList()
+                Handler().postDelayed({
+                    initRv()
+                }, 200)
+//                (storyBook as java.util.ArrayList<StoryBookSave>).clear()
+//                initRv()
             }
 
         })
@@ -145,8 +157,6 @@ class MyWorkFragments : BaseFragment(), OnCustomClickListener {
             withItem<ImageOnWorkModel>(R.layout.item_list_image_on_work) {
                 onBind(::ImageOnWorkHolder) { index, item ->
                     Glide.with(context!!).load(item.url).diskCacheStrategy(DiskCacheStrategy.NONE).into(img1)
-                    Log.i("uuuuuuuuuu", "$imageModel2")
-//                    gg("vcvccvcvcvfgfgfgf", "$items")
 
 
                     val positon = imageModel2.size
@@ -173,16 +183,19 @@ class MyWorkFragments : BaseFragment(), OnCustomClickListener {
 
 
                     share.setOnClickListener {
-                        gg("vcvccvcvcvfgfgfgf", "${item.url}")
                         SharePhotoUntils.getInstance().sendShareMore(context, item.url)
                     }
                     delete.setOnClickListener {
                         deleteImage(item.url)
                         val file = File(item.url)
                         file.delete()
-                        gg("vcvcvcvcvchghgh", "$index")
                         context!!.sendBroadcast(Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(File(item.url))))
-                        dataSourceImage.removeAt(index)
+                        try {
+                            dataSourceImage.removeAt(index)
+                        } catch (e: ArithmeticException) {
+                            0
+                        }
+
                         updateListImage()
                     }
                 }
@@ -334,12 +347,11 @@ class MyWorkFragments : BaseFragment(), OnCustomClickListener {
         }
     }
 
-    fun getList():List<StoryBookSave> {
+    fun getList(): List<StoryBookSave> {
 
         PhotorThread.getInstance().runBackground(object : PhotorThread.IBackground {
             override fun doingBackground() {
                 val x = daoSaveStory!!.getAllStory()
-                gg("huhuhuhuhuhuhuhu","$x")
                 storyBook = x
 
             }
