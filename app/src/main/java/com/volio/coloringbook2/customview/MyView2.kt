@@ -116,10 +116,10 @@ class MyView2 constructor(context: Context, bm: Bitmap?) : ImageView(context) {
                 if (pecent1 <= 100) {
                     val percent = 100 - pecent1
                     com.volio.coloringbook2.java.Lo.d("vinh32", "percent $percent")
-                    dao.updatePercentImage(imagename, percent)
+//                    dao.updatePercentImage(imagename, percent)
                 }
             } else {
-                dao.updatePercentImage(imagename, 0)
+//                dao.updatePercentImage(imagename, 0)
             }
         }
     }

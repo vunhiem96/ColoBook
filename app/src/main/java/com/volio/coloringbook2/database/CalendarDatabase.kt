@@ -4,17 +4,18 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.volio.coloringbook2.model.storybook.saveLocal.StoryBookSave
 import com.volio.coloringbook2.models.CalendarEntry
 import com.volio.coloringbook2.models.ImageModel
 
 
 @Database(
-    entities = [CalendarEntry::class, ImageModel::class],
+    entities = [CalendarEntry::class, ImageModel::class, StoryBookSave::class],
     version = 4
 )
 abstract class CalendarDatabase : RoomDatabase() {
     abstract fun calendarDao(): CalendarDao
-
+    abstract fun saveStoryDao(): SaveStoryDao
     companion object {
         @Volatile
         private var instance: CalendarDatabase? = null

@@ -27,6 +27,9 @@ object AppConst {
     var FOLDER_TEXT_TO_PHOTO =
         "${Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM)}/ColorToImage/"
 
+    var FOLDER_STORY =
+        "${Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM)}/StoryBook/"
+
     var FOLDER_SAVE =
         "${Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM)}/ColorToImage/vinh/"
 
@@ -54,6 +57,7 @@ object AppConst {
             val apiJson = context.config.category
             val gson = Gson()
             val category = gson.fromJson(apiJson, ColorBook::class.java)
+
             val position = category.size - 1
             list2.add(TypeModel(context.resources.getString(R.string.manda), 10002))
             for (i in 0..position) {

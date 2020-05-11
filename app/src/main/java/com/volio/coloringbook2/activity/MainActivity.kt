@@ -64,6 +64,7 @@ class MainActivity : AppCompatActivity() {
         }
         getCategory()
         getStoryBook()
+        config.Count = 0
 
     }
     private fun getCategory() {
@@ -79,6 +80,9 @@ class MainActivity : AppCompatActivity() {
                 try {
                     apiJson = response.body()!!.string()
                     config.category = apiJson
+                    gg("huhuhuhuhuhuhuhuhzzzz","$apiJson")
+
+
                     config.checkNetwork = true
 
                 } catch (e: IOException) {

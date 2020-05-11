@@ -90,6 +90,12 @@ public class ViewToBitmap {
             asyncSaveBitmap.execute();
         }
     }
+    public void saveBitmap2(Context context) {
+        if (bitmap != null) {
+            AsyncSaveImage2 asyncSaveBitmap = new AsyncSaveImage2(context, bitmap);
+            asyncSaveBitmap.execute();
+        }
+    }
 
     public void saveBitmap2(Context context, String name) {
         if (bitmap != null) {
@@ -255,6 +261,89 @@ public class ViewToBitmap {
             }
         }
     }
+
+    private class AsyncSaveImage2 extends AsyncTask<Void, Void, Boolean>
+            implements MediaScannerConnection.OnScanCompletedListener {
+        private Context context;
+        private Bitmap bitmap;
+        private CustomProgressDialog dialog;
+        private String name;
+
+        private AsyncSaveImage2(Context context, Bitmap bitmap, String name) {
+            this.context = context;
+            this.bitmap = bitmap;
+            this.name = name;
+            dialog = new CustomProgressDialog(context);
+        }
+
+        private AsyncSaveImage2(Context context, Bitmap bitmap) {
+            this.context = context;
+            this.bitmap = bitmap;
+            dialog = new CustomProgressDialog(context);
+        }
+
+
+        protected void onPreExecute() {
+            this.dialog.show();
+        }
+
+        @TargetApi(Build.VERSION_CODES.KITKAT)
+        @Override
+        protected Boolean doInBackground(Void... params) {
+            File myDir = new File(AppConst.INSTANCE.getFOLDER_STORY());
+            if (!myDir.exists()) {
+                myDir.mkdirs();
+            }
+            File imageFile = new File(AppConst.INSTANCE.getFOLDER_STORY() + getFilename());
+
+            if (fileExtension == null) {
+                throw new IllegalStateException("A file format must be chosen to ViewToBitmap before calling save()");
+            } else {
+                try (OutputStream out = new BufferedOutputStream(new FileOutputStream(imageFile))) {
+                    switch (fileExtension) {
+                        case EXTENSION_JPG:
+                            bitmap.compress(Bitmap.CompressFormat.JPEG, jpgQuality, out);
+                            break;
+                        case EXTENSION_PNG:
+                            bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
+                            break;
+                        default:
+                            bitmap.compress(Bitmap.CompressFormat.JPEG, jpgQuality, out);
+                            break;
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    bitmap = null;
+                    notifyListener(false, null);
+                    return false;
+                }
+            }
+
+            bitmap = null;
+            MediaScannerConnection.scanFile(context, new String[]{imageFile.toString()}, null, this);
+            return true;
+        }
+
+        @Override
+        protected void onPostExecute(final Boolean success) {
+            if (success) {
+                this.dialog.dismiss();
+            } else {
+                this.dialog.dismiss();
+                Toast.makeText(context, context.getResources().getString(R.string.text_error), Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        @Override
+        public void onScanCompleted(String path, Uri uri) {
+            if (uri != null && path != null) {
+                notifyListener(true, path);
+            } else {
+                notifyListener(false, null);
+            }
+        }
+    }
+
 
 
     private static class AsyncSaveImageToTemp extends AsyncTask<Void, Void, Boolean>

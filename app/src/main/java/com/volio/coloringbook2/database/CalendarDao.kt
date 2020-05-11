@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import com.volio.coloringbook2.model.storybook.saveLocal.StoryBookSave
 import com.volio.coloringbook2.models.CalendarEntry
 import com.volio.coloringbook2.models.ImageModel
 
@@ -29,6 +30,8 @@ interface CalendarDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun upsertCalendar(calendar: CalendarEntry)
 
+
+
     @Query("select * from calendar where date =:date1")
     fun getCalendarFromDate(date1: String?): CalendarEntry?
 
@@ -46,9 +49,14 @@ interface CalendarDao {
     @Query("select percent from image_data where name =:image ")
     fun getPercentImage(image: String): Int
 
-    @Query("update image_data set percent =:percent where name =:image")
-    fun updatePercentImage(image: String, percent: Int)
+    @Query("select * from image_data")
+    fun getImage(): List<ImageModel>
 
+//    @Query("update image_data set percent =:percent where name =:percent")
+//    fun updatePercentImage(image: String, percent: Int)
+
+    @Query("delete FROM image_data WHERE name = :name")
+    fun deleteImage(name: String)
 
 
 //    UPDATE table_name

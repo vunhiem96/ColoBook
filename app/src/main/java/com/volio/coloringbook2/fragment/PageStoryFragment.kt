@@ -61,6 +61,7 @@ class PageStoryFragment : Fragment(), OnCustomClickListener {
         val gson = Gson()
         val listStoryBook = gson.fromJson(apiJson, StoryBook::class.java)
         listImage = listStoryBook[postionList].list
+        gg("vcvcvcgjgjgjgjgjg","$listImage")
         adapter = PageStoryAdapter(context!!,listImage)
 
         ultraViewPager_story.adapter = adapter
@@ -81,6 +82,7 @@ class PageStoryFragment : Fragment(), OnCustomClickListener {
                 gg("vcvcvcvchghghghgh","${AppConst.positionChoose}")
                 bundle.putInt("idImg", AppConst.positionChoose)
                 bundle.putInt("idList", postionList)
+                bundle.putBoolean("story", true)
                 findNavController().navigate(R.id.action_pageStoryFragment_to_editFragment, bundle)
             }
 

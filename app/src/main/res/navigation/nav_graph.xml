@@ -108,6 +108,9 @@
         <action
                 android:id="@+id/action_tab3Fragment_to_categoryFragment"
                 app:destination="@id/categoryFragment" />
+        <action
+                android:id="@+id/action_tab3Fragment_to_pageStoryFragment"
+                app:destination="@id/pageStoryFragment" />
     </fragment>
     <fragment
             android:id="@+id/storyBookFragment"

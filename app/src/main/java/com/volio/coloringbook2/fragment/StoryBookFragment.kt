@@ -1,25 +1,21 @@
 package com.volio.coloringbook2.fragment
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.Navigation
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
-
 import com.volio.coloringbook2.R
 import com.volio.coloringbook2.adapter.StoryBookAdapter
-import com.volio.coloringbook2.common.gg
+import com.volio.coloringbook2.common.gone
 import com.volio.coloringbook2.database.config
-import com.volio.coloringbook2.java.Lo
 import com.volio.coloringbook2.java.PhotorTool
 import com.volio.coloringbook2.java.util.OnCustomClickListener
-import com.volio.coloringbook2.model.ColorBook
 import com.volio.coloringbook2.model.storybook.StoryBook
 import kotlinx.android.synthetic.main.fragment_story_book.*
 
@@ -40,6 +36,15 @@ class StoryBookFragment : BaseFragment(), OnCustomClickListener {
         super.onViewCreated(view, savedInstanceState)
         PhotorTool.clickScaleView(back_storybook, this)
         initRv()
+
+        context!!.config.Count =  (context!!.config.Count)!!.toInt() + 1
+        if(context!!.config.Count == 1) {
+            Handler().postDelayed({
+                progrees.gone()
+            }, 500)
+        } else{
+            progrees.gone()
+        }
     }
 
     private fun initRv() {

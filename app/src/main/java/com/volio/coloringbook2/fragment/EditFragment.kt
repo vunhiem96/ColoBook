@@ -31,16 +31,25 @@ import com.volio.coloringbook2.common.gone
 import com.volio.coloringbook2.common.setImageTint
 import com.volio.coloringbook2.customview.ColourImageView
 import com.volio.coloringbook2.customview.photoview.PhotoViewAttacher
+import com.volio.coloringbook2.database.CalendarDao
+import com.volio.coloringbook2.database.CalendarDatabase
+import com.volio.coloringbook2.database.SaveStoryDao
 import com.volio.coloringbook2.database.config
 import com.volio.coloringbook2.interfaces.ColorInterfaces
 import com.volio.coloringbook2.interfaces.ImageInterface
 import com.volio.coloringbook2.java.*
 import com.volio.coloringbook2.java.util.OnCustomClickListener
 import com.volio.coloringbook2.model.storybook.StoryBook
+import com.volio.coloringbook2.model.storybook.saveLocal.ImageStorySave
+import com.volio.coloringbook2.model.storybook.saveLocal.StoryBookSave
+import com.volio.coloringbook2.models.ImageModel
 import com.volio.coloringbook2.models.UltraPagerAdapter
 import com.zxy.tiny.Tiny
 import kotlinx.android.synthetic.main.fragment_edit.*
 import java.io.File
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 private const val ARG_PARAM1 = "url"
@@ -48,6 +57,7 @@ private const val ARG_PARAM2 = "isFromMain"
 private const val ARG_PARAM3 = "isRestart"
 
 class EditFragment : BaseFragment(), OnCustomClickListener, SaveInterface, ImageInterface, ColorInterfaces {
+    var storyBook: List<StoryBookSave> = ArrayList()
     private var edit = -1
     private var idList = -1
     private var idImage = -1
@@ -55,6 +65,10 @@ class EditFragment : BaseFragment(), OnCustomClickListener, SaveInterface, Image
     private var isFromMain = false
     private var imageName: String? = null
     private var isRestart = false
+    private var isStoryBook = false
+    private var dao: CalendarDao? = null
+    private var storyBookdao: SaveStoryDao? = null
+    private var namesss = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,9 +77,10 @@ class EditFragment : BaseFragment(), OnCustomClickListener, SaveInterface, Image
             imageUrl = it.getString(ARG_PARAM1)
             isFromMain = it.getBoolean(ARG_PARAM2)
             isRestart = it.getBoolean(ARG_PARAM3)
-            idList = it.getInt("idList",-1)
-            idImage = it.getInt("idImg",-1)
-            edit= it.getInt("edit",-1)
+            idList = it.getInt("idList", -1)
+            idImage = it.getInt("idImg", -1)
+            edit = it.getInt("edit", -1)
+            isStoryBook = it.getBoolean("story", false)
         }
         if (idList != -1) {
 
@@ -73,11 +88,17 @@ class EditFragment : BaseFragment(), OnCustomClickListener, SaveInterface, Image
             val gson = Gson()
             val listStoryBook = gson.fromJson(apiJson, StoryBook::class.java)
             val urlBase = "http://mycat.asia/volio_colorbook/"
-            val url  = listStoryBook[idList].list[idImage].image_url
+            val url = listStoryBook[idList].list[idImage].image_url
             imageUrl = "$urlBase$url"
         }
         setBackPress()
-
+        if (isStoryBook == true) {
+            val apiJson = context!!.config.storyBook
+            val gson = Gson()
+            val listStoryBook = gson.fromJson(apiJson, StoryBook::class.java)
+            val url = listStoryBook[idList].book_id
+            Log.i("hjhjhjhjhjhjhjhjj", "$url")
+        }
     }
 
 
@@ -96,6 +117,8 @@ class EditFragment : BaseFragment(), OnCustomClickListener, SaveInterface, Image
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 //        Glide.with(context!!).asBitmap().load(imageUrl).diskCacheStrategy(DiskCacheStrategy.NONE).into(imgPreView)
+        dao = CalendarDatabase.invoke(context!!).calendarDao()
+        storyBookdao = CalendarDatabase.invoke(context!!).saveStoryDao()
         if (AppConst.isRestartImage) {
             AppConst.isRestartImage = false
             restart()
@@ -123,6 +146,14 @@ class EditFragment : BaseFragment(), OnCustomClickListener, SaveInterface, Image
                 }
             }
         }
+        if (isStoryBook == true) {
+            val apiJson = context!!.config.storyBook
+            val gson = Gson()
+            val listStoryBook = gson.fromJson(apiJson, StoryBook::class.java)
+            val id = listStoryBook[idList].book_id
+            getList2("$id")
+        }
+
     }
 
 
@@ -160,22 +191,124 @@ class EditFragment : BaseFragment(), OnCustomClickListener, SaveInterface, Image
     }
 
     private var isSaveImaged = false
+
     private fun saveImage() {
 //        showDialog(R.string.please_wait_to_save)
-        if (imageView != null) {
-            val bitmap = imageView?.getBitmap() ?: return
-            ViewToBitmap.of(bitmap).setOnSaveResultListener { isSaved, path ->
-                if (isSaved && path != null && path.isNotEmpty()) {
-                    isSaveImaged = true
-                    if (isSafe()) {
-                        nextFragment(path)
+        if (isStoryBook == false) {
+            if (imageView != null) {
+                val bitmap = imageView?.getBitmap() ?: return
+                ViewToBitmap.of(bitmap).setOnSaveResultListener { isSaved, path ->
+                    if (isSaved && path != null && path.isNotEmpty()) {
+                        isSaveImaged = true
+                        if (isSafe()) {
+                            var size = imageView?.size()!!.toInt()
+                            if (size > 100) {
+                                size = 100
+                            }
+                            val currentDate: String = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(Date())
+                            val currentTime = SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(Date())
+                            val image = ImageModel(path, 0, 0, size, 0, currentDate, currentTime)
+                            saveImageDao(image)
+                            nextFragment(path)
+                        }
                     }
-                }
-            }.toJPG().saveBitmap(context!!)
+                }.toJPG().saveBitmap(context!!)
+
+
+            } else {
+                Toast.makeText(context, getString(R.string.st_went_wrong), Toast.LENGTH_SHORT).show()
+            }
         } else {
-            Toast.makeText(context, getString(R.string.st_went_wrong), Toast.LENGTH_SHORT).show()
+            if (imageView != null) {
+                val bitmap = imageView?.getBitmap() ?: return
+                ViewToBitmap.of(bitmap).setOnSaveResultListener { isSaved, path ->
+                    if (isSaved && path != null && path.isNotEmpty()) {
+                        isSaveImaged = true
+                        if (isSafe()) {
+                            val currentDate: String = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(Date())
+                            val currentTime = SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(Date())
+
+                            val apiJson = context!!.config.storyBook
+                            val gson = Gson()
+                            val listStoryBook = gson.fromJson(apiJson, StoryBook::class.java)
+                            val urlBase = "http://mycat.asia/volio_colorbook/"
+                            val url = listStoryBook[idList].list[idImage].image_url
+                            imageUrl = "$urlBase$url"
+
+                            val id = listStoryBook[idList].book_id
+
+
+                            val book_image_url = listStoryBook[idList].book_image_url
+                            val book_name = listStoryBook[idList].book_name
+                            val is_pro = listStoryBook[idList].is_pro
+                            //list
+                            val priority = listStoryBook[idList].priority
+//                            val book_id: String,
+//                            val book_image_url: String,
+//                            val book_name: String,
+//                            val is_pro: String,
+//                            val list: List<ImageStorySave>,
+//                            val priority: String
+                            val listImage: ArrayList<ImageStorySave> = ArrayList()
+                            if (storyBook.size == 0) {
+                                gg("vcvcvcvcvcfgfgfgfgf", "${storyBook.size}")
+                                for (i in 0..listStoryBook[idList].list.size - 1) {
+                                    if (i != idImage) {
+                                        val imageId = listStoryBook[idList].list[i].image_id
+                                        val image_url1 = listStoryBook[idList].list[i].image_url
+                                        val image_url = "$urlBase$image_url1"
+                                        val priorityImage = listStoryBook[idList].list[i].priority
+                                        val thumbnail_url = listStoryBook[idList].list[i].thumbnail_url
+                                        listImage.add(ImageStorySave(id, imageId, image_url, priorityImage, thumbnail_url, false))
+                                    } else {
+                                        val imageId = listStoryBook[idList].list[idImage].image_id
+                                        val image_url = listStoryBook[idList].list[idImage].image_url
+                                        val priorityImage = listStoryBook[idList].list[idImage].priority
+                                        val thumbnail_url = listStoryBook[idList].list[idImage].thumbnail_url
+                                        listImage.add(ImageStorySave(id, imageId, path, priorityImage, thumbnail_url, true))
+
+
+                                    }
+                                    gg("vcvcvcvcvcfgfgfgfgf", "hiha$listImage")
+                                }
+                                val storybook = StoryBookSave(id, book_image_url, book_name, is_pro, listImage, priority)
+
+                                saveStory(storybook)
+                            } else {
+                                gg("vunhieemmmmmmm", "$storyBook")
+                                for (i in 0..storyBook.size - 1) {
+                                    if (i != idImage) {
+                                        val imageId = storyBook[idList].list[i].image_id
+                                        val image_url = storyBook[idList].list[i].image_url
+                                        val priorityImage = storyBook[idList].list[i].priority
+                                        val thumbnail_url = storyBook[idList].list[i].thumbnail_url
+                                        val trues = storyBook[idList].list[i].saveLocal
+                                        listImage.add(ImageStorySave(id, imageId, image_url, priorityImage, thumbnail_url, trues))
+                                    } else {
+                                        val imageId = listStoryBook[idList].list[idImage].image_id
+                                        val priorityImage = listStoryBook[idList].list[idImage].priority
+                                        val thumbnail_url = listStoryBook[idList].list[idImage].thumbnail_url
+                                        listImage.add(ImageStorySave(id, imageId, path, priorityImage, thumbnail_url, true))
+                                    }
+
+                                }
+                                val storybook = StoryBookSave(id, book_image_url, book_name, is_pro, listImage, priority)
+                                updateStory(storybook)
+                                gg("vcvcvcvcvcfgfgfgfgf", "hihi$storybook")
+                            }
+
+                            nextFragment(path)
+                        }
+                    }
+                }.toJPG().saveBitmap2(context!!)
+
+
+            } else {
+                Toast.makeText(context, getString(R.string.st_went_wrong), Toast.LENGTH_SHORT).show()
+            }
         }
     }
+
 
     private fun nextFragment(path: String) {
         val bundle = Bundle()
@@ -370,6 +503,94 @@ class EditFragment : BaseFragment(), OnCustomClickListener, SaveInterface, Image
         imageView?.setColor(color)
     }
 
+    fun saveImageDao(image: ImageModel) {
+        PhotorThread.getInstance().runBackground(object : PhotorThread.IBackground {
+            override fun doingBackground() {
+                dao!!.upsertImage(image)
+            }
+
+            override fun onCompleted() {
+            }
+
+            override fun onCancel() {
+            }
+
+        })
+
+    }
+
+    fun saveStory(story: StoryBookSave) {
+        PhotorThread.getInstance().runBackground(object : PhotorThread.IBackground {
+            override fun doingBackground() {
+                storyBookdao!!.insertStoty(story)
+            }
+
+            override fun onCompleted() {
+            }
+
+            override fun onCancel() {
+            }
+
+        })
+
+    }
+
+    fun updateStory(story: StoryBookSave) {
+        PhotorThread.getInstance().runBackground(object : PhotorThread.IBackground {
+            override fun doingBackground() {
+                storyBookdao!!.updateStory(story)
+            }
+
+            override fun onCompleted() {
+            }
+
+            override fun onCancel() {
+            }
+
+        })
+
+    }
+
+    fun deleteImage(name: String) {
+        PhotorThread.getInstance().runBackground(object : PhotorThread.IBackground {
+            override fun doingBackground() {
+                dao!!.deleteImage(name)
+
+
+            }
+
+            override fun onCompleted() {
+            }
+
+            override fun onCancel() {
+            }
+
+        })
+
+    }
+
+
+    fun getList2(name: String): List<StoryBookSave> {
+        PhotorThread.getInstance().runBackground(object : PhotorThread.IBackground {
+            override fun doingBackground() {
+                val x = storyBookdao!!.getbookId(name)
+                gg("huhuhuhuhuhuhuhu", "$x")
+                storyBook = x
+
+            }
+
+            override fun onCompleted() {
+//                imageModel.add(imageModel1!!)
+//                imageModel2 = imageModel
+
+            }
+
+            override fun onCancel() {
+            }
+
+        })
+        return storyBook
+    }
 
     private fun initEvent() {
         PhotorTool.clickScaleView(btn_back_main, this)
@@ -377,11 +598,11 @@ class EditFragment : BaseFragment(), OnCustomClickListener, SaveInterface, Image
         PhotorTool.clickScaleView(btn_back_image, this)
         PhotorTool.clickScaleView(btn_forward_image, this)
         btn_share.setOnClickListener {
-            if (edit == 1001){
+            if (edit == 1001) {
                 val file = File(imageUrl)
                 file.delete()
                 context!!.sendBroadcast(Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(File(imageUrl))))
-
+                deleteImage(imageUrl!!)
             }
             Log.e("MEOMEO", "click save")
             if (!canTouch()) return@setOnClickListener
@@ -414,7 +635,9 @@ class EditFragment : BaseFragment(), OnCustomClickListener, SaveInterface, Image
     }
 
     private fun cacheImage() {
+        val size = imageView.size()
         val imageUrl1: String = if (isFromMain) {
+
             "$TEMP_FOLDER$imageUrl.jpg"
         } else {
             "$imageUrl"

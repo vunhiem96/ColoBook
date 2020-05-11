@@ -25,6 +25,10 @@ class Configs(context: Context)  {
     var urlImage: String?
         get() = prefs.getString("url", "")
         set(urlImage) = prefs.edit().putString("url", urlImage).apply()
+
+    var Count: Int?
+        get() = prefs.getInt("Count", 0)
+        set(Count) = prefs.edit().putInt("Count", Count!!).apply()
 }
 fun Context.getSharedPrefs() = getSharedPreferences(PREFS_KEY, Context.MODE_PRIVATE)
 val Context.config: Configs get() = Configs.newInstance(applicationContext)

@@ -6,6 +6,8 @@
         android:background="#FFFF"
         android:orientation="vertical">
 
+
+
     <RelativeLayout
             android:id="@+id/action_bar_setting"
             android:layout_width="match_parent"
@@ -58,6 +60,12 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/img"
             android:layout_marginTop="@dimen/_5sdp" />
-
+    <ProgressBar
+            android:background="#80FFFFFF"
+            android:padding="@dimen/_140sdp"
+            android:id="@+id/progrees"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
 
 </RelativeLayout>

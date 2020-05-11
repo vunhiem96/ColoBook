@@ -30,6 +30,8 @@ class ImageOnWorkHolder(itemView: View) : ViewHolder(itemView) {
   val share: ImageView = itemView.findViewById(R.id.share)
   val delete: ImageView = itemView.findViewById(R.id.delete)
   val tv_finish: TextView = itemView.findViewById(R.id.tv_finish)
+  val txtDate: TextView = itemView.findViewById(R.id.date_item)
+  val txtTime: TextView = itemView.findViewById(R.id.time_item)
 
 
 }

@@ -7,6 +7,7 @@ import android.graphics.Point
 import android.graphics.drawable.BitmapDrawable
 import android.util.AttributeSet
 import android.widget.ImageView
+import com.volio.coloringbook2.common.gg
 import com.volio.coloringbook2.java.DrawModel
 import com.volio.coloringbook2.java.PhotorThread
 import java.util.*
@@ -237,6 +238,8 @@ class ColourImageView(context: Context?, attrs: AttributeSet?) : ImageView(conte
     fun actionBackStep() {
         if (current_step > 0) {
             if (current_step - 1 < list.size) {
+                gg("vcvcvuuuuucvcvcvc","${list.size}")
+                list.size
                 PhotorThread.getInstance().removeAllBackgroundThreads()
                 val model = list[current_step - 1]
                 current_step--
@@ -262,6 +265,9 @@ class ColourImageView(context: Context?, attrs: AttributeSet?) : ImageView(conte
             undoSize = 1
             onRedoUndoListener?.onRedoUndo(undoSize, reduSize)
         }
+    }
+    fun size():Int{
+        return list.size
     }
 
     public interface OnRedoUndoListener {

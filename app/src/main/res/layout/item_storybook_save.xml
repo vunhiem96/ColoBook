@@ -7,8 +7,6 @@
         android:layout_margin="@dimen/_2sdp"
         android:background="#FFFF">
 
-
-
     <com.google.android.material.card.MaterialCardView
             android:id="@+id/item_storybook"
             style="@style/CustomCardViewStyle"
@@ -55,7 +53,7 @@
 
             <ImageView
                     android:visibility="gone"
-                    android:id="@+id/img_type_story"
+                    android:id="@+id/img_type_story_save"
                     android:layout_width="@dimen/_20sdp"
                     android:layout_height="@dimen/_30sdp"
                     app:srcCompat="@drawable/ic_vip" />
@@ -65,24 +63,56 @@
 
     </com.google.android.material.card.MaterialCardView>
     <TextView
-            android:id="@+id/name_storybook"
+            android:layout_marginStart="@dimen/_15sdp"
+            android:id="@+id/name_storybook_save"
             android:fontFamily="@font/jua_regular"
-            android:textSize="@dimen/_12ssp"
+            android:textSize="@dimen/_13ssp"
             android:textColor="#000000"
             android:text="Quotes Book"
-            android:layout_centerHorizontal="true"
             android:layout_below="@id/item_storybook"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_15sdp" />
     <TextView
-            android:id="@+id/page_storybook"
+            android:layout_marginStart="@dimen/_15sdp"
+            android:id="@+id/date_story"
             android:fontFamily="@font/jua_regular"
-            android:textSize="@dimen/_10ssp"
+            android:textSize="@dimen/_8ssp"
             android:textColor="#000000"
-            android:text="32 page"
+            android:text="Date:05/05/2020"
             android:layout_marginTop="@dimen/_5sdp"
-            android:layout_centerHorizontal="true"
-            android:layout_below="@id/name_storybook"
+            android:layout_below="@id/name_storybook_save"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_15sdp" />
+    <TextView
+            android:layout_marginStart="@dimen/_15sdp"
+            android:id="@+id/time_story"
+            android:fontFamily="@font/jua_regular"
+            android:textSize="@dimen/_8ssp"
+            android:textColor="#000000"
+            android:text="Time: 11:31:16"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_below="@id/date_story"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_15sdp" />
+    <LinearLayout
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/time_story"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+
+
+        <ImageView
+                android:id="@+id/delete_story"
+                android:layout_width="@dimen/_28sdp"
+                android:layout_height="@dimen/_26sdp"
+                android:layout_marginStart="@dimen/_30sdp"
+                android:layout_marginLeft="@dimen/_30sdp"
+                app:srcCompat="@drawable/ic_deletee" />
+    </LinearLayout>
 </RelativeLayout>

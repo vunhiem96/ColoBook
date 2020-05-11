@@ -8,19 +8,23 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.volio.coloringbook2.R
 import com.volio.coloringbook2.model.storybook.StoryBookItem
+import com.volio.coloringbook2.model.storybook.saveLocal.StoryBookSave
 import kotlinx.android.synthetic.main.item_storybook.view.*
+import kotlinx.android.synthetic.main.item_storybook.view.img_list_story_save
+import kotlinx.android.synthetic.main.item_storybook.view.img_type_story
+import kotlinx.android.synthetic.main.item_storybook.view.item_storybook
+import kotlinx.android.synthetic.main.item_storybook_save.view.*
 import java.util.*
 
-
-class StoryBookAdapter(
+class StorySaveAdapter(
     var context: Context,
-    var listStoryBook: ArrayList<StoryBookItem>,
+    var listStoryBook: ArrayList<StoryBookSave>,
     private val listener: ItemClickListener
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return StoryBookViewHolder(
-            LayoutInflater.from(context).inflate(R.layout.item_storybook, parent, false)
+        return StorySaveAdapter.SaveBookViewHolder(
+            LayoutInflater.from(context).inflate(R.layout.item_storybook_save, parent, false)
         )
     }
 
@@ -39,24 +43,20 @@ class StoryBookAdapter(
         }
 
 
-
         val size = storyBook.list.size
-        holder.itemView.name_storybook.text = storyBook.book_name
-        holder.itemView.page_storybook.text = "$size pages"
+        holder.itemView.name_storybook_save.text = storyBook.book_name
         val type = storyBook.is_pro
-        if(type == "1"){
-            holder.itemView.img_type_story.visibility = View.VISIBLE
+        if (type == "1") {
+            holder.itemView.img_type_story_save.visibility = View.VISIBLE
         }
     }
-
 
 
     interface ItemClickListener {
         fun onClick(pos: Int)
     }
 
-    class StoryBookViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    class SaveBookViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
     }
-
 }

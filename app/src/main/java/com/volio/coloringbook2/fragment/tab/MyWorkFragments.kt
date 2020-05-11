@@ -6,6 +6,8 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.os.FileObserver
+import android.os.Handler
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -17,7 +19,10 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.github.florent37.runtimepermission.kotlin.askPermission
+import com.google.gson.Gson
 import com.volio.coloringbook2.R
+import com.volio.coloringbook2.adapter.StoryBookAdapter
+import com.volio.coloringbook2.adapter.StorySaveAdapter
 import com.volio.coloringbook2.common.AppConst
 import com.volio.coloringbook2.common.gg
 import com.volio.coloringbook2.customview.recyclical.emptyDataSource
@@ -25,20 +30,30 @@ import com.volio.coloringbook2.customview.recyclical.setup
 import com.volio.coloringbook2.customview.recyclical.withItem
 import com.volio.coloringbook2.database.CalendarDao
 import com.volio.coloringbook2.database.CalendarDatabase
+import com.volio.coloringbook2.database.SaveStoryDao
+import com.volio.coloringbook2.database.config
 import com.volio.coloringbook2.fragment.BaseFragment
 import com.volio.coloringbook2.holder.ImageOnWorkHolder
 import com.volio.coloringbook2.interfaces.NewImageInterface
 import com.volio.coloringbook2.java.Lo
+import com.volio.coloringbook2.java.PhotorThread
 import com.volio.coloringbook2.java.PhotorTool
 import com.volio.coloringbook2.java.SharePhotoUntils
 import com.volio.coloringbook2.java.util.OnCustomClickListener
+import com.volio.coloringbook2.model.storybook.StoryBook
+import com.volio.coloringbook2.model.storybook.saveLocal.StoryBookSave
+import com.volio.coloringbook2.models.ImageModel
 import com.volio.coloringbook2.models.ImageOnWorkModel
 import kotlinx.android.synthetic.main.fragment_mywork.*
+import kotlinx.android.synthetic.main.fragment_story_book.*
 import org.jetbrains.anko.doAsync
 import java.io.File
 
 
 class MyWorkFragments : BaseFragment(), OnCustomClickListener {
+    var imageModel2: List<ImageModel> = ArrayList()
+    var storyBook: List<StoryBookSave> = ArrayList()
+   lateinit var storyBookSaveAdapter:StorySaveAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,6 +67,7 @@ class MyWorkFragments : BaseFragment(), OnCustomClickListener {
 
 
     private var dao: CalendarDao? = null
+    private var daoSaveStory: SaveStoryDao? = null
 
     var newImageInterface: NewImageInterface? = null
 
@@ -60,9 +76,13 @@ class MyWorkFragments : BaseFragment(), OnCustomClickListener {
         PhotorTool.clickScaleView(back_my_work, this)
         PhotorTool.clickScaleView(btn_new, this)
         dao = CalendarDatabase.invoke(context!!).calendarDao()
+        daoSaveStory = CalendarDatabase.invoke(context!!).saveStoryDao()
+        getPercent()
         updateListImage()
 
         chooseList()
+        getList()
+
     }
 
     private fun chooseList() {
@@ -72,6 +92,7 @@ class MyWorkFragments : BaseFragment(), OnCustomClickListener {
             recycle_story.visibility = View.GONE
         }
         rdbtn_story.setOnClickListener {
+            initRv()
             recycle_my_work.visibility = View.GONE
             recycle_story.visibility = View.VISIBLE
         }
@@ -102,6 +123,16 @@ class MyWorkFragments : BaseFragment(), OnCustomClickListener {
         }
     }
 
+    private fun initRv() {
+        recycle_story.layoutManager = GridLayoutManager(context,3)
+        storyBookSaveAdapter =  StorySaveAdapter(context!!, storyBook as java.util.ArrayList<StoryBookSave>, object : StorySaveAdapter.ItemClickListener {
+            override fun onClick(pos: Int) {
+
+            }
+
+        })
+        recycle_story.adapter = storyBookSaveAdapter
+    }
 
     private fun getImage() {
         PhotorTool.createFolder(AppConst.TEMP_FOLDER);
@@ -114,28 +145,42 @@ class MyWorkFragments : BaseFragment(), OnCustomClickListener {
             withItem<ImageOnWorkModel>(R.layout.item_list_image_on_work) {
                 onBind(::ImageOnWorkHolder) { index, item ->
                     Glide.with(context!!).load(item.url).diskCacheStrategy(DiskCacheStrategy.NONE).into(img1)
-                    var percent = item.percent
-                    Lo.d("dsk", "percent $percent")
-                    if (percent == 0) percent = 1
-                    txtPercent.text = "$percent/100"
-                    tv_finish.text = "$percent %"
-                    if (percent != null) {
-                        if (percent > 100) percent = 100
-                        progressBar.progress = percent
-                        if (percent == 100) {
-                            imgDone.setImageResource(R.drawable.ic_tick)
-                        } else {
-                            imgDone.setImageResource(R.color.tranparent)
+                    Log.i("uuuuuuuuuu", "$imageModel2")
+//                    gg("vcvccvcvcvfgfgfgf", "$items")
+
+
+                    val positon = imageModel2.size
+                    if (positon != 0) {
+                        for (i in 0..positon - 1) {
+                            val name = imageModel2[i].name
+                            if (name == item.url) {
+                                val percent = imageModel2[i].percent
+                                val date = imageModel2[i].date
+                                val time = imageModel2[i].time
+                                txtDate.text = "Date: $date"
+                                txtTime.text = "Time: $time"
+                                if (percent == 100) {
+                                    tv_finish.text = "Finish"
+                                } else {
+                                    tv_finish.text = "$percent %"
+                                }
+                            }
                         }
+
                     }
+
+//                    val percent = items.percent
+
+
                     share.setOnClickListener {
                         gg("vcvccvcvcvfgfgfgf", "${item.url}")
                         SharePhotoUntils.getInstance().sendShareMore(context, item.url)
                     }
                     delete.setOnClickListener {
+                        deleteImage(item.url)
                         val file = File(item.url)
                         file.delete()
-                        gg("vcvcvcvcvchghgh","$index")
+                        gg("vcvcvcvcvchghgh", "$index")
                         context!!.sendBroadcast(Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(File(item.url))))
                         dataSourceImage.removeAt(index)
                         updateListImage()
@@ -155,6 +200,7 @@ class MyWorkFragments : BaseFragment(), OnCustomClickListener {
                 }
             }
         }
+        recycle_my_work.scrollToPosition(dataSourceImage.size() - 1)
 
         observer.startWatching()
         observerSaveImage.startWatching()
@@ -185,6 +231,45 @@ class MyWorkFragments : BaseFragment(), OnCustomClickListener {
         }
     }
 
+    fun getPercent(): List<ImageModel> {
+        var imageModel: ArrayList<ImageModel> = ArrayList()
+        var imageModel1: ImageModel? = null
+        PhotorThread.getInstance().runBackground(object : PhotorThread.IBackground {
+            override fun doingBackground() {
+                imageModel2 = dao!!.getImage()
+
+            }
+
+            override fun onCompleted() {
+//                imageModel.add(imageModel1!!)
+//                imageModel2 = imageModel
+
+            }
+
+            override fun onCancel() {
+            }
+
+        })
+        return imageModel2
+    }
+
+    fun deleteImage(name: String) {
+        PhotorThread.getInstance().runBackground(object : PhotorThread.IBackground {
+            override fun doingBackground() {
+                dao!!.deleteImage(name)
+
+
+            }
+
+            override fun onCompleted() {
+            }
+
+            override fun onCancel() {
+            }
+
+        })
+
+    }
 
     private fun getCompleteImage() {
         val path = AppConst.FOLDER_TEXT_TO_PHOTO
@@ -249,4 +334,30 @@ class MyWorkFragments : BaseFragment(), OnCustomClickListener {
         }
     }
 
+    fun getList():List<StoryBookSave> {
+
+        PhotorThread.getInstance().runBackground(object : PhotorThread.IBackground {
+            override fun doingBackground() {
+                val x = daoSaveStory!!.getAllStory()
+                gg("huhuhuhuhuhuhuhu","$x")
+                storyBook = x
+
+            }
+
+            override fun onCompleted() {
+//                imageModel.add(imageModel1!!)
+//                imageModel2 = imageModel
+
+            }
+
+            override fun onCancel() {
+            }
+
+        })
+        return storyBook
+    }
+
+
 }
+
+
