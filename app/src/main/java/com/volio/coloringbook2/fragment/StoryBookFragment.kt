@@ -24,7 +24,7 @@ import kotlinx.android.synthetic.main.fragment_story_book.*
  * A simple [Fragment] subclass.
  */
 class StoryBookFragment : BaseFragment(), OnCustomClickListener {
-    lateinit var storyBookAdapter: StoryBookAdapter
+    var storyBookAdapter: StoryBookAdapter? = null
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
@@ -37,27 +37,27 @@ class StoryBookFragment : BaseFragment(), OnCustomClickListener {
         PhotorTool.clickScaleView(back_storybook, this)
         initRv()
 
-        context!!.config.Count =  (context!!.config.Count)!!.toInt() + 1
-        if(context!!.config.Count == 1) {
+        context!!.config.Count = (context!!.config.Count)!!.toInt() + 1
+        if (context!!.config.Count == 1) {
             Handler().postDelayed({
                 progrees.gone()
             }, 500)
-        } else{
+        } else {
             progrees.gone()
         }
     }
 
     private fun initRv() {
-        rv_story_book.layoutManager = GridLayoutManager(context,3)
+        rv_story_book.layoutManager = GridLayoutManager(context, 3)
         val apiJson = context!!.config.storyBook
         val gson = Gson()
         val listStoryBook = gson.fromJson(apiJson, StoryBook::class.java)
-        storyBookAdapter =  StoryBookAdapter(context!!, listStoryBook, object : StoryBookAdapter.ItemClickListener {
+        storyBookAdapter = StoryBookAdapter(context!!, listStoryBook, object : StoryBookAdapter.ItemClickListener {
             override fun onClick(pos: Int) {
                 val bundle = Bundle()
                 bundle.putString("name", listStoryBook[pos].book_name)
                 bundle.putInt("id", pos)
-                findNavController().navigate(R.id.action_storyBookFragment_to_pageStoryFragment,bundle)
+                findNavController().navigate(R.id.action_storyBookFragment_to_pageStoryFragment, bundle)
             }
 
         })
@@ -67,7 +67,6 @@ class StoryBookFragment : BaseFragment(), OnCustomClickListener {
     override fun OnCustomClick(v: View?, event: MotionEvent?) {
         when (v?.id) {
             R.id.back_storybook -> findNavController().popBackStack()
-
 
 
         }

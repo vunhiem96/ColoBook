@@ -85,9 +85,9 @@ object AppConst {
         for (i in 1..6) {
             val name = "simple_mandalas_$i"
             when {
-                i <= 3 -> list.add(ImageModel(name = name, type = 1,date = "",time = ""))
-                i in 4..6 -> list.add(ImageModel(name = name, type = 2,date = "",time = ""))
-                else -> list.add(ImageModel(name = name, date = "",time = ""))
+                i <= 3 -> list.add(ImageModel(name = name, type = 1,date = "",time = "",urlGoc = ""))
+                i in 4..6 -> list.add(ImageModel(name = name, type = 2,date = "",time = "",urlGoc = ""))
+                else -> list.add(ImageModel(name = name, date = "",time = "",urlGoc = ""))
             }
         }
         return list
@@ -98,9 +98,9 @@ object AppConst {
         for (i in 1..10) {
             val name = "mandalaa_$i"
             when {
-                i <= 3 -> list.add(ImageModel(name = name, type = 1,date = "",time = ""))
-                i in 4..6 -> list.add(ImageModel(name = name, type = 2,date = "",time = ""))
-                else -> list.add(ImageModel(name = name,date = "",time = ""))
+                i <= 3 -> list.add(ImageModel(name = name, type = 1,date = "",time = "",urlGoc = ""))
+                i in 4..6 -> list.add(ImageModel(name = name, type = 2,date = "",time = "",urlGoc = ""))
+                else -> list.add(ImageModel(name = name,date = "",time = "",urlGoc = ""))
             }
         }
         return list
@@ -119,8 +119,8 @@ object AppConst {
     private val maxMandala = 10
     private fun loadMandala(): ArrayList<ImageModel> {
         val list = arrayListOf<ImageModel>()
-        list.add(ImageModel("mandalaa_1", type = 3,date = "",time = ""))
-        list.add(ImageModel("simple_mandalas_1", type = 4,date = "",time = ""))
+        list.add(ImageModel("mandalaa_1", type = 3,date = "",time = "",urlGoc = ""))
+        list.add(ImageModel("simple_mandalas_1", type = 4,date = "",time = "",urlGoc = ""))
 //        for (i in minMandala..maxMandala) {
 //            val name = "mandalaa_$i"
 //            when {

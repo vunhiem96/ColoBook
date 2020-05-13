@@ -7,6 +7,7 @@ import androidx.room.PrimaryKey
 data class ImageModel(
     @PrimaryKey(autoGenerate = false)
     val name: String,
+    val urlGoc:String,
     var type: Int = 0,
     var id: Int = 0,
     var percent: Int = 0,

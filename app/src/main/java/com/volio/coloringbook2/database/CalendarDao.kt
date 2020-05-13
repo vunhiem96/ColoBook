@@ -41,7 +41,10 @@ interface CalendarDao {
     fun upsertImage(image: ImageModel)
 
     @Query("select * from image_data where name =:image")
-    fun getImageFromName(image: String): ImageModel?
+    fun getImageFromName(image: String):List<ImageModel>
+
+    @Query("select * from image_data where urlGoc =:url")
+    fun getImageFromUrlGoc(url: String):List<ImageModel>
 
     @Query("select pixelWhite from image_data where name =:image ")
     fun getPixelWhite(image: String): Int

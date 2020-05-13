@@ -73,7 +73,6 @@ class MyWorkFragments : BaseFragment(), OnCustomClickListener {
         getPercent()
         updateListImage()
         chooseList()
-
         getList()
 
     }
@@ -82,6 +81,7 @@ class MyWorkFragments : BaseFragment(), OnCustomClickListener {
         initRv()
         rdbtn_pick.isChecked = true
         rdbtn_pick.setOnClickListener {
+            dataSourceImage = emptyDataSource()
             getImage()
             recycle_my_work.visibility = View.VISIBLE
             recycle_story.visibility = View.GONE
@@ -94,8 +94,6 @@ class MyWorkFragments : BaseFragment(), OnCustomClickListener {
     }
 
     private var dataSourceImage = emptyDataSource()
-
-
     private var observer: FileObserver = object : FileObserver(AppConst.TEMP_FOLDER) {
         override fun onEvent(event: Int, file: String?) {
             if (event == CREATE) {
@@ -103,6 +101,7 @@ class MyWorkFragments : BaseFragment(), OnCustomClickListener {
                     dataSourceImage.insert(0, ImageOnWorkModel(url = AppConst.TEMP_FOLDER + file, percent = 1))
                 }
             } else if (event == FileObserver.MODIFY) {
+
 
             }
         }
@@ -132,14 +131,15 @@ class MyWorkFragments : BaseFragment(), OnCustomClickListener {
             }
 
         }, object : StorySaveAdapter.ItemClickListener2 {
+
             override fun onClick(pos: Int) {
                 storyBookSaveAdapter.notifyItemRemoved(pos)
+                DeleteList(storyBook[pos].book_id)
                 getList()
                 Handler().postDelayed({
                     initRv()
-                }, 200)
-//                (storyBook as java.util.ArrayList<StoryBookSave>).clear()
-//                initRv()
+                }, 100)
+
             }
 
         })
@@ -192,11 +192,12 @@ class MyWorkFragments : BaseFragment(), OnCustomClickListener {
                         context!!.sendBroadcast(Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(File(item.url))))
                         try {
                             dataSourceImage.removeAt(index)
-                        } catch (e: ArithmeticException) {
-                            0
+                            dataSourceImage = emptyDataSource()
+                            getImage()
+                        }  catch (e: java.lang.Exception) {
                         }
 
-                        updateListImage()
+
                     }
                 }
 
@@ -369,7 +370,25 @@ class MyWorkFragments : BaseFragment(), OnCustomClickListener {
         return storyBook
     }
 
+    fun DeleteList(id: String) {
 
+        PhotorThread.getInstance().runBackground(object : PhotorThread.IBackground {
+            override fun doingBackground() {
+                daoSaveStory!!.deleteById(id)
+            }
+
+            override fun onCompleted() {
+//                imageModel.add(imageModel1!!)
+//                imageModel2 = imageModel
+
+            }
+
+            override fun onCancel() {
+            }
+
+        })
+
+    }
 }
 
 

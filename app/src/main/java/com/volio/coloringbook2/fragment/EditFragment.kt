@@ -70,8 +70,8 @@ class EditFragment : BaseFragment(), OnCustomClickListener, SaveInterface, Image
     private var isMywork = false
     private var dao: CalendarDao? = null
     private var storyBookdao: SaveStoryDao? = null
-    private var idBook:String?=null
-
+    private var idBook: String? = null
+    var imageSave:List<ImageModel> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -121,7 +121,7 @@ class EditFragment : BaseFragment(), OnCustomClickListener, SaveInterface, Image
             restart()
         }
 
-        if (idList != -1 && isMywork == false ) {
+        if (idList != -1 && isMywork == false) {
             val apiJson = context!!.config.storyBook
             val gson = Gson()
             val listStoryBook = gson.fromJson(apiJson, StoryBook::class.java)
@@ -132,15 +132,14 @@ class EditFragment : BaseFragment(), OnCustomClickListener, SaveInterface, Image
             getList2("$id2")
 
         }
-        if (idList != -1 && isMywork == true )
-        {
+        if (idList != -1 && isMywork == true) {
             getList2(idBook!!)
 
             Handler().postDelayed({
                 imageUrl = storyBook[0].list[idImage].image_url
-                gg("vcvcvcvcvcvcvcvc","$idBook")
+                gg("vcvcvcvcvcvcvcvc", "$idBook")
                 initView()
-            },100)
+            }, 100)
         }
 
 
@@ -230,7 +229,7 @@ class EditFragment : BaseFragment(), OnCustomClickListener, SaveInterface, Image
                             }
                             val currentDate: String = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(Date())
                             val currentTime = SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(Date())
-                            val image = ImageModel(path, 0, 0, size, 0, currentDate, currentTime)
+                            val image = ImageModel(path,imageUrl!!, 0, 0, size, 0, currentDate, currentTime)
                             saveImageDao(image)
                             nextFragment(path)
                         }
@@ -258,26 +257,24 @@ class EditFragment : BaseFragment(), OnCustomClickListener, SaveInterface, Image
                             val url = listStoryBook[idList].list[idImage].image_url
                             imageUrl = "$urlBase$url"
 
-                            var book_image_url =""
+                            var book_image_url = ""
                             var book_name = ""
                             var is_pro = ""
                             var priority = ""
-                            var id ="12"
-                              if(isMywork == false){
-                                   id = listStoryBook[idList].book_id
-                                   book_image_url = listStoryBook[idList].book_image_url
-                                   book_name = listStoryBook[idList].book_name
-                                   is_pro = listStoryBook[idList].is_pro
-                                   priority = listStoryBook[idList].priority
-                              } else{
-                                  id = idBook!!
-                                  book_image_url = storyBook[0].book_image_url
-                                  book_name = storyBook[0].book_name
-                                  is_pro = storyBook[0].is_pro
-                                  priority = storyBook[0].priority
-                              }
-
-
+                            var id = "12"
+                            if (isMywork == false) {
+                                id = listStoryBook[idList].book_id
+                                book_image_url = listStoryBook[idList].book_image_url
+                                book_name = listStoryBook[idList].book_name
+                                is_pro = listStoryBook[idList].is_pro
+                                priority = listStoryBook[idList].priority
+                            } else {
+                                id = idBook!!
+                                book_image_url = storyBook[0].book_image_url
+                                book_name = storyBook[0].book_name
+                                is_pro = storyBook[0].is_pro
+                                priority = storyBook[0].priority
+                            }
 
 
 //                            val book_id: String,
@@ -287,6 +284,7 @@ class EditFragment : BaseFragment(), OnCustomClickListener, SaveInterface, Image
 //                            val list: List<ImageStorySave>,
 //                            val priority: String
                             val listImage: ArrayList<ImageStorySave> = ArrayList()
+                            gg("vcvcvcvfgfgfgfgfg", "insert $storyBook")
                             if (storyBook.size == 0) {
                                 for (i in 0..listStoryBook[idList].list.size - 1) {
                                     if (i != idImage) {
@@ -309,19 +307,18 @@ class EditFragment : BaseFragment(), OnCustomClickListener, SaveInterface, Image
                                 gg("vcvcvcvfgfgfgfgfg", "insert $storybook")
                                 saveStory(storybook)
                             } else {
-                                for (i in 0..storyBook[idList].list.size - 1) {
+                                for (i in 0..storyBook[0].list.size - 1) {
                                     if (i != idImage) {
-                                        val imageId = storyBook[idList].list[i].image_id
-                                        val image_url = storyBook[idList].list[i].image_url
-                                        val priorityImage = storyBook[idList].list[i].priority
-                                        val thumbnail_url = storyBook[idList].list[i].thumbnail_url
-                                        val trues = storyBook[idList].list[i].saveLocal
+                                        val imageId = storyBook[0].list[i].image_id
+                                        val image_url = storyBook[0].list[i].image_url
+                                        val priorityImage = storyBook[0].list[i].priority
+                                        val thumbnail_url = storyBook[0].list[i].thumbnail_url
+                                        val trues = storyBook[0].list[i].saveLocal
                                         listImage.add(ImageStorySave(id, imageId, image_url, priorityImage, thumbnail_url, trues))
                                     } else {
-
-                                        val imageId = listStoryBook[idList].list[idImage].image_id
-                                        val priorityImage = listStoryBook[idList].list[idImage].priority
-                                        val thumbnail_url = listStoryBook[idList].list[idImage].thumbnail_url
+                                        val imageId = listStoryBook[0].list[idImage].image_id
+                                        val priorityImage = listStoryBook[0].list[idImage].priority
+                                        val thumbnail_url = listStoryBook[0].list[idImage].thumbnail_url
                                         listImage.add(ImageStorySave(id, imageId, path, priorityImage, thumbnail_url, true))
                                     }
 
@@ -372,6 +369,7 @@ class EditFragment : BaseFragment(), OnCustomClickListener, SaveInterface, Image
                     }
                     if (directory.isDirectory) {
                         if (files.isEmpty()) {
+                            gg("vâovaovaov", "câccaa1")
                             loadImage()
                         } else {
                             for (file in files) {
@@ -383,13 +381,41 @@ class EditFragment : BaseFragment(), OnCustomClickListener, SaveInterface, Image
                                     imageUrl2 = url
                                     Glide.with(context!!).load(url).diskCacheStrategy(DiskCacheStrategy.NONE).into(imgPreView)
                                     showPopupCreateNew()
+                                    gg("vâovaovaov", "câccaa2")
                                     return
                                 }
                             }
-                            loadImage()
+
+                            getListImaageSave(imageUrl!!)
+
+                                Handler().postDelayed({
+                                    gg("vâovaovaov", "$imageSave")
+                                    if (imageSave.size > 0) {
+                                    val date = imageSave[0].date
+                                    if (date == "") {
+                                        loadImage()
+                                    } else {
+                                        PhotorDialog.getInstance().showDialogConfirm(activity, R.string.continue_edit_or_new,
+                                            R.string.continuee, R.string.rework, false, { _, _ ->
+                                                //continue
+                                                imageUrl = imageSave[0].name
+                                                isFromMain = false
+                                                loadImage()
+                                            }, { _, _ ->
+                                                loadImage()
+
+                                            })
+                                    }
+                                    } else{
+                                        loadImage()
+                                    }
+                                }, 100)
+
+
                         }
                     }
                 } else {
+                    gg("vâovaovaov", "câccaa4")
                     loadImage()
                 }
 
@@ -399,11 +425,39 @@ class EditFragment : BaseFragment(), OnCustomClickListener, SaveInterface, Image
                 s = s?.substring(s.lastIndexOf("/") + 1)
                 s = s?.substring(0, s.lastIndexOf("."))
                 imageName = s
-
+                storyBook
                 Lo.d("imageurl $imageUrl")
                 Lo.d("imageName $imageName")
+                Handler().postDelayed({
+                    gg("vâovaovaov", "câccaa5 $storyBook")
+                    gg("vâovaovaov", "câccaa5 $idImage")
+                    if(isMywork==false){
+                    if (storyBook.size > 0) {
+                        val check = storyBook[0].list[idImage].saveLocal
+                        if (check == true) {
+                            PhotorDialog.getInstance().showDialogConfirm(activity, R.string.continue_edit_or_new,
+                                R.string.continuee, R.string.rework, false, { _, _ ->
+                                    //continue
+                                    imageUrl = storyBook[0].list[idImage].image_url
+                                    isFromMain = false
+                                    loadImage()
+                                }, { _, _ ->
+                                    loadImage()
 
-                loadImage()
+                                })
+                        } else {
+                            loadImage()
+                        }
+                    } else {
+                        loadImage()
+                    }} else{
+                        loadImage()
+                    }
+
+
+                }, 200)
+
+
             }
 
         } else {
@@ -472,16 +526,19 @@ class EditFragment : BaseFragment(), OnCustomClickListener, SaveInterface, Image
         var bitmap: Bitmap? = null
         PhotorThread.getInstance().runBackground(object : PhotorThread.IBackground {
             override fun doingBackground() {
-                bitmap = Glide.with(context!!)
-                    .asBitmap()
-                    .load(if (isFromMain) {
+                try {
+                    bitmap = Glide.with(context!!)
+                        .asBitmap()
+                        .load(if (isFromMain) {
 //                        id
-                        imageUrl
-                    } else {
-                        imageUrl
-                    })
-                    .diskCacheStrategy(DiskCacheStrategy.NONE)
-                    .submit().get()
+                            imageUrl
+                        } else {
+                            imageUrl
+                        })
+                        .diskCacheStrategy(DiskCacheStrategy.NONE)
+                        .submit().get()
+                } catch (e: IllegalStateException) {
+                }
             }
 
             override fun onCompleted() {
@@ -658,6 +715,25 @@ class EditFragment : BaseFragment(), OnCustomClickListener, SaveInterface, Image
         changeCurrentColor(color)
     }
 
+    fun getListImaageSave(url:String): List<ImageModel> {
+        PhotorThread.getInstance().runBackground(object : PhotorThread.IBackground {
+            override fun doingBackground() {
+                imageSave = dao!!.getImageFromUrlGoc(url)
+
+            }
+
+            override fun onCompleted() {
+//                imageModel.add(imageModel1!!)
+//                imageModel2 = imageModel
+
+            }
+
+            override fun onCancel() {
+            }
+
+        })
+        return imageSave
+    }
     private fun saveCurrentImage() {
         if (activity != null) {
             if (PhotorTool.checkHasPermission(activity!!)) {
