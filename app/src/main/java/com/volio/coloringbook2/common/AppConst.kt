@@ -183,18 +183,18 @@ object AppConst {
 
     val listAllColor =
         arrayListOf(
-            ListColorModel("Spring", arrayListOf("#f8cf53", "#f2b32c", "#f2b32c", "#d14b27", "#c94ca4", "#f6718d", "#ffa0b4", "#8844b9", "#40b24e", "#804c2d", "#C8F4F9")),
-            ListColorModel("Summer", arrayListOf("#fedc55", "#ffcb00", "#ff8a00", "#f85c00", "#fd7f7f", "#5fccff", "#1173d7", "#39c600", "#ff9975", "#e81e00", "#5885AF")),
-            ListColorModel("Autumn", arrayListOf("#f8c453", "#ff8a00", "#df6027", "#c23e2a", "#8d1818", "#727c1d", "#498edb", "#35559a", "#b86d15", "#804806", "#C15B78")),
-            ListColorModel("Winter", arrayListOf("#f5d8c5", "#98ddfe", "#61a8f0", "#2d79c5", "#119290", "#dabbed", "#ad7ffa", "#f89ae3", "#c2c2dd", "#ffffff", "#C15B78")),
-            ListColorModel("Relax", arrayListOf("#c0e4fd", "#86d7fe", "#72b0f5", "#b987ec", "#50c396", "#fff695", "#f0757f", "#ffa67a", "#fdadb6", "#74d2b7", "#C15B78")),
-            ListColorModel("Vivid", arrayListOf("#f97c01", "#1fc3ff", "#ff4e92", "#fd7ca2", "#5f2d89", "#b65a04", "#fee15f", "#ef3125", "#008af4", "#37edc7", "#C15B78")),
-            ListColorModel("Basic", arrayListOf("#f8ee53", "#f76735", "#ef3125", "#ffaac2", "#624fa1", "#0c96f7", "#0c57b5", "#2d731a", "#ffffff", "#e1b996", "#C15B78")),
-            ListColorModel("Vintage", arrayListOf("#e1b996", "#f6d69d", "#f3c367", "#df7552", "#ee9a99", "#a7f4f4", "#85d1d1", "#84b597", "#b08fbb", "#ad586f", "#C15B78")),
-
-            ListColorModel("Shade Of Dark", arrayListOf("#51355d", "#143d57", "#136151", "#571c2a", "#3c3310", "#4c3111", "#215c84", "#2d3e50", "#6f2435", "#401f4e", "#e1b996")),
-            ListColorModel("Lullaby", arrayListOf("#c21a1a", "#f48f97", "#ce1874", "#6f5089", "#8ddb9d", "#25a2a6", "#f5a10b", "#ce5621", "#e1bcaa", "#fe6f69", "#f97c01")),
-            ListColorModel("Sunset", arrayListOf("#fdf3b8", "#f7d16c", "#eb9549", "#ed92a4", "#cd80bc", "#abe6eb", "#78c1ca", "#7a8be4", "#696fc7", "#996ba4", "#40b24e"))
+            ListColorModel("Spring", arrayListOf("#EF238D", "#EA3136", "#FE6700", "#FE9900", "#FEFE00", "#01CC01", "#00AFEE", "#009899", "#003399", "#6600CD", "#633191","#9A33CC","#FFFFFF","#000000"))
+//            ListColorModel("Summer", arrayListOf("#fedc55", "#ffcb00", "#ff8a00", "#f85c00", "#fd7f7f", "#5fccff", "#1173d7", "#39c600", "#ff9975", "#e81e00", "#5885AF")),
+//            ListColorModel("Autumn", arrayListOf("#f8c453", "#ff8a00", "#df6027", "#c23e2a", "#8d1818", "#727c1d", "#498edb", "#35559a", "#b86d15", "#804806", "#C15B78")),
+//            ListColorModel("Winter", arrayListOf("#f5d8c5", "#98ddfe", "#61a8f0", "#2d79c5", "#119290", "#dabbed", "#ad7ffa", "#f89ae3", "#c2c2dd", "#ffffff", "#C15B78")),
+//            ListColorModel("Relax", arrayListOf("#c0e4fd", "#86d7fe", "#72b0f5", "#b987ec", "#50c396", "#fff695", "#f0757f", "#ffa67a", "#fdadb6", "#74d2b7", "#C15B78")),
+//            ListColorModel("Vivid", arrayListOf("#f97c01", "#1fc3ff", "#ff4e92", "#fd7ca2", "#5f2d89", "#b65a04", "#fee15f", "#ef3125", "#008af4", "#37edc7", "#C15B78")),
+//            ListColorModel("Basic", arrayListOf("#f8ee53", "#f76735", "#ef3125", "#ffaac2", "#624fa1", "#0c96f7", "#0c57b5", "#2d731a", "#ffffff", "#e1b996", "#C15B78")),
+//            ListColorModel("Vintage", arrayListOf("#e1b996", "#f6d69d", "#f3c367", "#df7552", "#ee9a99", "#a7f4f4", "#85d1d1", "#84b597", "#b08fbb", "#ad586f", "#C15B78")),
+//
+//            ListColorModel("Shade Of Dark", arrayListOf("#51355d", "#143d57", "#136151", "#571c2a", "#3c3310", "#4c3111", "#215c84", "#2d3e50", "#6f2435", "#401f4e", "#e1b996")),
+//            ListColorModel("Lullaby", arrayListOf("#c21a1a", "#f48f97", "#ce1874", "#6f5089", "#8ddb9d", "#25a2a6", "#f5a10b", "#ce5621", "#e1bcaa", "#fe6f69", "#f97c01")),
+//            ListColorModel("Sunset", arrayListOf("#fdf3b8", "#f7d16c", "#eb9549", "#ed92a4", "#cd80bc", "#abe6eb", "#78c1ca", "#7a8be4", "#696fc7", "#996ba4", "#40b24e"))
         )
 
     var bitmap: Bitmap? = null

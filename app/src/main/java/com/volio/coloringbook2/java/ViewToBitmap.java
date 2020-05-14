@@ -82,6 +82,10 @@ public class ViewToBitmap {
         AsyncSaveImage asyncSaveBitmap = new AsyncSaveImage(context, getBitmap());
         asyncSaveBitmap.execute();
     }
+    public void save2(Context context) {
+        AsyncSaveImage2 asyncSaveBitmap = new AsyncSaveImage2(context, getBitmap());
+        asyncSaveBitmap.execute();
+    }
 
 
     public void saveBitmap(Context context) {

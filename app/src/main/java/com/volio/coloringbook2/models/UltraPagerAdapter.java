@@ -63,6 +63,9 @@ public class UltraPagerAdapter extends PagerAdapter {
         ImageView img9 = (ImageView) linearLayout.findViewById(R.id.color_9);
         ImageView img10 = (ImageView) linearLayout.findViewById(R.id.color_10);
         ImageView img11 = (ImageView) linearLayout.findViewById(R.id.color_11);
+        ImageView img12 = (ImageView) linearLayout.findViewById(R.id.color_12);
+        ImageView img13 = (ImageView) linearLayout.findViewById(R.id.color_13);
+        ImageView img14 = (ImageView) linearLayout.findViewById(R.id.color_14);
 
 //        final ImageView imgChose1 = (ImageView) linearLayout.findViewById(R.id.img_choose_1);
 //        final ImageView imgChose2 = (ImageView) linearLayout.findViewById(R.id.img_choose_2);
@@ -90,6 +93,9 @@ public class UltraPagerAdapter extends PagerAdapter {
         img9.setColorFilter(Color.parseColor(listColor.get(8)));
         img10.setColorFilter(Color.parseColor(listColor.get(9)));
         img11.setColorFilter(Color.parseColor(listColor.get(10)));
+        img12.setColorFilter(Color.parseColor(listColor.get(11)));
+        img13.setColorFilter(Color.parseColor(listColor.get(12)));
+        img14.setColorFilter(Color.parseColor(listColor.get(13)));
 
 //        hideAll(imgChose1, imgChose2, imgChose3, imgChose4, imgChose5, imgChose6, imgChose7, imgChose8, imgChose9, imgChose10, imgChose11);
 
@@ -140,6 +146,21 @@ public class UltraPagerAdapter extends PagerAdapter {
         PhotorTool.clickScaleView(img1, (v, event) -> {
             if (interfaces != null) {
                 interfaces.pickColor(listColor.get(0));
+            }
+        });
+        PhotorTool.clickScaleView(img12, (v, event) -> {
+            if (interfaces != null) {
+                interfaces.pickColor(listColor.get(11));
+            }
+        });
+        PhotorTool.clickScaleView(img13, (v, event) -> {
+            if (interfaces != null) {
+                interfaces.pickColor(listColor.get(12));
+            }
+        });
+        PhotorTool.clickScaleView(img14, (v, event) -> {
+            if (interfaces != null) {
+                interfaces.pickColor(listColor.get(13));
             }
         });
 

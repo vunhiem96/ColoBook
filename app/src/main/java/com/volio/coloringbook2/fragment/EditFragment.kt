@@ -5,6 +5,7 @@ import android.Manifest
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
@@ -14,6 +15,7 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.navigation.fragment.findNavController
@@ -46,6 +48,8 @@ import com.volio.coloringbook2.model.storybook.saveLocal.StoryBookSave
 import com.volio.coloringbook2.models.ImageModel
 import com.volio.coloringbook2.models.UltraPagerAdapter
 import com.zxy.tiny.Tiny
+import io.github.hyuwah.draggableviewlib.makeDraggable
+import kotlinx.android.synthetic.main.dialog_chose_color.*
 import kotlinx.android.synthetic.main.fragment_edit.*
 import java.io.File
 import java.text.SimpleDateFormat
@@ -71,7 +75,7 @@ class EditFragment : BaseFragment(), OnCustomClickListener, SaveInterface, Image
     private var dao: CalendarDao? = null
     private var storyBookdao: SaveStoryDao? = null
     private var idBook: String? = null
-    var imageSave:List<ImageModel> = ArrayList()
+    var imageSave: List<ImageModel> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -187,7 +191,7 @@ class EditFragment : BaseFragment(), OnCustomClickListener, SaveInterface, Image
         ultraViewPager.setMultiScreen(0.75f)
         ultraViewPager.setAutoMeasureHeight(false)
         ultraViewPager.setPageTransformer(false, UltraDepthScaleTransformer())
-        ultraViewPager.setInfiniteLoop(true)
+        ultraViewPager.setInfiniteLoop(false)
     }
 
     override fun pickColor(color: String) {
@@ -219,7 +223,7 @@ class EditFragment : BaseFragment(), OnCustomClickListener, SaveInterface, Image
         if (isStoryBook == false) {
             if (imageView != null) {
                 val bitmap = imageView?.getBitmap() ?: return
-                ViewToBitmap.of(bitmap).setOnSaveResultListener { isSaved, path ->
+                ViewToBitmap.of(imageView2).toJPG().setOnSaveResultListener { isSaved, path ->
                     if (isSaved && path != null && path.isNotEmpty()) {
                         isSaveImaged = true
                         if (isSafe()) {
@@ -229,12 +233,29 @@ class EditFragment : BaseFragment(), OnCustomClickListener, SaveInterface, Image
                             }
                             val currentDate: String = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(Date())
                             val currentTime = SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(Date())
-                            val image = ImageModel(path,imageUrl!!, 0, 0, size, 0, currentDate, currentTime)
+                            val image = ImageModel(path, imageUrl!!, 0, 0, size, 0, currentDate, currentTime)
                             saveImageDao(image)
                             nextFragment(path)
                         }
                     }
-                }.toJPG().saveBitmap(context!!)
+                }.toJPG().save(context!!)
+
+//                ViewToBitmap.of(bitmap).setOnSaveResultListener { isSaved, path ->
+//                    if (isSaved && path != null && path.isNotEmpty()) {
+//                        isSaveImaged = true
+//                        if (isSafe()) {
+//                            var size = imageView?.size()!!.toInt()
+//                            if (size > 100) {
+//                                size = 100
+//                            }
+//                            val currentDate: String = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(Date())
+//                            val currentTime = SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(Date())
+//                            val image = ImageModel(path,imageUrl!!, 0, 0, size, 0, currentDate, currentTime)
+//                            saveImageDao(image)
+//                            nextFragment(path)
+//                        }
+//                    }
+//                }.toJPG().saveBitmap(context!!)
 
 
             } else {
@@ -243,7 +264,7 @@ class EditFragment : BaseFragment(), OnCustomClickListener, SaveInterface, Image
         } else {
             if (imageView != null) {
                 val bitmap = imageView?.getBitmap() ?: return
-                ViewToBitmap.of(bitmap).setOnSaveResultListener { isSaved, path ->
+                ViewToBitmap.of(imageView2).setOnSaveResultListener { isSaved, path ->
                     if (isSaved && path != null && path.isNotEmpty()) {
                         isSaveImaged = true
                         if (isSafe()) {
@@ -331,7 +352,7 @@ class EditFragment : BaseFragment(), OnCustomClickListener, SaveInterface, Image
                             nextFragment(path)
                         }
                     }
-                }.toJPG().saveBitmap2(context!!)
+                }.toJPG().save2(context!!)
 
 
             } else {
@@ -388,9 +409,9 @@ class EditFragment : BaseFragment(), OnCustomClickListener, SaveInterface, Image
 
                             getListImaageSave(imageUrl!!)
 
-                                Handler().postDelayed({
-                                    gg("vâovaovaov", "$imageSave")
-                                    if (imageSave.size > 0) {
+                            Handler().postDelayed({
+                                gg("vâovaovaov", "$imageSave")
+                                if (imageSave.size > 0) {
                                     val date = imageSave[0].date
                                     if (date == "") {
                                         loadImage()
@@ -406,10 +427,10 @@ class EditFragment : BaseFragment(), OnCustomClickListener, SaveInterface, Image
 
                                             })
                                     }
-                                    } else{
-                                        loadImage()
-                                    }
-                                }, 100)
+                                } else {
+                                    loadImage()
+                                }
+                            }, 100)
 
 
                         }
@@ -431,26 +452,27 @@ class EditFragment : BaseFragment(), OnCustomClickListener, SaveInterface, Image
                 Handler().postDelayed({
                     gg("vâovaovaov", "câccaa5 $storyBook")
                     gg("vâovaovaov", "câccaa5 $idImage")
-                    if(isMywork==false){
-                    if (storyBook.size > 0) {
-                        val check = storyBook[0].list[idImage].saveLocal
-                        if (check == true) {
-                            PhotorDialog.getInstance().showDialogConfirm(activity, R.string.continue_edit_or_new,
-                                R.string.continuee, R.string.rework, false, { _, _ ->
-                                    //continue
-                                    imageUrl = storyBook[0].list[idImage].image_url
-                                    isFromMain = false
-                                    loadImage()
-                                }, { _, _ ->
-                                    loadImage()
+                    if (isMywork == false) {
+                        if (storyBook.size > 0) {
+                            val check = storyBook[0].list[idImage].saveLocal
+                            if (check == true) {
+                                PhotorDialog.getInstance().showDialogConfirm(activity, R.string.continue_edit_or_new,
+                                    R.string.continuee, R.string.rework, false, { _, _ ->
+                                        //continue
+                                        imageUrl = storyBook[0].list[idImage].image_url
+                                        isFromMain = false
+                                        loadImage()
+                                    }, { _, _ ->
+                                        loadImage()
 
-                                })
+                                    })
+                            } else {
+                                loadImage()
+                            }
                         } else {
                             loadImage()
                         }
                     } else {
-                        loadImage()
-                    }} else{
                         loadImage()
                     }
 
@@ -480,7 +502,215 @@ class EditFragment : BaseFragment(), OnCustomClickListener, SaveInterface, Image
 
     }
 
+    fun dialogCreate(text: String) {
+        val builder: AlertDialog.Builder?
+        val inflater = this.layoutInflater
+        builder = AlertDialog.Builder(context!!)
+        val logoutDialog = inflater.inflate(R.layout.dialog_chose_color, null)
+//            val btnCancel: ImageView = logoutDialog.findViewById(R.id.btn_close_dialog)
+        val tvDone: TextView = logoutDialog.findViewById(R.id.tv_done)
+//            val layoutSend: RelativeLayout = logoutDialog.findViewById(R.id.layout_send_feedback)
+
+
+        builder.setView(logoutDialog)
+        builder.setCancelable(true)
+        val dialog: AlertDialog = builder.create()
+        dialog.show()
+        if (text != "") {
+            dialog.edt.setText(text)
+        }
+        dialog.colors_1.setOnClickListener {
+            dialog.edt.setTextColor(Color.parseColor("#EF238D"))
+            tv2.setTextColor(Color.parseColor("#EF238D"))
+            dialog.img_chooses_1.visibility = View.VISIBLE
+            dialog.img_chooses_2.visibility = View.GONE
+            dialog.img_chooses_3.visibility = View.GONE
+            dialog.img_chooses_4.visibility = View.GONE
+            dialog.img_chooses_5.visibility = View.GONE
+            dialog.img_chooses_6.visibility = View.GONE
+            dialog.img_chooses_7.visibility = View.GONE
+            dialog.img_chooses_8.visibility = View.GONE
+            dialog.img_chooses_9.visibility = View.GONE
+            dialog.img_chooses_10.visibility = View.GONE
+            dialog.img_chooses_11.visibility = View.GONE
+        }
+        dialog.colors_2.setOnClickListener {
+            dialog.edt.setTextColor(Color.parseColor("#EA3136"))
+            tv2.setTextColor(Color.parseColor("#EA3136"))
+            dialog.img_chooses_1.visibility = View.GONE
+            dialog.img_chooses_2.visibility = View.VISIBLE
+            dialog.img_chooses_3.visibility = View.GONE
+            dialog.img_chooses_4.visibility = View.GONE
+            dialog.img_chooses_5.visibility = View.GONE
+            dialog.img_chooses_6.visibility = View.GONE
+            dialog.img_chooses_7.visibility = View.GONE
+            dialog.img_chooses_8.visibility = View.GONE
+            dialog.img_chooses_9.visibility = View.GONE
+            dialog.img_chooses_10.visibility = View.GONE
+            dialog.img_chooses_11.visibility = View.GONE
+        }
+        dialog.colors_3.setOnClickListener {
+            dialog.edt.setTextColor(Color.parseColor("#FE6700"))
+            tv2.setTextColor(Color.parseColor("#FE6700"))
+            dialog.img_chooses_1.visibility = View.GONE
+            dialog.img_chooses_2.visibility = View.GONE
+            dialog.img_chooses_3.visibility = View.VISIBLE
+            dialog.img_chooses_4.visibility = View.GONE
+            dialog.img_chooses_5.visibility = View.GONE
+            dialog.img_chooses_6.visibility = View.GONE
+            dialog.img_chooses_7.visibility = View.GONE
+            dialog.img_chooses_8.visibility = View.GONE
+            dialog.img_chooses_9.visibility = View.GONE
+            dialog.img_chooses_10.visibility = View.GONE
+            dialog.img_chooses_11.visibility = View.GONE
+        }
+        dialog.colors_4.setOnClickListener {
+            dialog.edt.setTextColor(Color.parseColor("#FE9900"))
+            tv2.setTextColor(Color.parseColor("#FE9900"))
+            dialog.img_chooses_1.visibility = View.GONE
+            dialog.img_chooses_2.visibility = View.GONE
+            dialog.img_chooses_3.visibility = View.GONE
+            dialog.img_chooses_4.visibility = View.VISIBLE
+            dialog.img_chooses_5.visibility = View.GONE
+            dialog.img_chooses_6.visibility = View.GONE
+            dialog.img_chooses_7.visibility = View.GONE
+            dialog.img_chooses_8.visibility = View.GONE
+            dialog.img_chooses_9.visibility = View.GONE
+            dialog.img_chooses_10.visibility = View.GONE
+            dialog.img_chooses_11.visibility = View.GONE
+        }
+        dialog.colors_5.setOnClickListener {
+            dialog.edt.setTextColor(Color.parseColor("#01CC01"))
+            tv2.setTextColor(Color.parseColor("#01CC01"))
+            dialog.img_chooses_1.visibility = View.GONE
+            dialog.img_chooses_2.visibility = View.GONE
+            dialog.img_chooses_3.visibility = View.GONE
+            dialog.img_chooses_4.visibility = View.GONE
+            dialog.img_chooses_5.visibility = View.VISIBLE
+            dialog.img_chooses_6.visibility = View.GONE
+            dialog.img_chooses_7.visibility = View.GONE
+            dialog.img_chooses_8.visibility = View.GONE
+            dialog.img_chooses_9.visibility = View.GONE
+            dialog.img_chooses_10.visibility = View.GONE
+            dialog.img_chooses_11.visibility = View.GONE
+        }
+        dialog.colors_6.setOnClickListener {
+            dialog.edt.setTextColor(Color.parseColor("#00AFEE"))
+            tv2.setTextColor(Color.parseColor("#00AFEE"))
+            dialog.img_chooses_1.visibility = View.GONE
+            dialog.img_chooses_2.visibility = View.GONE
+            dialog.img_chooses_3.visibility = View.GONE
+            dialog.img_chooses_4.visibility = View.GONE
+            dialog.img_chooses_5.visibility = View.GONE
+            dialog.img_chooses_6.visibility = View.VISIBLE
+            dialog.img_chooses_7.visibility = View.GONE
+            dialog.img_chooses_8.visibility = View.GONE
+            dialog.img_chooses_9.visibility = View.GONE
+            dialog.img_chooses_10.visibility = View.GONE
+            dialog.img_chooses_11.visibility = View.GONE
+        }
+        dialog.colors_7.setOnClickListener {
+            dialog.edt.setTextColor(Color.parseColor("#009899"))
+            tv2.setTextColor(Color.parseColor("#009899"))
+            dialog.img_chooses_1.visibility = View.GONE
+            dialog.img_chooses_2.visibility = View.GONE
+            dialog.img_chooses_3.visibility = View.GONE
+            dialog.img_chooses_4.visibility = View.GONE
+            dialog.img_chooses_5.visibility = View.GONE
+            dialog.img_chooses_6.visibility = View.GONE
+            dialog.img_chooses_7.visibility = View.VISIBLE
+            dialog.img_chooses_8.visibility = View.GONE
+            dialog.img_chooses_9.visibility = View.GONE
+            dialog.img_chooses_10.visibility = View.GONE
+            dialog.img_chooses_11.visibility = View.GONE
+        }
+        dialog.colors_8.setOnClickListener {
+            dialog.edt.setTextColor(Color.parseColor("#003399"))
+            tv2.setTextColor(Color.parseColor("#003399"))
+            dialog.img_chooses_1.visibility = View.GONE
+            dialog.img_chooses_2.visibility = View.GONE
+            dialog.img_chooses_3.visibility = View.GONE
+            dialog.img_chooses_4.visibility = View.GONE
+            dialog.img_chooses_5.visibility = View.GONE
+            dialog.img_chooses_6.visibility = View.GONE
+            dialog.img_chooses_7.visibility = View.GONE
+            dialog.img_chooses_8.visibility = View.VISIBLE
+            dialog.img_chooses_9.visibility = View.GONE
+            dialog.img_chooses_10.visibility = View.GONE
+            dialog.img_chooses_11.visibility = View.GONE
+        }
+        dialog.colors_9.setOnClickListener {
+            dialog.edt.setTextColor(Color.parseColor("#6600CD"))
+            tv2.setTextColor(Color.parseColor("#6600CD"))
+            dialog.img_chooses_1.visibility = View.GONE
+            dialog.img_chooses_2.visibility = View.GONE
+            dialog.img_chooses_3.visibility = View.GONE
+            dialog.img_chooses_4.visibility = View.GONE
+            dialog.img_chooses_5.visibility = View.GONE
+            dialog.img_chooses_6.visibility = View.GONE
+            dialog.img_chooses_7.visibility = View.GONE
+            dialog.img_chooses_8.visibility = View.GONE
+            dialog.img_chooses_9.visibility = View.VISIBLE
+            dialog.img_chooses_10.visibility = View.GONE
+            dialog.img_chooses_11.visibility = View.GONE
+        }
+
+        dialog.colors_10.setOnClickListener {
+            dialog.edt.setTextColor(Color.parseColor("#FFFFFF"))
+            tv2.setTextColor(Color.parseColor("#FFFFFF"))
+            dialog.img_chooses_1.visibility = View.GONE
+            dialog.img_chooses_2.visibility = View.GONE
+            dialog.img_chooses_3.visibility = View.GONE
+            dialog.img_chooses_4.visibility = View.GONE
+            dialog.img_chooses_5.visibility = View.GONE
+            dialog.img_chooses_6.visibility = View.GONE
+            dialog.img_chooses_7.visibility = View.GONE
+            dialog.img_chooses_8.visibility = View.GONE
+            dialog.img_chooses_9.visibility = View.GONE
+            dialog.img_chooses_10.visibility = View.VISIBLE
+            dialog.img_chooses_11.visibility = View.GONE
+        }
+        dialog.colors_11.setOnClickListener {
+            dialog.edt.setTextColor(Color.parseColor("#000000"))
+            tv2.setTextColor(Color.parseColor("#000000"))
+            dialog.img_chooses_1.visibility = View.GONE
+            dialog.img_chooses_2.visibility = View.GONE
+            dialog.img_chooses_3.visibility = View.GONE
+            dialog.img_chooses_4.visibility = View.GONE
+            dialog.img_chooses_5.visibility = View.GONE
+            dialog.img_chooses_6.visibility = View.GONE
+            dialog.img_chooses_7.visibility = View.GONE
+            dialog.img_chooses_8.visibility = View.GONE
+            dialog.img_chooses_9.visibility = View.GONE
+            dialog.img_chooses_10.visibility = View.GONE
+            dialog.img_chooses_11.visibility = View.VISIBLE
+        }
+
+
+        dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+//            btnCancel.setOnClickListener {
+//                dialog.dismiss()
+//            }
+        tvDone.setOnClickListener {
+            tv2.setText(dialog.edt.text.toString())
+            tv.visibility = View.VISIBLE
+            dialog.dismiss()
+        }
+
+    }
+
     private fun loadImage() {
+        tv.setOnClickListener {
+            dialogCreate(tv2.text.toString())
+        }
+        tv.makeDraggable()
+
+        tv_settext.setOnClickListener {
+            dialogCreate("")
+        }
+        close.setOnClickListener {
+            tv.visibility = View.GONE
+        }
         if (isRestart) isFromMain = true
 
         val id = AppConst.getIdRawFromName(context!!, imageName!!)
@@ -690,6 +920,8 @@ class EditFragment : BaseFragment(), OnCustomClickListener, SaveInterface, Image
         PhotorTool.clickScaleView(btn_back_image, this)
         PhotorTool.clickScaleView(btn_forward_image, this)
         btn_share.setOnClickListener {
+            close.visibility = View.GONE
+            tv2.setBackgroundResource(R.drawable.bodertext2)
             if (edit == 1001) {
                 val file = File(imageUrl)
                 file.delete()
@@ -715,7 +947,7 @@ class EditFragment : BaseFragment(), OnCustomClickListener, SaveInterface, Image
         changeCurrentColor(color)
     }
 
-    fun getListImaageSave(url:String): List<ImageModel> {
+    fun getListImaageSave(url: String): List<ImageModel> {
         PhotorThread.getInstance().runBackground(object : PhotorThread.IBackground {
             override fun doingBackground() {
                 imageSave = dao!!.getImageFromUrlGoc(url)
@@ -734,6 +966,7 @@ class EditFragment : BaseFragment(), OnCustomClickListener, SaveInterface, Image
         })
         return imageSave
     }
+
     private fun saveCurrentImage() {
         if (activity != null) {
             if (PhotorTool.checkHasPermission(activity!!)) {

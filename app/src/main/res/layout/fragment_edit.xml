@@ -12,45 +12,40 @@
 
 
         <ImageButton
-                android:layout_marginStart="@dimen/_5sdp"
                 android:id="@+id/btn_back_main"
                 android:layout_width="@dimen/_50sdp"
                 android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginLeft="@dimen/_5sdp"
                 android:background="@color/white"
                 android:padding="@dimen/_10sdp"
                 android:scaleType="fitXY"
-                app:srcCompat="@drawable/ic_home3"
-                android:layout_marginLeft="@dimen/_5sdp" />
+                app:srcCompat="@drawable/ic_home3" />
 
 
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:background="@drawable/boder"
+                android:gravity="center"
+                android:orientation="horizontal">
 
 
-            <LinearLayout
-                    android:background="@drawable/boder"
-                    android:layout_centerInParent="true"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:orientation="horizontal">
+            <ImageButton
+                    android:id="@+id/btn_back_image"
+                    android:layout_width="@dimen/_48sdp"
+                    android:layout_height="@dimen/_26sdp"
+                    android:background="@color/tranparent"
+                    app:srcCompat="@drawable/ic_vector_back" />
 
-
-                <ImageButton
-                        android:background="@color/tranparent"
-                        android:id="@+id/btn_back_image"
-                        android:layout_width="@dimen/_48sdp"
-                        android:layout_height="@dimen/_26sdp"
-                        app:srcCompat="@drawable/ic_vector_back"
-                       />
-
-                <ImageButton
-                        android:background="@color/tranparent"
-                        android:id="@+id/btn_forward_image"
-                        android:layout_width="@dimen/_48sdp"
-                        android:layout_height="@dimen/_26sdp"
-                        app:srcCompat="@drawable/ic_vector_next" />
-            </LinearLayout>
-
-
+            <ImageButton
+                    android:id="@+id/btn_forward_image"
+                    android:layout_width="@dimen/_48sdp"
+                    android:layout_height="@dimen/_26sdp"
+                    android:background="@color/tranparent"
+                    app:srcCompat="@drawable/ic_vector_next" />
+        </LinearLayout>
 
 
         <ImageButton
@@ -68,12 +63,6 @@
 
 
         <TextView
-                android:background="@drawable/boder"
-                android:fontFamily="@font/jua_regular"
-                android:gravity="center"
-                android:text="SAVE"
-                android:textColor="#F2C94C"
-                android:textSize="@dimen/_12ssp"
                 android:id="@+id/btn_share"
                 android:layout_width="@dimen/_50sdp"
                 android:layout_height="@dimen/_26sdp"
@@ -82,31 +71,83 @@
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="@dimen/_10sdp"
                 android:layout_marginRight="@dimen/_10sdp"
+                android:background="@drawable/boder"
+                android:fontFamily="@font/jua_regular"
+                android:gravity="center"
+                android:text="SAVE"
+                android:textColor="#F2C94C"
+                android:textSize="@dimen/_12ssp"
 
-               >
+                >
 
-<!--            <TextView-->
-<!--                 android:layout_margin="@dimen/_2sdp"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="match_parent"-->
-<!--                    android:fontFamily="@font/jua_regular"-->
-<!--                    android:gravity="center"-->
-<!--                    android:text="SAVE"-->
-<!--                    android:textColor="#F2C94C"-->
-<!--                    android:textSize="@dimen/_12ssp" />-->
+            <!--            <TextView-->
+            <!--                 android:layout_margin="@dimen/_2sdp"-->
+            <!--                    android:layout_width="match_parent"-->
+            <!--                    android:layout_height="match_parent"-->
+            <!--                    android:fontFamily="@font/jua_regular"-->
+            <!--                    android:gravity="center"-->
+            <!--                    android:text="SAVE"-->
+            <!--                    android:textColor="#F2C94C"-->
+            <!--                    android:textSize="@dimen/_12ssp" />-->
         </TextView>
 
     </RelativeLayout>
 
-
-    <com.volio.coloringbook2.customview.ColourImageView
-            android:id="@+id/imageView"
+    <FrameLayout
+            android:id="@+id/imageView2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@+id/bottom"
             android:layout_below="@+id/toolbar"
             android:layout_centerInParent="true"
-            android:adjustViewBounds="true" />
+            android:adjustViewBounds="true"
+            android:background="#ffff">
+
+        <com.volio.coloringbook2.customview.ColourImageView
+                android:id="@+id/imageView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:adjustViewBounds="true"></com.volio.coloringbook2.customview.ColourImageView>
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            <FrameLayout
+                    android:visibility="gone"
+                    android:id="@+id/tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                <TextView
+                        android:id="@+id/tv2"
+                        android:paddingVertical="@dimen/_8sdp"
+                        android:layout_marginBottom="@dimen/_4sdp"
+                        android:layout_marginEnd="@dimen/_4sdp"
+                       android:paddingHorizontal="@dimen/_10sdp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/_40sdp"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="@dimen/_5sdp"
+                        android:layout_marginTop="@dimen/_4sdp"
+                        android:background="@drawable/bodertext"
+                        android:fontFamily="@font/jua_regular"
+                        android:gravity="center"
+                        android:text="Daxua 20vvvvvvvvvvvvvv"
+                        android:textColor="#DF5F8B"
+                        android:textSize="@dimen/_20sdp" />
+
+                <ImageView
+                        android:id="@+id/close"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:srcCompat="@drawable/ic_close" />
+            </FrameLayout>
+
+        </LinearLayout>
+
+
+    </FrameLayout>
 
 
     <ImageView
@@ -136,8 +177,9 @@
                 android:gravity="center">
 
             <RelativeLayout
-                    android:layout_width="@dimen/_30sdp"
-                    android:layout_height="@dimen/_30sdp"
+                    android:layout_width="@dimen/_28sdp"
+                    android:layout_height="@dimen/_28sdp"
+                    android:layout_marginEnd="@dimen/_5sdp"
                     android:layout_marginRight="@dimen/_5sdp"
                     android:background="@drawable/background_color">
 
@@ -160,10 +202,32 @@
                     android:textSize="@dimen/_12sdp" />
         </LinearLayout>
 
-        <com.tmall.ultraviewpager.UltraViewPager
-                android:id="@+id/ultraViewPager"
+        <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_100sdp" />
+                android:layout_height="@dimen/_110sdp">
+
+            <TextView
+                    android:id="@+id/tv_settext"
+                    android:layout_width="@dimen/_38sdp"
+                    android:layout_height="@dimen/_38sdp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:layout_marginRight="@dimen/_15sdp"
+                    android:background="@drawable/boderx"
+                    android:gravity="center"
+                    android:text="Aa"
+                    android:textColor="#000000"
+                    android:textSize="@dimen/_18ssp" />
+
+            <com.tmall.ultraviewpager.UltraViewPager
+                    android:id="@+id/ultraViewPager"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_110sdp"
+                    android:layout_marginHorizontal="@dimen/_50sdp" />
+        </RelativeLayout>
+
 
     </LinearLayout>
 
