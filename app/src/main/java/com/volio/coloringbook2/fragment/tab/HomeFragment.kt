@@ -2,8 +2,9 @@ package com.volio.coloringbook2.fragment.tab
 
 
 import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkInfo
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -11,27 +12,20 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import com.flyco.tablayout.listener.OnTabSelectListener
-import com.google.gson.Gson
 import com.volio.coloringbook2.R
 import com.volio.coloringbook2.common.AppConst
 import com.volio.coloringbook2.database.config
 import com.volio.coloringbook2.fragment.BaseFragment
 import com.volio.coloringbook2.fragment.NewImageFragment
 import com.volio.coloringbook2.interfaces.NewImageInterface
-import com.volio.coloringbook2.java.PhotorTool
 import com.volio.coloringbook2.java.util.OnCustomClickListener
-import com.volio.coloringbook2.model.ColorBook
-import com.volio.coloringbook2.model.ColorBookItem
 import com.volio.coloringbook2.models.TypeModel
-import com.volio.coloringbook2.viewmodel.ColorBookViewModel
 import kotlinx.android.synthetic.main.fragment_home.*
 
 
 class HomeFragment : BaseFragment(), OnCustomClickListener, NewImageInterface {
-    var list:Array<TypeModel>? = null
+    var list: Array<TypeModel>? = null
 
     //    lateinit var viewmodel: ColorBookViewModel
     var newImageInterface: NewImageInterface? = null
@@ -61,7 +55,7 @@ class HomeFragment : BaseFragment(), OnCustomClickListener, NewImageInterface {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 //        viewmodel = ViewModelProviders.of(this).get(ColorBookViewModel::class.java)
-
+        context!!.config.checkNetwork = isOnline()
         initTabViewPager()
         initClick()
     }
@@ -71,6 +65,11 @@ class HomeFragment : BaseFragment(), OnCustomClickListener, NewImageInterface {
 //        PhotorTool.clickScaleView(txt_discover, this)
     }
 
+    fun isOnline(): Boolean {
+        val connMgr = activity!!.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val networkInfo: NetworkInfo? = connMgr.activeNetworkInfo
+        return networkInfo?.isConnected == true
+    }
 
 
     private fun initTabViewPager() {

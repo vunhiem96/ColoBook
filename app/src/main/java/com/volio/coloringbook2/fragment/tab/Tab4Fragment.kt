@@ -104,10 +104,10 @@ class Tab4Fragment : BaseFragment(), OnCustomClickListener, View.OnTouchListener
         super.onViewCreated(view, savedInstanceState)
         PhotorTool.clickScaleView(txt_checkupdate, this)
         PhotorTool.clickScaleView(back_setting, this)
-//        PhotorTool.clickScaleView(txt_rate, this)
+        PhotorTool.clickScaleView(txt_rate, this)
 //        PhotorTool.clickScaleView(txt_feedback, this)
 //        PhotorTool.clickScaleView(txt_policy, this)
-//        PhotorTool.clickScaleView(txt_share, this)
+        PhotorTool.clickScaleView(txt_share, this)
 //        PhotorTool.clickScaleView(img_ad, this)
 //        val font = Typeface.createFromAsset(activity?.assets,
 //            "fonts/ChalkboardSE-Regular.ttf")
@@ -134,8 +134,8 @@ class Tab4Fragment : BaseFragment(), OnCustomClickListener, View.OnTouchListener
             }
             R.id.back_setting -> findNavController().popBackStack()
 
-//            R.id.txt_rate -> clickRate()
-//            R.id.txt_share -> clickShare()
+            R.id.txt_rate -> clickRate()
+            R.id.txt_share -> clickShare()
 //            R.id.txt_feedback -> clickFeedback()
 //            R.id.txt_policy -> clickPolicy()
         }

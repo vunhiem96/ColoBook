@@ -32,7 +32,7 @@ class PageMyWorkAdapter(var context: Context,
         val img_page = linearLayout.findViewById<View>(R.id.img_page) as ImageView
         val storyBook = listStoryBook[position]
 
-        Glide.with(context).load(storyBook.image_url).placeholder(R.drawable.ic_splash).into(img_page)
+        Glide.with(context).load(storyBook.thumbnail_url).placeholder(R.drawable.ic_splash).into(img_page)
 //        context.config.urlImage = url2
         textView.text = "Page ${position + 1}"
         container.addView(linearLayout)

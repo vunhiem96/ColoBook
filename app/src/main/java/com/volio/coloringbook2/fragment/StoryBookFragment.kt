@@ -1,11 +1,16 @@
 package com.volio.coloringbook2.fragment
 
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkInfo
 import android.os.Bundle
 import android.os.Handler
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -35,7 +40,12 @@ class StoryBookFragment : BaseFragment(), OnCustomClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         PhotorTool.clickScaleView(back_storybook, this)
-        initRv()
+        val check = isOnline()
+        if(check == true) {
+            initRv()
+        } else{
+            Toast.makeText(context!!,"Check your connection and try again",Toast.LENGTH_LONG).show()
+        }
 
         context!!.config.Count = (context!!.config.Count)!!.toInt() + 1
         if (context!!.config.Count == 1) {
@@ -47,6 +57,11 @@ class StoryBookFragment : BaseFragment(), OnCustomClickListener {
         }
     }
 
+    fun isOnline(): Boolean {
+        val connMgr = activity!!.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val networkInfo: NetworkInfo? = connMgr.activeNetworkInfo
+        return networkInfo?.isConnected == true
+    }
     private fun initRv() {
         rv_story_book.layoutManager = GridLayoutManager(context, 3)
         val apiJson = context!!.config.storyBook

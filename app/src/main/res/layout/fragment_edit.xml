@@ -110,6 +110,7 @@
                 android:adjustViewBounds="true"></com.volio.coloringbook2.customview.ColourImageView>
 
         <LinearLayout
+                android:gravity="center_horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
@@ -119,14 +120,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
 
-                <TextView
+                <com.volio.coloringbook2.java.PinchZoomTextView
                         android:id="@+id/tv2"
                         android:paddingVertical="@dimen/_8sdp"
                         android:layout_marginBottom="@dimen/_4sdp"
                         android:layout_marginEnd="@dimen/_4sdp"
                        android:paddingHorizontal="@dimen/_10sdp"
                         android:layout_width="wrap_content"
-                        android:layout_height="@dimen/_40sdp"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginStart="@dimen/_5sdp"
                         android:layout_marginTop="@dimen/_4sdp"
@@ -135,13 +136,23 @@
                         android:gravity="center"
                         android:text="Daxua 20vvvvvvvvvvvvvv"
                         android:textColor="#DF5F8B"
-                        android:textSize="@dimen/_20sdp" />
+                        android:textSize="@dimen/_30sdp" />
+
 
                 <ImageView
                         android:id="@+id/close"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         app:srcCompat="@drawable/ic_close" />
+                <ToggleButton
+                      android:textOff=""
+                        android:textOn=""
+                        android:checked="false"
+                        android:id="@+id/zoom"
+                        android:background="@drawable/onoff_zoom"
+                        android:layout_gravity="end|bottom"
+                        android:layout_width="@dimen/_20sdp"
+                        android:layout_height="@dimen/_20sdp"/>
             </FrameLayout>
 
         </LinearLayout>
@@ -205,16 +216,33 @@
         <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_110sdp">
-
+            <LinearLayout
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:id="@+id/choose_color_style"
+                    android:layout_width="@dimen/_38sdp"
+                    android:layout_height="@dimen/_38sdp"
+                  android:layout_alignParentBottom="true"
+                    android:background="@drawable/boderx"
+                    android:gravity="center"
+                    android:textColor="#000000"
+                    android:textSize="@dimen/_18ssp"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="@dimen/_15sdp">
+                <ImageView
+                        android:id="@+id/img_style"
+                        android:padding="@dimen/_8sdp"
+                        app:srcCompat="@drawable/ic_default_color"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
+            </LinearLayout>
             <TextView
                     android:id="@+id/tv_settext"
                     android:layout_width="@dimen/_38sdp"
                     android:layout_height="@dimen/_38sdp"
                     android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
+                  android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="@dimen/_15sdp"
                     android:layout_marginEnd="@dimen/_10sdp"
-                    android:layout_marginRight="@dimen/_15sdp"
                     android:background="@drawable/boderx"
                     android:gravity="center"
                     android:text="Aa"

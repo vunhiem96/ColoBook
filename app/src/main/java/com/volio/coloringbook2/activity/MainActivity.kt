@@ -92,8 +92,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                config.checkNetwork = false
-                Toast.makeText(this@MainActivity, "Vui lòng kiểm tra lại 3G/Wifi", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@MainActivity, "Check your connection and try again", Toast.LENGTH_SHORT).show()
             }
         })
     }
@@ -119,8 +118,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                config.checkNetwork = false
-                Toast.makeText(this@MainActivity, "Vui lòng kiểm tra lại 3G/Wifi", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@MainActivity, "Check your connection and try again", Toast.LENGTH_SHORT).show()
             }
         })
     }

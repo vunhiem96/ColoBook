@@ -1,9 +1,9 @@
 package com.volio.coloringbook2.common
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Environment
-import android.util.Log
 import com.google.gson.Gson
 import com.volio.coloringbook2.R
 import com.volio.coloringbook2.database.config
@@ -18,7 +18,6 @@ import java.io.IOException
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.concurrent.schedule
-import kotlin.math.log
 
 object AppConst {
 
@@ -47,13 +46,13 @@ object AppConst {
 //            TypeModel(context.resources.getString(R.string.animal), 2),
 //            TypeModel(context.resources.getString(R.string.fantasy_world), 3))
 //            TypeModel(context.resources.getString(R.string.people), 5)
-            )
+        )
     }
 
     fun getAllType2(context: Context): ArrayList<TypeModel> {
         val checkNet = context!!.config.checkNetwork
         val list2: ArrayList<TypeModel> = ArrayList()
-        if(checkNet == true) {
+        if (checkNet == true) {
             val apiJson = context.config.category
             val gson = Gson()
             val category = gson.fromJson(apiJson, ColorBook::class.java)
@@ -66,7 +65,7 @@ object AppConst {
                 list2.add(TypeModel(category[i].cate_name, idInt))
 
             }
-        } else{
+        } else {
             list2.add(TypeModel(context.resources.getString(R.string.manda), 10002))
         }
         return list2
@@ -85,9 +84,9 @@ object AppConst {
         for (i in 1..6) {
             val name = "simple_mandalas_$i"
             when {
-                i <= 3 -> list.add(ImageModel(name = name, type = 1,date = "",time = "",urlGoc = ""))
-                i in 4..6 -> list.add(ImageModel(name = name, type = 2,date = "",time = "",urlGoc = ""))
-                else -> list.add(ImageModel(name = name, date = "",time = "",urlGoc = ""))
+                i <= 3 -> list.add(ImageModel(name = name, type = 1, date = "", time = "", urlGoc = ""))
+                i in 4..6 -> list.add(ImageModel(name = name, type = 2, date = "", time = "", urlGoc = ""))
+                else -> list.add(ImageModel(name = name, date = "", time = "", urlGoc = ""))
             }
         }
         return list
@@ -98,9 +97,9 @@ object AppConst {
         for (i in 1..10) {
             val name = "mandalaa_$i"
             when {
-                i <= 3 -> list.add(ImageModel(name = name, type = 1,date = "",time = "",urlGoc = ""))
-                i in 4..6 -> list.add(ImageModel(name = name, type = 2,date = "",time = "",urlGoc = ""))
-                else -> list.add(ImageModel(name = name,date = "",time = "",urlGoc = ""))
+                i <= 3 -> list.add(ImageModel(name = name, type = 1, date = "", time = "", urlGoc = ""))
+                i in 4..6 -> list.add(ImageModel(name = name, type = 2, date = "", time = "", urlGoc = ""))
+                else -> list.add(ImageModel(name = name, date = "", time = "", urlGoc = ""))
             }
         }
         return list
@@ -113,14 +112,12 @@ object AppConst {
     //type 2 new
 
 
-
-
     private val minMandala = 1
     private val maxMandala = 10
     private fun loadMandala(): ArrayList<ImageModel> {
         val list = arrayListOf<ImageModel>()
-        list.add(ImageModel("mandalaa_1", type = 3,date = "",time = "",urlGoc = ""))
-        list.add(ImageModel("simple_mandalas_1", type = 4,date = "",time = "",urlGoc = ""))
+        list.add(ImageModel("mandalaa_1", type = 3, date = "", time = "", urlGoc = ""))
+        list.add(ImageModel("simple_mandalas_1", type = 4, date = "", time = "", urlGoc = ""))
 //        for (i in minMandala..maxMandala) {
 //            val name = "mandalaa_$i"
 //            when {
@@ -131,10 +128,6 @@ object AppConst {
 //        }
         return list
     }
-
-
-
-
 
 
     val listAllImages = loadNames()
@@ -183,7 +176,7 @@ object AppConst {
 
     val listAllColor =
         arrayListOf(
-            ListColorModel("Spring", arrayListOf("#EF238D", "#EA3136", "#FE6700", "#FE9900", "#FEFE00", "#01CC01", "#00AFEE", "#009899", "#003399", "#6600CD", "#633191","#9A33CC","#FFFFFF","#000000"))
+            ListColorModel("Spring", arrayListOf("#EF238D", "#EA3136", "#FE6700", "#FE9900", "#FEFE00", "#01CC01", "#00AFEE", "#009899", "#003399", "#6600CD", "#633191", "#9A33CC", "#FFFFFF", "#000000"))
 //            ListColorModel("Summer", arrayListOf("#fedc55", "#ffcb00", "#ff8a00", "#f85c00", "#fd7f7f", "#5fccff", "#1173d7", "#39c600", "#ff9975", "#e81e00", "#5885AF")),
 //            ListColorModel("Autumn", arrayListOf("#f8c453", "#ff8a00", "#df6027", "#c23e2a", "#8d1818", "#727c1d", "#498edb", "#35559a", "#b86d15", "#804806", "#C15B78")),
 //            ListColorModel("Winter", arrayListOf("#f5d8c5", "#98ddfe", "#61a8f0", "#2d79c5", "#119290", "#dabbed", "#ad7ffa", "#f89ae3", "#c2c2dd", "#ffffff", "#C15B78")),
@@ -196,11 +189,34 @@ object AppConst {
 //            ListColorModel("Lullaby", arrayListOf("#c21a1a", "#f48f97", "#ce1874", "#6f5089", "#8ddb9d", "#25a2a6", "#f5a10b", "#ce5621", "#e1bcaa", "#fe6f69", "#f97c01")),
 //            ListColorModel("Sunset", arrayListOf("#fdf3b8", "#f7d16c", "#eb9549", "#ed92a4", "#cd80bc", "#abe6eb", "#78c1ca", "#7a8be4", "#696fc7", "#996ba4", "#40b24e"))
         )
+    val listWaterColor =
+        arrayListOf(
+            ListColorModel("Spring", arrayListOf("#69bdd2", "#4d94ff", "#3385ff", "#1a75ff", "#6699ff", "#4d88ff", "#4d4dff", "#99d6ff", "#80ccff", "#66c2ff", "#4db8ff", "#1a8cff", "#0080ff", "#0073e6"))
+        )
+    val listcrayColor =
+        arrayListOf(
+            ListColorModel("Spring", arrayListOf("#9A9797", "#A9A9A9", "#e0e0d1", "#d6d6c2", "#ccccb3", "#c2c2a3", "#b8b894", "#708090", "#778899", "#696969", "#C0C0C0", "#D3D3D3", "#DCDCDC", "#808080"))
+        )
 
     var bitmap: Bitmap? = null
 
     var tabChoose = -1
     var positionChoose = -1
+
+    fun Context.shareApp() {
+        val linkApk = getString(R.string.base_link_apk) + applicationContext!!.packageName
+        val appName = getString(R.string.app_name)
+        val sharingIntent = Intent(Intent.ACTION_SEND)
+        sharingIntent.type = "text/plain"
+        sharingIntent.run {
+            putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name))  // title
+            putExtra(
+                Intent.EXTRA_TEXT,
+                "Download app " + getString(R.string.app_name) + ": $linkApk"  // content
+            )
+        }
+        startActivity(Intent.createChooser(sharingIntent, getString(R.string.share_via)))
+    }
 
     fun saveBitmap(name: String, imageName: String, mBitmap: Bitmap) {
         val t1 = Thread(Runnable {

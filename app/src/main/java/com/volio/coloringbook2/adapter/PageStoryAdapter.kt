@@ -31,7 +31,7 @@ class PageStoryAdapter(var context: Context,
         val img_page = linearLayout.findViewById<View>(R.id.img_page) as ImageView
         val storyBook = listStoryBook[position]
         val url = "http://mycat.asia/volio_colorbook/"
-        val url2 = "${url}${storyBook.image_url}"
+        val url2 = "${url}${storyBook.thumbnail_url}"
 
         Glide.with(context).load(url2).placeholder(R.drawable.ic_splash).into(img_page)
         context.config.urlImage = url2

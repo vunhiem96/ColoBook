@@ -8,7 +8,8 @@
     <string name="discover_now">Discover now</string>
     <string name="all">All</string>
     <string name="animals">Animals</string>
-
+    <string name="base_link_apk">https://play.google.com/store/apps/details?id=</string>
+    <string name="share_via">Share via</string>
     <string name="dogs">Dogs</string>
     <string name="people">People</string>
     <string name="gallery">Gallery</string>

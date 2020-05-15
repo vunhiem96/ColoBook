@@ -1,11 +1,15 @@
 package com.volio.coloringbook2.fragment
 
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkInfo
 import android.os.Bundle
 import android.os.Handler
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager.widget.PagerAdapter
@@ -117,20 +121,44 @@ class PageStoryFragment : Fragment(), OnCustomClickListener {
                     bundle.putBoolean("story", true)
                     findNavController().navigate(R.id.action_pageStoryFragment_to_editFragment, bundle)
                 } else {
-                    val bundle = Bundle()
-                    AppConst.positionChoose = ultraViewPager_story.currentItem
-                    gg("vcvcvcvchghghghgh", "${AppConst.positionChoose}")
-                    bundle.putInt("idImg", AppConst.positionChoose)
-                    bundle.putString("idStorybook", idImage)
-                    bundle.putInt("idList", postionList)
-                    bundle.putBoolean("story", true)
-                    bundle.putBoolean("mywork", true)
-                    findNavController().navigate(R.id.action_pageStoryFragment_to_editFragment, bundle)
+                    val checkNetwork = isOnline()
+                    if (checkNetwork==true)
+                        {
+                        val bundle = Bundle()
+                        AppConst.positionChoose = ultraViewPager_story.currentItem
+                        gg("vcvcvcvchghghghgh", "${AppConst.positionChoose}")
+                        bundle.putInt("idImg", AppConst.positionChoose)
+                        bundle.putString("idStorybook", idImage)
+                        bundle.putInt("idList", postionList)
+                        bundle.putBoolean("story", true)
+                        bundle.putBoolean("mywork", true)
+                        findNavController().navigate(R.id.action_pageStoryFragment_to_editFragment, bundle)
+                    } else{
+                        val check = listImage2[0].list[ultraViewPager_story.currentItem].saveLocal
+                        if(check==true) {
+                            val bundle = Bundle()
+                            AppConst.positionChoose = ultraViewPager_story.currentItem
+                            gg("vcvcvcvchghghghgh", "${AppConst.positionChoose}")
+                            bundle.putInt("idImg", AppConst.positionChoose)
+                            bundle.putString("idStorybook", idImage)
+                            bundle.putInt("idList", postionList)
+                            bundle.putBoolean("story", true)
+                            bundle.putBoolean("mywork", true)
+                            findNavController().navigate(R.id.action_pageStoryFragment_to_editFragment, bundle)
+                        } else{
+                            Toast.makeText(context!!,"Check your connection to edit",Toast.LENGTH_LONG).show()
+                        }
+                    }
                 }
             }
 
 
         }
+    }
+    fun isOnline(): Boolean {
+        val connMgr = activity!!.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val networkInfo: NetworkInfo? = connMgr.activeNetworkInfo
+        return networkInfo?.isConnected == true
     }
     fun getListImage(id:String): List<StoryBookSave> {
 

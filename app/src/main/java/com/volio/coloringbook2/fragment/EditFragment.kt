@@ -50,6 +50,7 @@ import com.volio.coloringbook2.models.UltraPagerAdapter
 import com.zxy.tiny.Tiny
 import io.github.hyuwah.draggableviewlib.makeDraggable
 import kotlinx.android.synthetic.main.dialog_chose_color.*
+import kotlinx.android.synthetic.main.dialog_chose_color_style.view.*
 import kotlinx.android.synthetic.main.fragment_edit.*
 import java.io.File
 import java.text.SimpleDateFormat
@@ -153,7 +154,7 @@ class EditFragment : BaseFragment(), OnCustomClickListener, SaveInterface, Image
         initEvent()
         initView()
         PhotorTool.createFolder(TEMP_FOLDER)
-        initViewPager()
+        initViewPager(1)
         imageView?.onRedoUndoListener = object : ColourImageView.OnRedoUndoListener {
             override fun onRedoUndo(undoSize: Int, redoSize: Int) {
                 if (undoSize != 0) {
@@ -184,9 +185,17 @@ class EditFragment : BaseFragment(), OnCustomClickListener, SaveInterface, Image
 
 
     private var adapter: PagerAdapter? = null
-    private fun initViewPager() {
+    private fun initViewPager(check: Int) {
         ultraViewPager.setScrollMode(UltraViewPager.ScrollMode.HORIZONTAL)
-        adapter = UltraPagerAdapter(true, AppConst.listAllColor, this)
+        if(check==1) {
+            adapter = UltraPagerAdapter(true, AppConst.listAllColor, this)
+        }
+        if(check == 2){
+            adapter = UltraPagerAdapter(true, AppConst.listWaterColor, this)
+        }
+        if(check == 3){
+            adapter = UltraPagerAdapter(true, AppConst.listcrayColor, this)
+        }
         ultraViewPager.adapter = adapter
         ultraViewPager.setMultiScreen(0.75f)
         ultraViewPager.setAutoMeasureHeight(false)
@@ -314,12 +323,13 @@ class EditFragment : BaseFragment(), OnCustomClickListener, SaveInterface, Image
                                         val image_url = "$urlBase$image_url1"
                                         val priorityImage = listStoryBook[idList].list[i].priority
                                         val thumbnail_url = listStoryBook[idList].list[i].thumbnail_url
-                                        listImage.add(ImageStorySave(id, imageId, image_url, priorityImage, thumbnail_url, false))
+                                        val thumbnail_url2 = "$urlBase$thumbnail_url"
+                                        listImage.add(ImageStorySave(id, imageId, image_url, priorityImage, thumbnail_url2, false))
                                     } else {
                                         val imageId = listStoryBook[idList].list[idImage].image_id
                                         val priorityImage = listStoryBook[idList].list[idImage].priority
                                         val thumbnail_url = listStoryBook[idList].list[idImage].thumbnail_url
-                                        listImage.add(ImageStorySave(id, imageId, path, priorityImage, thumbnail_url, true))
+                                        listImage.add(ImageStorySave(id, imageId, path, priorityImage, path, true))
 
 
                                     }
@@ -340,7 +350,7 @@ class EditFragment : BaseFragment(), OnCustomClickListener, SaveInterface, Image
                                         val imageId = listStoryBook[0].list[idImage].image_id
                                         val priorityImage = listStoryBook[0].list[idImage].priority
                                         val thumbnail_url = listStoryBook[0].list[idImage].thumbnail_url
-                                        listImage.add(ImageStorySave(id, imageId, path, priorityImage, thumbnail_url, true))
+                                        listImage.add(ImageStorySave(id, imageId, path, priorityImage, path, true))
                                     }
 
                                 }
@@ -692,14 +702,98 @@ class EditFragment : BaseFragment(), OnCustomClickListener, SaveInterface, Image
 //                dialog.dismiss()
 //            }
         tvDone.setOnClickListener {
-            tv2.setText(dialog.edt.text.toString())
-            tv.visibility = View.VISIBLE
-            dialog.dismiss()
+            val string = dialog.edt.text.toString()
+            if(string !="") {
+                tv2.text = string
+                tv.visibility = View.VISIBLE
+                dialog.dismiss()
+                close.visibility = View.VISIBLE
+                zoom.visibility = View.VISIBLE
+                tv2.setBackgroundResource(R.drawable.bodertext)
+            } else{
+                tv.visibility = View.GONE
+                close.visibility = View.GONE
+                zoom.visibility = View.GONE
+                dialog.dismiss()
+            }
         }
 
     }
 
     private fun loadImage() {
+
+        choose_color_style.setOnClickListener {
+            val builder: AlertDialog.Builder?
+            val inflater = this.layoutInflater
+            builder = AlertDialog.Builder(context!!)
+            val logoutDialog2 = inflater.inflate(R.layout.dialog_chose_color_style, null)
+//            val btnCancel: ImageView = logoutDialog.findViewById(R.id.btn_close_dialog)
+//            val tvDone: TextView = logoutDialog.findViewById(R.id.tv_done)
+//            val layoutSend: RelativeLayout = logoutDialog.findViewById(R.id.layout_send_feedback)
+            builder.setView(logoutDialog2)
+            builder.setCancelable(true)
+            val dialog2: AlertDialog = builder.create()
+            dialog2.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            dialog2.show()
+            logoutDialog2.dissmiss2.setOnClickListener {
+                dialog2.dismiss()
+            }
+            logoutDialog2.dismiss1.setOnClickListener {
+                dialog2.dismiss()
+            }
+            logoutDialog2.btn_default.setOnClickListener {
+                initViewPager(1)
+                img_style.setImageResource(R.drawable.ic_default_color)
+                Handler().postDelayed({
+                    dialog2.dismiss()
+                },200)
+                logoutDialog2.btn_default.setBackgroundResource(R.drawable.round_bg_dialog)
+                logoutDialog2.btn_water_color.setBackgroundResource(R.drawable.background_white)
+                logoutDialog2.btn_crayons.setBackgroundResource(R.drawable.background_white)
+                logoutDialog2.btn_gradient.setBackgroundResource(R.drawable.background_white)
+            }
+            logoutDialog2.btn_water_color.setOnClickListener {
+                initViewPager(2)
+                img_style.setImageResource(R.drawable.ic_watercolor)
+                Handler().postDelayed({
+                    dialog2.dismiss()
+                },200)
+                logoutDialog2.btn_default.setBackgroundResource(R.drawable.background_white)
+                logoutDialog2.btn_water_color.setBackgroundResource(R.drawable.round_bg_dialog)
+                logoutDialog2.btn_crayons.setBackgroundResource(R.drawable.background_white)
+                logoutDialog2.btn_gradient.setBackgroundResource(R.drawable.background_white)
+            }
+            logoutDialog2.btn_crayons.setOnClickListener {
+                initViewPager(3)
+                img_style.setImageResource(R.drawable.ic_crayons)
+                Handler().postDelayed({
+                    dialog2.dismiss()
+                },200)
+                logoutDialog2.btn_default.setBackgroundResource(R.drawable.background_white)
+                logoutDialog2.btn_water_color.setBackgroundResource(R.drawable.background_white)
+                logoutDialog2.btn_crayons.setBackgroundResource(R.drawable.round_bg_dialog)
+                logoutDialog2.btn_gradient.setBackgroundResource(R.drawable.background_white)
+            }
+            logoutDialog2.btn_gradient.setOnClickListener {
+                img_style.setImageResource(R.drawable.ic_gradient)
+                Handler().postDelayed({
+                    dialog2.dismiss()
+                },200)
+                logoutDialog2.btn_default.setBackgroundResource(R.drawable.background_white)
+                logoutDialog2.btn_water_color.setBackgroundResource(R.drawable.background_white)
+                logoutDialog2.btn_crayons.setBackgroundResource(R.drawable.background_white)
+                logoutDialog2.btn_gradient.setBackgroundResource(R.drawable.round_bg_dialog)
+            }
+        }
+
+        tv2.touch = false
+        zoom.setOnClickListener {
+            tv2.touch = zoom.isChecked
+            if(zoom.isChecked == true){
+                Toast.makeText(context!!,"Use 2 hands to zoom text",Toast.LENGTH_LONG).show()
+            }
+        }
+
         tv.setOnClickListener {
             dialogCreate(tv2.text.toString())
         }
@@ -921,6 +1015,7 @@ class EditFragment : BaseFragment(), OnCustomClickListener, SaveInterface, Image
         PhotorTool.clickScaleView(btn_forward_image, this)
         btn_share.setOnClickListener {
             close.visibility = View.GONE
+            zoom.visibility = View.GONE
             tv2.setBackgroundResource(R.drawable.bodertext2)
             if (edit == 1001) {
                 val file = File(imageUrl)

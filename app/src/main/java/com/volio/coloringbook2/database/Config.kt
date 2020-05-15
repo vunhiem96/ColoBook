@@ -22,6 +22,14 @@ class Configs(context: Context)  {
         get() = prefs.getBoolean("checkNetwork", false)
         set(checkNetwork) = prefs.edit().putBoolean("checkNetwork", checkNetwork!!).apply()
 
+    var checkSound: Boolean?
+        get() = prefs.getBoolean("checkSound", false)
+        set(checkSound) = prefs.edit().putBoolean("checkSound", checkSound!!).apply()
+
+    var checkVibrate: Boolean?
+        get() = prefs.getBoolean("checkVibrate", false)
+        set(checkVibrate) = prefs.edit().putBoolean("checkVibrate", checkNetwork!!).apply()
+
     var urlImage: String?
         get() = prefs.getString("url", "")
         set(urlImage) = prefs.edit().putString("url", urlImage).apply()

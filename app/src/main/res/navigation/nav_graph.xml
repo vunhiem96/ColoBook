@@ -111,6 +111,9 @@
         <action
                 android:id="@+id/action_tab3Fragment_to_pageStoryFragment"
                 app:destination="@id/pageStoryFragment" />
+        <action
+                android:id="@+id/action_tab3Fragment_to_storyBookFragment"
+                app:destination="@id/storyBookFragment" />
     </fragment>
     <fragment
             android:id="@+id/storyBookFragment"

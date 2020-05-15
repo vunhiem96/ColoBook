@@ -147,6 +147,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/_160sdp">
         <RelativeLayout
+                android:id="@+id/txt_rate"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_40sdp">
             <TextView
@@ -170,6 +171,7 @@
             
         </RelativeLayout>
         <RelativeLayout
+                android:id="@+id/txt_share"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_40sdp">
 

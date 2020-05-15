@@ -21,6 +21,7 @@ import com.github.florent37.runtimepermission.kotlin.askPermission
 import com.volio.coloringbook2.R
 import com.volio.coloringbook2.adapter.StorySaveAdapter
 import com.volio.coloringbook2.common.AppConst
+import com.volio.coloringbook2.common.gg
 import com.volio.coloringbook2.customview.recyclical.emptyDataSource
 import com.volio.coloringbook2.customview.recyclical.setup
 import com.volio.coloringbook2.customview.recyclical.withItem
@@ -47,7 +48,7 @@ class MyWorkFragments : BaseFragment(), OnCustomClickListener {
     var imageModel2: List<ImageModel> = ArrayList()
     var storyBook: List<StoryBookSave> = ArrayList()
     lateinit var storyBookSaveAdapter: StorySaveAdapter
-
+    var count = 1
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -74,19 +75,45 @@ class MyWorkFragments : BaseFragment(), OnCustomClickListener {
         updateListImage()
         chooseList()
         getList()
+        recycle_story.visibility = View.GONE
+    }
 
+    fun emptyList(){
+        Handler().postDelayed({
+            val check =  dataSourceImage.isEmpty()
+            if(check == true){
+                empty.visibility = View.VISIBLE
+            } else{
+                empty.visibility = View.GONE
+            }
+        },200)
+    }
+    fun emptyStory(){
+        Handler().postDelayed({
+            val check =  storyBook.size
+            if(check == 0){
+                empty.visibility = View.VISIBLE
+            } else{
+                empty.visibility = View.GONE
+            }
+        },200)
     }
 
     private fun chooseList() {
+        emptyList()
         initRv()
         rdbtn_pick.isChecked = true
         rdbtn_pick.setOnClickListener {
+            count =1
             dataSourceImage = emptyDataSource()
             getImage()
+            emptyList()
             recycle_my_work.visibility = View.VISIBLE
             recycle_story.visibility = View.GONE
         }
         rdbtn_story.setOnClickListener {
+            count =2
+            emptyStory()
             initRv()
             recycle_my_work.visibility = View.GONE
             recycle_story.visibility = View.VISIBLE
@@ -157,8 +184,6 @@ class MyWorkFragments : BaseFragment(), OnCustomClickListener {
             withItem<ImageOnWorkModel>(R.layout.item_list_image_on_work) {
                 onBind(::ImageOnWorkHolder) { index, item ->
                     Glide.with(context!!).load(item.url).diskCacheStrategy(DiskCacheStrategy.NONE).into(img1)
-
-
                     val positon = imageModel2.size
                     if (positon != 0) {
                         for (i in 0..positon - 1) {
@@ -196,7 +221,7 @@ class MyWorkFragments : BaseFragment(), OnCustomClickListener {
                             getImage()
                         }  catch (e: java.lang.Exception) {
                         }
-
+                        emptyList()
 
                     }
                 }
@@ -341,8 +366,12 @@ class MyWorkFragments : BaseFragment(), OnCustomClickListener {
 
             R.id.back_my_work -> findNavController().popBackStack()
             R.id.btn_new -> {
-                val bundle = bundleOf("url" to "mandalaa_1")
-                findNavController().navigate(R.id.action_tab3Fragment_to_categoryFragment, bundle)
+                if(count == 1) {
+                    val bundle = bundleOf("url" to "mandalaa_1")
+                    findNavController().navigate(R.id.action_tab3Fragment_to_categoryFragment, bundle)
+                } else{
+                    findNavController().navigate(R.id.action_tab3Fragment_to_storyBookFragment)
+                }
             }
 
         }
